@@ -7,5 +7,9 @@
             <argument>sylius_admin_order_creation_create_order</argument>
         </service>
         <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderIndexPage" parent="sylius.behat.page.admin.order.index" />
+
+        <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Context\Admin\ManagingOrdersContext">
+            <tag name="fob.context_service" />
+        </service>
     </services>
 </container>

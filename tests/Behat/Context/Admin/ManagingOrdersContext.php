@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Context\Admin;
 
 use Behat\Behat\Context\Context;
+use Behat\Behat\Tester\Exception\PendingException;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 
@@ -30,6 +31,22 @@ final class ManagingOrdersContext implements Context
      * @When I add :product to this order
      */
     public function addToThisOrder(ProductInterface $product): void
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @When I select :shippingMethodName shipping method
+     */
+    public function selectShippingMethod(string $shippingMethodName): void
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @When I select :paymentMethodName payment method
+     */
+    public function selectPaymentMethod(string $paymentMethodName): void
     {
         throw new PendingException();
     }
