@@ -13,15 +13,14 @@ Feature: Creating order with online payment
         And there is a customer account "jon.snow@the-wall.com"
         And I am logged in as an administrator
 
-    @ui @todo
+    @ui @javascript @todo
     Scenario: Creating an order with paypal payment for an existing customer
         When I create a new order for "jon.snow@the-wall.com"
         And I add "Stark Coat" to this order
-        And I specify the shipping address as "Ankh Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
+        And I specify this order shipping address as "Ankh Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
         And I select "Free" shipping method
         And I select "Paypal" payment method
         And I place this order
         Then I should be notified that order has been successfully created
         And I should be able to copy payment link for a customer
-        And there should be one order for "jon.snow@the-wall.com" in the registry
-        And this order should not be paid nor shipped
+        And there should be one not paid nor shipped order for "ned.stark@the-wall.com" in the registry

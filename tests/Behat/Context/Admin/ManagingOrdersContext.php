@@ -5,18 +5,58 @@ declare(strict_types=1);
 namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Context\Admin;
 
 use Behat\Behat\Context\Context;
-use Behat\Behat\Tester\Exception\PendingException;
+use Sylius\Behat\NotificationType;
+use Sylius\Behat\Service\NotificationCheckerInterface;
+use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\ProductInterface;
+use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\NewOrderCustomerPageInterface;
+use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderCreatePageInterface;
+use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderIndexPageInterface;
+use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderShowPageInterface;
+use Webmozart\Assert\Assert;
 
 final class ManagingOrdersContext implements Context
 {
+    /** @var OrderIndexPageInterface */
+    private $orderIndexPage;
+
+    /** @var NewOrderCustomerPageInterface */
+    private $newOrderCustomerPage;
+
+    /** @var OrderCreatePageInterface */
+    private $orderCreatePage;
+
+    /** @var OrderShowPageInterface */
+    private $orderShowPage;
+
+    /** @var NotificationCheckerInterface */
+    private $notificationChecker;
+
+    public function __construct(
+        OrderIndexPageInterface $orderIndexPage,
+        NewOrderCustomerPageInterface $newOrderCustomerPage,
+        OrderCreatePageInterface $orderCreatePage,
+        OrderShowPageInterface $orderShowPage,
+        NotificationCheckerInterface $notificationChecker
+    ) {
+        $this->orderIndexPage = $orderIndexPage;
+        $this->newOrderCustomerPage = $newOrderCustomerPage;
+        $this->orderCreatePage = $orderCreatePage;
+        $this->orderShowPage = $orderShowPage;
+        $this->notificationChecker = $notificationChecker;
+    }
+
     /**
      * @When I create a new order for :customer
      */
     public function createNewOrderFor(CustomerInterface $customer): void
     {
-        throw new PendingException();
+        $this->orderIndexPage->open();
+        $this->orderIndexPage->createOrder();
+
+        $this->newOrderCustomerPage->selectCustomer($customer->getEmail());
+        $this->newOrderCustomerPage->next();
     }
 
     /**
@@ -24,15 +64,27 @@ final class ManagingOrdersContext implements Context
      */
     public function createNewOrderForNewCustomerWithEmail(string $email): void
     {
-        throw new PendingException();
+        $this->orderIndexPage->open();
+        $this->orderIndexPage->createOrder();
+
+        $this->newOrderCustomerPage->createCustomer($email);
+        $this->newOrderCustomerPage->next();
     }
 
     /**
      * @When I add :product to this order
      */
-    public function addToThisOrder(ProductInterface $product): void
+    public function addProductToThisOrder(ProductInterface $product): void
     {
-        throw new PendingException();
+        $this->orderCreatePage->addProduct($product->getName());
+    }
+
+    /**
+     * @When /^I specify this order shipping (address as "[^"]+", "[^"]+", "[^"]+", "[^"]+" for "[^"]+")$/
+     */
+    public function specifyTheShippingAddressAs(AddressInterface $address): void
+    {
+        $this->orderCreatePage->specifyShippingAddress($address);
     }
 
     /**
@@ -40,7 +92,7 @@ final class ManagingOrdersContext implements Context
      */
     public function selectShippingMethod(string $shippingMethodName): void
     {
-        throw new PendingException();
+        $this->orderCreatePage->selectShippingMethod($shippingMethodName);
     }
 
     /**
@@ -48,7 +100,7 @@ final class ManagingOrdersContext implements Context
      */
     public function selectPaymentMethod(string $paymentMethodName): void
     {
-        throw new PendingException();
+        $this->orderCreatePage->selectPaymentMethod($paymentMethodName);
     }
 
     /**
@@ -56,7 +108,7 @@ final class ManagingOrdersContext implements Context
      */
     public function placeThisOrder(): void
     {
-        throw new PendingException();
+        $this->orderCreatePage->placeOrder();
     }
 
     /**
@@ -64,23 +116,10 @@ final class ManagingOrdersContext implements Context
      */
     public function shouldBeNotifiedThatOrderHasBeenSuccessfullyCreated(): void
     {
-        throw new PendingException();
-    }
-
-    /**
-     * @Then there should be one order for :customer in the registry
-     */
-    public function thereShouldBeOneOrderForInTheRegistry(CustomerInterface $customer): void
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * @Then this order should not be paid nor shipped
-     */
-    public function thisOrderShouldNotBePaidNorShipped(): void
-    {
-        throw new PendingException();
+        $this->notificationChecker->checkNotification(
+            'Order has been successfully created',
+            NotificationType::success()
+        );
     }
 
     /**
@@ -88,6 +127,21 @@ final class ManagingOrdersContext implements Context
      */
     public function shouldBeAbleToCopyPaymentLinkForCustomer(): void
     {
-        throw new PendingException();
+        Assert::true($this->orderShowPage->hasPaymentLinkToCopy());
+    }
+
+    /**
+     * @Then there should be one not paid nor shipped order for :customer in the registry
+     */
+    public function thereShouldBeOneOrderForInTheRegistry(CustomerInterface $customer): void
+    {
+        $this->orderIndexPage->open();
+
+        Assert::true($this->orderIndexPage->isSingleResourceOnPage([
+            'customer' => $customer->getEmail(),
+            'state' => 'New',
+            'payment_state' => 'Awaiting payment',
+            'shipping_state' => 'Ready',
+        ]));
     }
 }
