@@ -1,6 +1,6 @@
 @managing_orders
 Feature: Creating order with online payment
-    In order to have order placed by Admin and paid by Customer
+    In order to place order in the name of a Customer and forward the payment to them
     As an Administrator
     I want to be able to create an order with online payment in Admin panel
 

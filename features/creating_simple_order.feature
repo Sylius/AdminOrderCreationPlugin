@@ -1,6 +1,6 @@
 @managing_orders
 Feature: Creating simple order
-    In order to have order placed without Customer intervention
+    In order to place an order in the name of a Customer
     As an Administrator
     I want to be able to create a simple order in Admin panel
 
