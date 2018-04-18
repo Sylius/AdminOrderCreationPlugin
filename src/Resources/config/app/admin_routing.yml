@@ -2,3 +2,13 @@ sylius_admin_order_creation_select_order_customer:
     path: /admin/orders/new/select-customer
     defaults:
         _controller: sylius.controller.order:selectNewOrderCustomerAction
+
+sylius_admin_order_creation_order_create:
+    path: /orders/new
+    methods: [GET, POST]
+    defaults:
+        _controller: sylius.controller.order:createAction
+        _sylius:
+            section: admin
+            permission: true
+            template: SyliusAdminBundle:Crud:create.html.twig

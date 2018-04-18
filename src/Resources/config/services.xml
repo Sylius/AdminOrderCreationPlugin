@@ -5,5 +5,10 @@
         <service id="Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderCustomerSelectType">
             <tag name="form.type" />
         </service>
+
+        <service id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory" decorates="sylius.factory.order" public="false">
+            <argument type="service" id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory.inner" />
+            <argument type="service" id="sylius.repository.customer" />
+        </service>
     </services>
 </container>

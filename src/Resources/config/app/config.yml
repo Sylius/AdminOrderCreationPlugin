@@ -1,3 +1,6 @@
+imports:
+    - { resource: '@SyliusAdminOrderCreationPlugin/Resources/config/services.xml' }
+
 sylius_order:
     resources:
         order:
