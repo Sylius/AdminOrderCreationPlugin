@@ -10,6 +10,6 @@ final class OrderIndexPage extends IndexPage implements OrderIndexPageInterface
 {
     public function createOrder(): void
     {
-        $this->getDocument()->pressButton('Create');
+        $this->getDocument()->clickLink('Create');
     }
 }

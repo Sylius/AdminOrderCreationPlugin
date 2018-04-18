@@ -1,0 +1,19 @@
+sylius_order:
+    resources:
+        order:
+            classes:
+                controller: Sylius\AdminOrderCreationPlugin\Controller\OrderCreationController
+
+sylius_grid:
+    grids:
+        sylius_admin_order:
+            actions:
+                main:
+                    create:
+                        type: default
+                        label: sylius.ui.create
+                        icon: plus
+                        options:
+                            link:
+                                route: sylius_admin_order_creation_select_order_customer
+                                parameters: []

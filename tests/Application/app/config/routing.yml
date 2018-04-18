@@ -1,4 +1,5 @@
 sylius:
     resource: "../../../../vendor/sylius/sylius/app/config/routing.yml"
 
-# Put your own routes here
+sylius_admin_order_creation:
+    resource: "@SyliusAdminOrderCreationPlugin/Resources/config/app/admin_routing.yml"
