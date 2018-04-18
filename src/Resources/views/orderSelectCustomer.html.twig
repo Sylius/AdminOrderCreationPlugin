@@ -1,5 +1,10 @@
 {% extends '@SyliusAdmin/layout.html.twig' %}
 
-{% block content %}
+{% form_theme form '@SyliusAdmin/Form/theme.html.twig' %}
 
+{% block content %}
+    {{ form_start(form) }}
+        {{ form_row(form.customer) }}
+        <button class="ui primary button" type="submit">Next</button>
+    {{ form_end(form) }}
 {% endblock %}
