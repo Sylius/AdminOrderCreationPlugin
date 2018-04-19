@@ -18,11 +18,12 @@
     </div>
     <div class="ui segment">
         {{ form_start(form, {'action': path('sylius_admin_order_creation_order_create', { 'customerEmail': app.request.attributes.get('customerEmail') }), 'attr': {'class': 'ui loadable form', 'novalidate': 'novalidate'}}) }}
-        {% if configuration.vars.templates.form is defined %}
-            {% include configuration.vars.templates.form %}
-        {% else %}
-            {{ form_widget(form) }}
-        {% endif %}
+
+        {{ form_row(form.items) }}
+        {{ form_row(form.promotionCoupon) }}
+        {{ form_row(form.shippingAddress) }}
+        {{ form_row(form.shipments) }}
+        {{ form_row(form.payments) }}
 
         {% include '@SyliusUi/Form/Buttons/_create.html.twig' with {'paths': {'cancel': path(configuration.getRouteName('index'), configuration.vars.route.parameters|default({}))}} %}
 

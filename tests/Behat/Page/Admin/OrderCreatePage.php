@@ -12,31 +12,39 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
 {
     public function addProduct(string $productName): void
     {
-        $this->getDocument()->pressButton('Add');
+        $this->getDocument()->clickLink('Add');
         $this->getDocument()->selectFieldOption('Variant', $productName);
     }
 
     public function specifyShippingAddress(AddressInterface $address): void
     {
         $this->fillAddressData(
-            $this->getDocument()->find('css', '#shipping-address'),
+            $this->getDocument()->find('css', 'div[id*="shippingAddress"]'),
             $address
         );
     }
 
     public function selectShippingMethod(string $shippingMethodName): void
     {
-        $this->getDocument()->selectFieldOption('Shipping method', $shippingMethodName);
+        $shipmentsCollection = $this->getDocument()->find('css', '#sylius_admin_order_creation_new_order_shipments');
+
+        $shipmentsCollection->clickLink('Add');
+        $this->getSession()->wait(1000);
+        $shipmentsCollection->selectFieldOption('Shipping Method', $shippingMethodName);
     }
 
     public function selectPaymentMethod(string $paymentMethodName): void
     {
-        $this->getDocument()->selectFieldOption('Payment method', $paymentMethodName);
+        $paymentsCollection = $this->getDocument()->find('css', '#sylius_admin_order_creation_new_order_payments');
+
+        $paymentsCollection->clickLink('Add');
+        $this->getSession()->wait(1000);
+        $paymentsCollection->selectFieldOption('Payment Method', $paymentMethodName);
     }
 
     public function placeOrder(): void
     {
-        $this->getDocument()->pressButton('Place order');
+        $this->getDocument()->pressButton('Create');
     }
 
     private function fillAddressData(NodeElement $addressForm, AddressInterface $address): void

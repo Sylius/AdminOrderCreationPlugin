@@ -32,6 +32,7 @@ final class OrderItemType extends AbstractResourceType
             ->add('quantity', IntegerType::class, [
                 'attr' => ['min' => 1],
                 'label' => 'sylius.ui.quantity',
+                'data' => 1,
             ])
             ->add('variant', EntityType::class, [
                 'class' => ProductVariant::class,
@@ -46,6 +47,6 @@ final class OrderItemType extends AbstractResourceType
      */
     public function getBlockPrefix(): string
     {
-        return 'sylius_order_item';
+        return 'sylius_admin_order_creation_new_order_order_item';
     }
 }

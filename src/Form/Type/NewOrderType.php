@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Sylius\AdminOrderCreationPlugin\Form\Type;
 
 use Sylius\Bundle\AddressingBundle\Form\Type\AddressType;
-use Sylius\Bundle\PaymentBundle\Form\Type\PaymentType;
 use Sylius\Bundle\PromotionBundle\Form\Type\PromotionCouponToCodeType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
-use Sylius\Bundle\ShippingBundle\Form\Type\ShipmentType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 
