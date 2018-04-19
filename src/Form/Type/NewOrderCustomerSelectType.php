@@ -16,6 +16,7 @@ final class NewOrderCustomerSelectType extends AbstractType
         $builder->add('customer', EntityType::class, [
             'label' => 'sylius.ui.customer',
             'class' => Customer::class,
+            'choice_value' => 'email',
         ]);
     }
 
