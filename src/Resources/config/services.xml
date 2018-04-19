@@ -31,6 +31,15 @@
             <argument type="service" id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory.inner" />
             <argument type="service" id="sylius.repository.customer" />
             <argument type="service" id="sylius.repository.channel" />
+            <argument type="service" id="sylius.repository.currency" />
+            <argument type="service" id="sylius.repository.locale" />
+        </service>
+
+        <service id="Sylius\AdminOrderCreationPlugin\EventListener\OrderCreationListener">
+            <argument type="service" id="sylius.order_processing.order_processor" />
+            <argument type="service" id="sm.factory" />
+            <tag name="kernel.event_listener" event="sylius.order.pre_create" method="processOrderBeforeCreation" />
+            <tag name="kernel.event_listener" event="sylius.order.pre_create" method="completeOrderAfterCreation" />
         </service>
     </services>
 </container>

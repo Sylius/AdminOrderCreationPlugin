@@ -9,6 +9,8 @@ use Sylius\Bundle\PromotionBundle\Form\Type\PromotionCouponToCodeType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 final class NewOrderType extends AbstractResourceType
 {
@@ -20,6 +22,7 @@ final class NewOrderType extends AbstractResourceType
                 'entry_type' => OrderItemType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
+                'by_reference' => false,
             ])
             ->add('promotionCoupon', PromotionCouponToCodeType::class, [
                 'by_reference' => false,
@@ -37,13 +40,24 @@ final class NewOrderType extends AbstractResourceType
                 'label' => 'sylius.ui.payments',
                 'allow_add' => true,
                 'allow_delete' => true,
+                'by_reference' => false,
             ])
             ->add('shipments', CollectionType::class, [
                 'entry_type' => ShipmentType::class,
                 'label' => 'sylius.ui.shipments',
                 'allow_add' => true,
                 'allow_delete' => true,
+                'by_reference' => false,
             ])
+            ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
+                $orderData = $event->getData();
+
+                if (isset($orderData['shippingAddress']) && !isset($orderData['billingAddress'])) {
+                    $orderData['billingAddress'] = $orderData['shippingAddress'];
+
+                    $event->setData($orderData);
+                }
+            })
         ;
     }
 

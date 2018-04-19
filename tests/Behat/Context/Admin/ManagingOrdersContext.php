@@ -140,8 +140,8 @@ final class ManagingOrdersContext implements Context
         Assert::true($this->orderIndexPage->isSingleResourceOnPage([
             'customer' => $customer->getEmail(),
             'state' => 'New',
-            'payment_state' => 'Awaiting payment',
-            'shipping_state' => 'Ready',
+            'paymentState' => 'Awaiting payment',
+            'shippingState' => 'Ready',
         ]));
     }
 }
