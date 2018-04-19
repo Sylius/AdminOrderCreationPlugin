@@ -2,6 +2,7 @@
 
 namespace Sylius\AdminOrderCreationPlugin\Factory;
 
+use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
@@ -15,10 +16,17 @@ final class OrderFactory implements OrderFactoryInterface
     /** @var CustomerRepositoryInterface */
     private $customerRepository;
 
-    public function __construct(FactoryInterface $decoratedFactory, CustomerRepositoryInterface $customerRepository)
-    {
+    /** @var ChannelRepositoryInterface */
+    private $channelRepository;
+
+    public function __construct(
+        FactoryInterface $decoratedFactory,
+        CustomerRepositoryInterface $customerRepository,
+        ChannelRepositoryInterface $channelRepository
+    ) {
         $this->decoratedFactory = $decoratedFactory;
         $this->customerRepository = $customerRepository;
+        $this->channelRepository = $channelRepository;
     }
 
     public function createNew(): OrderInterface
@@ -34,6 +42,7 @@ final class OrderFactory implements OrderFactoryInterface
         /** @var OrderInterface $order */
         $order = $this->decoratedFactory->createNew();
         $order->setCustomer($customer);
+        $order->setChannel($this->channelRepository->findOneBy(['enabled' => true]));
 
         return $order;
     }

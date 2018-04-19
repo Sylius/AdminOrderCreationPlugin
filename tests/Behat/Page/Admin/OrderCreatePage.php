@@ -12,8 +12,8 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
 {
     public function addProduct(string $productName): void
     {
-        $this->getDocument()->selectFieldOption('Products', $productName);
-        $this->getDocument()->pressButton('Add product');
+        $this->getDocument()->pressButton('Add');
+        $this->getDocument()->selectFieldOption('Variant', $productName);
     }
 
     public function specifyShippingAddress(AddressInterface $address): void
