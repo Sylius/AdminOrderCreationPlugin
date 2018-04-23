@@ -1,7 +1,8 @@
 sylius_admin_order_creation_select_order_customer:
     path: /admin/orders/new/select-customer
+    methods: [GET]
     defaults:
-        _controller: sylius.controller.order:selectNewOrderCustomerAction
+        _controller: Sylius\AdminOrderCreationPlugin\Controller\SelectNewOrderCustomerAction
 
 sylius_admin_order_creation_order_create:
     path: /admin/orders/new/{customerEmail}

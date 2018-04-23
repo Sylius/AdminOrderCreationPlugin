@@ -1,12 +1,6 @@
 imports:
     - { resource: '@SyliusAdminOrderCreationPlugin/Resources/config/services.xml' }
 
-sylius_order:
-    resources:
-        order:
-            classes:
-                controller: Sylius\AdminOrderCreationPlugin\Controller\OrderCreationController
-
 sylius_grid:
     grids:
         sylius_admin_order:
