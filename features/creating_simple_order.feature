@@ -24,7 +24,7 @@ Feature: Creating simple order
         Then I should be notified that order has been successfully created
         And there should be one not paid nor shipped order for "jon.snow@the-wall.com" in the registry
 
-    @ui @javascript @todo
+    @ui @javascript
     Scenario: Creating a simple order for a new customer
         When I create a new order for a new customer with email "ned.stark@the-wall.com"
         And I add "Stark Coat" to this order

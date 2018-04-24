@@ -15,7 +15,7 @@ final class NewOrderCustomerCreateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('customer', TextType::class, [
-            'label' => 'sylius.ui.customer',
+            'label' => 'sylius_admin_order_creation.ui.new_customer_email',
         ]);
     }
 

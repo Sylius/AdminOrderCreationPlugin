@@ -3,6 +3,7 @@
 namespace Sylius\AdminOrderCreationPlugin\Factory;
 
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
+use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 use Sylius\Component\Currency\Model\CurrencyInterface;
@@ -15,6 +16,9 @@ final class OrderFactory implements OrderFactoryInterface
 {
     /** @var FactoryInterface */
     private $decoratedFactory;
+
+    /** @var FactoryInterface */
+    private $customerFactory;
 
     /** @var CustomerRepositoryInterface */
     private $customerRepository;
@@ -30,12 +34,14 @@ final class OrderFactory implements OrderFactoryInterface
 
     public function __construct(
         FactoryInterface $decoratedFactory,
+        FactoryInterface $customerFactory,
         CustomerRepositoryInterface $customerRepository,
         ChannelRepositoryInterface $channelRepository,
         RepositoryInterface $currencyRepository,
         RepositoryInterface $localeRepository
     ) {
         $this->decoratedFactory = $decoratedFactory;
+        $this->customerFactory = $customerFactory;
         $this->customerRepository = $customerRepository;
         $this->channelRepository = $channelRepository;
         $this->currencyRepository = $currencyRepository;
@@ -52,11 +58,8 @@ final class OrderFactory implements OrderFactoryInterface
 
     public function createForCustomer(string $customerEmail): OrderInterface
     {
-        $customer = $this->customerRepository->findOneBy(['email' => $customerEmail]);
+        $customer = $this->getNewOrderCustomer($customerEmail);
 
-        Assert::notNull($customer);
-
-        /** @var OrderInterface $order */
         $order = $this->decoratedFactory->createNew();
         assert($order instanceof OrderInterface);
 
@@ -72,5 +75,21 @@ final class OrderFactory implements OrderFactoryInterface
         $order->setLocaleCode($locale->getCode());
 
         return $order;
+    }
+
+    private function getNewOrderCustomer(string $email): CustomerInterface
+    {
+        $customer = $this->customerRepository->findOneBy(['email' => $email]);
+
+        if (null === $customer) {
+            $customer = $this->customerFactory->createNew();
+            assert($customer instanceof CustomerInterface);
+
+            $customer->setEmail($email);
+        }
+
+        assert($customer instanceof CustomerInterface);
+
+        return $customer;
     }
 }

@@ -4,25 +4,32 @@
 {% form_theme createCustomerForm '@SyliusAdmin/Form/theme.html.twig' %}
 
 {% block content %}
-    {{ form_start(selectCustomerForm, {'action': url('sylius_admin_order_creation_order_create', {'customerEmail': (selectCustomerForm.customer.vars.choices|first).value})}) }}
+    {{ form_start(selectCustomerForm)}}
         {{ form_row(selectCustomerForm.customer) }}
         <button class="ui primary button" type="submit">Next</button>
     {{ form_end(selectCustomerForm) }}
-    {{ form_start(createCustomerForm) }}
+    {{ form_start(createCustomerForm)}}
         {{ form_row(createCustomerForm.customer) }}
         <button class="ui positive button" type="submit"><i class="icon plus"></i>Create new</button>
     {{ form_end(createCustomerForm) }}
 {% endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
-        $('select').on('change', function() {
-            let form = $(this).parents('form');
-            let action = form.attr('action');
+        $('form button').on('click', function(e) {
+            e.preventDefault();
 
-            action = action.substr(0, action.lastIndexOf("/"));
-            form.attr('action', action+"/"+$(this).val());
+            let form = $(this).parents('form');
+            form.attr('action', Routing.generate(
+                'sylius_admin_order_creation_order_create',
+                { 'customerEmail': form.find('[name*="[customer]"]').val() },
+                true
+            ));
+
+            form.submit();
         });
     </script>
 {% endblock %}

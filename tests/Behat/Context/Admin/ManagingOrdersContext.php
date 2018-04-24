@@ -68,7 +68,6 @@ final class ManagingOrdersContext implements Context
         $this->orderIndexPage->createOrder();
 
         $this->newOrderCustomerPage->createCustomer($email);
-        $this->newOrderCustomerPage->next();
     }
 
     /**

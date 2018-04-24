@@ -1,0 +1,3 @@
+sylius_admin_order_creation:
+    ui:
+        new_customer_email: 'New customer email'

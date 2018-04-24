@@ -37,6 +37,7 @@
 
         <service id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory" decorates="sylius.factory.order" public="false">
             <argument type="service" id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory.inner" />
+            <argument type="service" id="sylius.factory.customer" />
             <argument type="service" id="sylius.repository.customer" />
             <argument type="service" id="sylius.repository.channel" />
             <argument type="service" id="sylius.repository.currency" />

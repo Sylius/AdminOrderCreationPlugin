@@ -25,7 +25,7 @@ final class NewOrderCustomerPage extends SymfonyPage implements NewOrderCustomer
 
     public function createCustomer(string $email): void
     {
+        $this->getDocument()->fillField('New customer email', $email);
         $this->getDocument()->pressButton('Create new');
-        $this->getDocument()->fillField('Email', $email);
     }
 }
