@@ -1,12 +1,17 @@
 {% extends '@SyliusAdmin/layout.html.twig' %}
 
-{% form_theme form '@SyliusAdmin/Form/theme.html.twig' %}
+{% form_theme selectCustomerForm '@SyliusAdmin/Form/theme.html.twig' %}
+{% form_theme createCustomerForm '@SyliusAdmin/Form/theme.html.twig' %}
 
 {% block content %}
-    {{ form_start(form, {'action': url('sylius_admin_order_creation_order_create', {'customerEmail': (form.customer.vars.choices|first).value})}) }}
-        {{ form_row(form.customer) }}
+    {{ form_start(selectCustomerForm, {'action': url('sylius_admin_order_creation_order_create', {'customerEmail': (selectCustomerForm.customer.vars.choices|first).value})}) }}
+        {{ form_row(selectCustomerForm.customer) }}
         <button class="ui primary button" type="submit">Next</button>
-    {{ form_end(form) }}
+    {{ form_end(selectCustomerForm) }}
+    {{ form_start(createCustomerForm) }}
+        {{ form_row(createCustomerForm.customer) }}
+        <button class="ui positive button" type="submit"><i class="icon plus"></i>Create new</button>
+    {{ form_end(createCustomerForm) }}
 {% endblock %}
 
 {% block javascripts %}

@@ -10,6 +10,9 @@
         <service id="Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderCustomerSelectType">
             <tag name="form.type" />
         </service>
+        <service id="Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderCustomerCreateType">
+            <tag name="form.type" />
+        </service>
         <service id="Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType">
             <argument>%sylius.model.order.class%</argument>
             <argument>%sylius.form.type.order.validation_groups%</argument>
