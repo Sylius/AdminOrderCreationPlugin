@@ -29,7 +29,7 @@ final class OrderCreationListenerSpec extends ObjectBehavior
         $this->processOrderBeforeCreation($event);
     }
 
-    function it_completes_order_after_it_is_created(
+    function it_completes_order_before_creation(
         FactoryInterface $stateMachineFactory,
         GenericEvent $event,
         StateMachineInterface $stateMachine,
@@ -43,7 +43,7 @@ final class OrderCreationListenerSpec extends ObjectBehavior
         $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT)->shouldBeCalled();
         $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_COMPLETE)->shouldBeCalled();
 
-        $this->completeOrderAfterCreation($event);
+        $this->completeOrderBeforeCreation($event);
     }
 
     function it_throws_exception_if_event_subject_is_not_order(GenericEvent $event)
@@ -57,7 +57,7 @@ final class OrderCreationListenerSpec extends ObjectBehavior
 
         $this
             ->shouldThrow(\InvalidArgumentException::class)
-            ->during('completeOrderAfterCreation', [$event])
+            ->during('completeOrderBeforeCreation', [$event])
         ;
     }
 }

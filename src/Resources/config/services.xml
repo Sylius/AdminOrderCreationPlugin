@@ -4,7 +4,7 @@
     <services>
         <service id="Sylius\AdminOrderCreationPlugin\Controller\SelectNewOrderCustomerAction">
             <argument type="service" id="form.factory" />
-            <argument type="service" id="templating" />
+            <argument type="service" id="twig" />
         </service>
 
         <service id="Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderCustomerSelectType">
@@ -44,7 +44,7 @@
             <argument type="service" id="sylius.order_processing.order_processor" />
             <argument type="service" id="sm.factory" />
             <tag name="kernel.event_listener" event="sylius.order.pre_create" method="processOrderBeforeCreation" />
-            <tag name="kernel.event_listener" event="sylius.order.pre_create" method="completeOrderAfterCreation" />
+            <tag name="kernel.event_listener" event="sylius.order.pre_create" method="completeOrderBeforeCreation" />
         </service>
     </services>
 </container>

@@ -29,7 +29,10 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
         $shipmentsCollection = $this->getDocument()->find('css', '#sylius_admin_order_creation_new_order_shipments');
 
         $shipmentsCollection->clickLink('Add');
-        $this->getSession()->wait(1000);
+        $this->getDocument()->waitFor(1, function () use ($shipmentsCollection) {
+            return $shipmentsCollection->has('css', '[data-form-collection="item"]');
+        });
+
         $shipmentsCollection->selectFieldOption('Shipping Method', $shippingMethodName);
     }
 
@@ -38,7 +41,10 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
         $paymentsCollection = $this->getDocument()->find('css', '#sylius_admin_order_creation_new_order_payments');
 
         $paymentsCollection->clickLink('Add');
-        $this->getSession()->wait(1000);
+        $this->getDocument()->waitFor(1, function () use ($paymentsCollection) {
+            return $paymentsCollection->has('css', '[data-form-collection="item"]');
+        });
+
         $paymentsCollection->selectFieldOption('Payment Method', $paymentMethodName);
     }
 

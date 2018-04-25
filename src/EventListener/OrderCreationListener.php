@@ -31,7 +31,7 @@ final class OrderCreationListener
         $this->orderProcessor->process($order);
     }
 
-    public function completeOrderAfterCreation(GenericEvent $event): void
+    public function completeOrderBeforeCreation(GenericEvent $event): void
     {
         $order = $event->getSubject();
         Assert::isInstanceOf($order, OrderInterface::class);
