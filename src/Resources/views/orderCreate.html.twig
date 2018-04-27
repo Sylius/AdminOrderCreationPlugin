@@ -1,0 +1,33 @@
+{% extends 'SyliusAdminBundle::layout.html.twig' %}
+
+{% set header = configuration.vars.header|default(metadata.applicationName~'.ui.new_'~metadata.name) %}
+
+{% block title %}{{ header|trans }} {{ parent() }}{% endblock %}
+
+{% form_theme form '@SyliusAdmin/Form/theme.html.twig' %}
+
+{% block content %}
+    <div class="ui stackable two column grid">
+        <div class="column">
+            {% include configuration.vars.templates.header_title|default('@SyliusAdmin/Crud/Create/_headerTitle.html.twig') %}
+            {% include configuration.vars.templates.breadcrumb|default('@SyliusAdmin/Crud/Create/_breadcrumb.html.twig') %}
+        </div>
+        <div class="middle aligned column">
+            {% include configuration.vars.templates.toolbar|default('@SyliusAdmin/Crud/_toolbar.html.twig') ignore missing %}
+        </div>
+    </div>
+    <div class="ui segment">
+        {{ form_start(form, {'action': path('sylius_admin_order_creation_order_create', { 'customerEmail': app.request.attributes.get('customerEmail') }), 'attr': {'class': 'ui loadable form', 'novalidate': 'novalidate'}}) }}
+
+        {{ form_row(form.items) }}
+        {{ form_row(form.promotionCoupon) }}
+        {{ form_row(form.shippingAddress) }}
+        {{ form_row(form.shipments) }}
+        {{ form_row(form.payments) }}
+
+        {% include '@SyliusUi/Form/Buttons/_create.html.twig' with {'paths': {'cancel': path(configuration.getRouteName('index'), configuration.vars.route.parameters|default({}))}} %}
+
+        {{ form_row(form._token) }}
+        {{ form_end(form, {'render_rest': false}) }}
+    </div>
+{% endblock %}

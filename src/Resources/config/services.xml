@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="Sylius\AdminOrderCreationPlugin\Controller\SelectNewOrderCustomerAction">
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="twig" />
+        </service>
+
+        <service id="Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderCustomerSelectType">
+            <tag name="form.type" />
+        </service>
+        <service id="Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType">
+            <argument>%sylius.model.order.class%</argument>
+            <argument>%sylius.form.type.order.validation_groups%</argument>
+            <tag name="form.type" />
+        </service>
+        <service id="Sylius\AdminOrderCreationPlugin\Form\Type\OrderItemType">
+            <argument>%sylius.model.order_item.class%</argument>
+            <argument>%sylius.form.type.order_item.validation_groups%</argument>
+            <argument type="service" id="sylius.form.data_mapper.order_item_quantity" />
+            <tag name="form.type" />
+        </service>
+        <service id="Sylius\AdminOrderCreationPlugin\Form\Type\ShipmentType">
+            <argument>%sylius.model.shipment.class%</argument>
+            <argument>%sylius.form.type.shipment.validation_groups%</argument>
+            <tag name="form.type" />
+        </service>
+        <service id="Sylius\AdminOrderCreationPlugin\Form\Type\PaymentType">
+            <argument>%sylius.model.payment.class%</argument>
+            <argument>%sylius.form.type.payment.validation_groups%</argument>
+            <tag name="form.type" />
+        </service>
+
+        <service id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory" decorates="sylius.factory.order" public="false">
+            <argument type="service" id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory.inner" />
+            <argument type="service" id="sylius.repository.customer" />
+            <argument type="service" id="sylius.repository.channel" />
+            <argument type="service" id="sylius.repository.currency" />
+            <argument type="service" id="sylius.repository.locale" />
+        </service>
+
+        <service id="Sylius\AdminOrderCreationPlugin\EventListener\OrderCreationListener">
+            <argument type="service" id="sylius.order_processing.order_processor" />
+            <argument type="service" id="sm.factory" />
+            <tag name="kernel.event_listener" event="sylius.order.pre_create" method="processOrderBeforeCreation" />
+            <tag name="kernel.event_listener" event="sylius.order.pre_create" method="completeOrderBeforeCreation" />
+        </service>
+    </services>
+</container>

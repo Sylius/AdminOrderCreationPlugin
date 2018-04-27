@@ -10,6 +10,8 @@ imports:
 
     - { resource: "../../../../vendor/sylius/sylius/app/config/security.yml" }
 
+    - { resource: "@SyliusAdminOrderCreationPlugin/Resources/config/app/config.yml" }
+
 framework:
     translator: { fallbacks: ["%locale%", "en"] }
     secret: "%secret"

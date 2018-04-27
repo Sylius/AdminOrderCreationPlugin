@@ -1,0 +1,20 @@
+sylius_admin_order_creation_select_order_customer:
+    path: /admin/orders/new/select-customer
+    methods: [GET]
+    defaults:
+        _controller: Sylius\AdminOrderCreationPlugin\Controller\SelectNewOrderCustomerAction
+
+sylius_admin_order_creation_order_create:
+    path: /admin/orders/new/{customerEmail}
+    methods: [GET, POST]
+    defaults:
+        _controller: sylius.controller.order:createAction
+        _sylius:
+            section: admin
+            permission: true
+            template: SyliusAdminOrderCreationPlugin::orderCreate.html.twig
+            form:
+                type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
+            factory:
+                method: createForCustomer
+                arguments: [$customerEmail]
