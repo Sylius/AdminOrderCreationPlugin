@@ -50,5 +50,12 @@
             <tag name="kernel.event_listener" event="sylius.order.pre_create" method="processOrderBeforeCreation" />
             <tag name="kernel.event_listener" event="sylius.order.pre_create" method="completeOrderBeforeCreation" />
         </service>
+
+        <service id="Sylius\AdminOrderCreationPlugin\EventListener\PaymentLinkCreationListener">
+            <argument type="service" id="payum" />
+            <argument type="service" id="sylius.manager.order" />
+            <argument type="string">sylius_shop_order_after_pay</argument>
+            <tag name="kernel.event_listener" event="sylius.order.post_create" method="setPaymentLink" />
+        </service>
     </services>
 </container>

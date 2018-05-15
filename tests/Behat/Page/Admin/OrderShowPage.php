@@ -12,6 +12,6 @@ final class OrderShowPage extends ShowPage implements OrderShowPageInterface
     {
         $lastPayment = $this->getElement('payments')->find('css', '.item:last-child');
 
-        return null !== $lastPayment->find('css', '#copy-link');
+        return null !== $lastPayment->find('css', '#payment-link');
     }
 }

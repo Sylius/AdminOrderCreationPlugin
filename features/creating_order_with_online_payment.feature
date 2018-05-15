@@ -13,7 +13,7 @@ Feature: Creating order with online payment
         And there is a customer account "jon.snow@the-wall.com"
         And I am logged in as an administrator
 
-    @ui @javascript @todo
+    @ui @javascript
     Scenario: Creating an order with paypal payment for an existing customer
         When I create a new order for "jon.snow@the-wall.com"
         And I add "Stark Coat" to this order
