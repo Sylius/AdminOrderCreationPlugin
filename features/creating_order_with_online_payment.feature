@@ -22,5 +22,5 @@ Feature: Creating order with online payment
         And I select "Paypal" payment method
         And I place this order
         Then I should be notified that order has been successfully created
-        And I should be able to copy payment link for a customer
-        And there should be one not paid nor shipped order for "ned.stark@the-wall.com" in the registry
+        And there should be payment link displayed next to order the payment
+        And there should be one not paid nor shipped order for "jon.snow@the-wall.com" in the registry

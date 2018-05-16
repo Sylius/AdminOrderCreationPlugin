@@ -8,5 +8,5 @@ use Sylius\Behat\Page\Admin\Order\ShowPageInterface;
 
 interface OrderShowPageInterface extends ShowPageInterface
 {
-    public function hasPaymentLinkToCopy(): bool;
+    public function hasPaymentLink(): bool;
 }

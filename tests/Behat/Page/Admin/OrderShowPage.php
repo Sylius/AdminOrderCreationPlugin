@@ -8,7 +8,7 @@ use Sylius\Behat\Page\Admin\Order\ShowPage;
 
 final class OrderShowPage extends ShowPage implements OrderShowPageInterface
 {
-    public function hasPaymentLinkToCopy(): bool
+    public function hasPaymentLink(): bool
     {
         $lastPayment = $this->getElement('payments')->find('css', '.item:last-child');
 

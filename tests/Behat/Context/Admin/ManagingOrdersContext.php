@@ -122,11 +122,11 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
-     * @Then I should be able to copy payment link for a customer
+     * @Then there should be payment link displayed next to order the payment
      */
-    public function shouldBeAbleToCopyPaymentLinkForCustomer(): void
+    public function thereShouldBePaymentLinkDisplayedNextToOrderPayment(): void
     {
-        Assert::true($this->orderShowPage->hasPaymentLinkToCopy());
+        Assert::true($this->orderShowPage->hasPaymentLink());
     }
 
     /**
