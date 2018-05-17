@@ -8,6 +8,7 @@ use Payum\Core\Payum;
 use Payum\Core\Security\GenericTokenFactoryInterface;
 use Payum\Core\Security\TokenInterface;
 use PhpSpec\ObjectBehavior;
+use Sylius\AdminOrderCreationPlugin\Sender\OrderPaymentLinkSenderInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
@@ -15,14 +16,15 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 
 final class PaymentLinkCreationListenerSpec extends ObjectBehavior
 {
-    function let(Payum $payum, ObjectManager $orderManager)
+    function let(Payum $payum, ObjectManager $orderManager, OrderPaymentLinkSenderInterface $orderPaymentLinkSender)
     {
-        $this->beConstructedWith($payum, $orderManager, 'sylius_shop_order_after_pay');
+        $this->beConstructedWith($payum, $orderManager, $orderPaymentLinkSender, 'sylius_shop_order_after_pay');
     }
 
-    function it_sets_authorize_link_for_last_order_new_payment_requiring_authorization(
+    function it_sets_authorize_link_for_last_order_new_payment_requiring_authorization_and_sends_it(
         Payum $payum,
         ObjectManager $orderManager,
+        OrderPaymentLinkSenderInterface $orderPaymentLinkSender,
         GenericTokenFactoryInterface $tokenFactory,
         TokenInterface $token,
         GenericEvent $event,
@@ -50,6 +52,8 @@ final class PaymentLinkCreationListenerSpec extends ObjectBehavior
         $token->getAfterUrl()->willReturn('http://url-to-pay.com');
 
         $payment->setDetails(['payment-link' => 'http://url-to-pay.com'])->shouldBeCalled();
+        $orderPaymentLinkSender->sendPaymentLink($order)->shouldBeCalled();
+
         $orderManager->flush()->shouldBeCalled();
 
         $this->setPaymentLink($event);
@@ -58,6 +62,7 @@ final class PaymentLinkCreationListenerSpec extends ObjectBehavior
     function it_sets_capture_link_for_last_order_new_payment_requiring_authorization(
         Payum $payum,
         ObjectManager $orderManager,
+        OrderPaymentLinkSenderInterface $orderPaymentLinkSender,
         GenericTokenFactoryInterface $tokenFactory,
         TokenInterface $token,
         GenericEvent $event,
@@ -85,6 +90,8 @@ final class PaymentLinkCreationListenerSpec extends ObjectBehavior
         $token->getAfterUrl()->willReturn('http://url-to-pay.com');
 
         $payment->setDetails(['payment-link' => 'http://url-to-pay.com'])->shouldBeCalled();
+        $orderPaymentLinkSender->sendPaymentLink($order)->shouldBeCalled();
+
         $orderManager->flush()->shouldBeCalled();
 
         $this->setPaymentLink($event);

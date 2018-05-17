@@ -140,7 +140,10 @@ final class ManagingOrdersContext implements Context
      */
     public function thereShouldBePaymentLinkSentTo(string $email): void
     {
-        Assert::count($this->emailChecker->countMessagesTo($email), 1);
+        Assert::true($this->emailChecker->hasMessageTo(
+            'New order has been created for you in Admin panel. Check it out in your orders\' history. To pay for this order, click',
+            $email
+        ));
     }
 
     /**
