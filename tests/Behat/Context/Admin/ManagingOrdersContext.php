@@ -128,7 +128,7 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
-     * @Then there should be payment link displayed next to order the payment
+     * @Then there should be a payment link displayed next to order's payment
      */
     public function thereShouldBePaymentLinkDisplayedNextToOrderPayment(): void
     {
@@ -136,7 +136,7 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
-     * @Then there should be payment link sent to :email
+     * @Then there should be a payment link sent to :email
      */
     public function thereShouldBePaymentLinkSentTo(string $email): void
     {

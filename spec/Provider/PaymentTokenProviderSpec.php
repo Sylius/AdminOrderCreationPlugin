@@ -47,7 +47,7 @@ final class PaymentTokenProviderSpec extends ObjectBehavior
         $this->getPaymentToken($payment)->shouldReturn($token);
     }
 
-    function it_provides_capture_token_for_payment_if_it_requires_authorization(
+    function it_provides_capture_token_for_payment(
         Payum $payum,
         GenericTokenFactoryInterface $tokenFactory,
         PaymentInterface $payment,
