@@ -15,13 +15,20 @@
         </div>
     </div>
     {% if sm_can(payment, 'complete', 'sylius_payment') %}
-        {{ dump(payment) }}
         <div class="ui segment">
             <form action="{{ path('sylius_admin_order_payment_complete', {'orderId': order.id, 'id': payment.id}) }}" method="post" novalidate>
                 <input type="hidden" name="_method" value="PUT">
                 <button type="submit" class="ui icon labeled tiny blue fluid loadable button"><i class="check icon"></i> {{ 'sylius.ui.complete'|trans }}</button>
             </form>
         </div>
+        {% if payment.details['payment-link'] is defined %}
+            <div class="ui segment">
+                <a href="{{ payment.details['payment-link'] }}">
+                    <button type="submit" id="payment-link" class="ui icon labeled tiny yellow fluid loadable button"><i class="money icon"></i> Pay</button>
+                </a>
+            </div>
+        {% endif %}
+        <a></a>
     {% endif %}
     {% if sm_can(payment, 'refund', 'sylius_payment') %}
         <div class="ui segment">

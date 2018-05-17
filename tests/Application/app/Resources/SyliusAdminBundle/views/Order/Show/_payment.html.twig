@@ -22,11 +22,11 @@
             </form>
         </div>
         {% if payment.details['payment-link'] is defined %}
-        <div class="ui segment">
-            <a href="{{ payment.details['payment-link'] }}">
-                <button type="submit" id="payment-link" class="ui icon labeled tiny yellow fluid loadable button"><i class="money icon"></i> Pay</button>
-            </a>
-        </div>
+            <div class="ui segment">
+                <a href="{{ payment.details['payment-link'] }}">
+                    <button type="submit" id="payment-link" class="ui icon labeled tiny yellow fluid loadable button"><i class="money icon"></i> Pay</button>
+                </a>
+            </div>
         {% endif %}
         <a></a>
     {% endif %}

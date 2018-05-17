@@ -28,6 +28,8 @@ final class OrderPaymentLinkSender implements OrderPaymentLinkSenderInterface
             return;
         }
 
+        assert($order->getCustomer() !== null);
+
         $this->sender
             ->send(
                 'order_created_in_admin_panel',

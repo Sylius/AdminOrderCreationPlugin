@@ -10,6 +10,7 @@ use Payum\Core\Security\TokenInterface;
 use Sylius\AdminOrderCreationPlugin\Sender\OrderPaymentLinkSenderInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
+use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Webmozart\Assert\Assert;
 
@@ -60,10 +61,15 @@ final class PaymentLinkCreationListener
 
     private function getPaymentToken(PaymentInterface $payment, GenericTokenFactoryInterface $tokenFactory): TokenInterface
     {
+        /** @var PaymentMethodInterface $paymentMethod */
+        $paymentMethod = $payment->getMethod();
         /** @var GatewayConfigInterface $gatewayConfig */
-        $gatewayConfig = $payment->getMethod()->getGatewayConfig();
+        $gatewayConfig = $paymentMethod->getGatewayConfig();
 
-        if (isset($gatewayConfig->getConfig()['use_authorize']) && $gatewayConfig->getConfig()['use_authorize'] === true) {
+        if (
+            isset($gatewayConfig->getConfig()['use_authorize']) &&
+            $gatewayConfig->getConfig()['use_authorize'] === true
+        ) {
             return $tokenFactory->createAuthorizeToken(
                 $gatewayConfig->getGatewayName(), $payment, $this->afterPayRoute
             );

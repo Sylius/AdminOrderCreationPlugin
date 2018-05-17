@@ -1,7 +1,8 @@
 {% block subject %}
-    New order has been created for you
+    {{ 'sylius_admin_order_creation.email.order_created.subject'|trans }}
 {% endblock %}
 
 {% block body %}
-    New order has been created for you in Admin panel. Check it out in your orders' history. To pay for this order, click <a href="{{ paymentLink }}">this link</a>.
+    {% set link = '<a href="' ~ paymentLink ~ '">this link</a>' %}
+    {{ 'sylius_admin_order_creation.email.order_created.body'|trans({'link': link}) }}
 {% endblock %}

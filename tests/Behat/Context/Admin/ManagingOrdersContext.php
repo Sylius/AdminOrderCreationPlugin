@@ -141,7 +141,7 @@ final class ManagingOrdersContext implements Context
     public function thereShouldBePaymentLinkSentTo(string $email): void
     {
         Assert::true($this->emailChecker->hasMessageTo(
-            'New order has been created for you in Admin panel. Check it out in your orders\' history. To pay for this order, click',
+            'New order has been created for you in Admin panel. Check it out in your orders history. To pay for this order, click',
             $email
         ));
     }

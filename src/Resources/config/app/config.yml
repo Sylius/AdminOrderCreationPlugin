@@ -18,5 +18,5 @@ sylius_grid:
 sylius_mailer:
     emails:
         order_created_in_admin_panel:
-            subject: New order has been created for you
-            template: SyliusAdminOrderCreationPlugin:Emails:orderCreated.html.twig
+            subject: 'sylius_admin_order_creation.email.order_created.subject'
+            template: 'SyliusAdminOrderCreationPlugin:Emails:orderCreated.html.twig'
