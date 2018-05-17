@@ -10,6 +10,7 @@ use Sylius\Behat\Service\NotificationCheckerInterface;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Core\Test\Services\EmailCheckerInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\NewOrderCustomerPageInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderCreatePageInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderIndexPageInterface;
@@ -33,18 +34,23 @@ final class ManagingOrdersContext implements Context
     /** @var NotificationCheckerInterface */
     private $notificationChecker;
 
+    /** @var EmailCheckerInterface */
+    private $emailChecker;
+
     public function __construct(
         OrderIndexPageInterface $orderIndexPage,
         NewOrderCustomerPageInterface $newOrderCustomerPage,
         OrderCreatePageInterface $orderCreatePage,
         OrderShowPageInterface $orderShowPage,
-        NotificationCheckerInterface $notificationChecker
+        NotificationCheckerInterface $notificationChecker,
+        EmailCheckerInterface $emailChecker
     ) {
         $this->orderIndexPage = $orderIndexPage;
         $this->newOrderCustomerPage = $newOrderCustomerPage;
         $this->orderCreatePage = $orderCreatePage;
         $this->orderShowPage = $orderShowPage;
         $this->notificationChecker = $notificationChecker;
+        $this->emailChecker = $emailChecker;
     }
 
     /**
@@ -127,6 +133,14 @@ final class ManagingOrdersContext implements Context
     public function thereShouldBePaymentLinkDisplayedNextToOrderPayment(): void
     {
         Assert::true($this->orderShowPage->hasPaymentLink());
+    }
+
+    /**
+     * @Then there should be payment link sent to :email
+     */
+    public function thereShouldBePaymentLinkSentTo(string $email): void
+    {
+        Assert::count($this->emailChecker->countMessagesTo($email), 1);
     }
 
     /**

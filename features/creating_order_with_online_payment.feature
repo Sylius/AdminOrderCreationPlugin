@@ -23,4 +23,5 @@ Feature: Creating order with online payment
         And I place this order
         Then I should be notified that order has been successfully created
         And there should be payment link displayed next to order the payment
+        And there should be payment link sent to "jon.snow@the-wall.com"
         And there should be one not paid nor shipped order for "jon.snow@the-wall.com" in the registry
