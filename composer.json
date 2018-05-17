@@ -6,7 +6,8 @@
     "require": {
         "php": "^7.1",
 
-        "sylius/sylius": "^1.2@dev"
+        "sylius/sylius": "^1.2@dev",
+        "friendsofsymfony/jsrouting-bundle": "^2.2"
     },
     "require-dev": {
         "behat/behat": "^3.3",

@@ -17,14 +17,16 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 final class OrderFactorySpec extends ObjectBehavior
 {
     function let(
-        FactoryInterface $defaultFactory,
+        FactoryInterface $orderFactory,
+        FactoryInterface $customerFactory,
         CustomerRepositoryInterface $customerRepository,
         ChannelRepositoryInterface $channelRepository,
         RepositoryInterface $currencyRepository,
         RepositoryInterface $localeRepository
     ) {
         $this->beConstructedWith(
-            $defaultFactory,
+            $orderFactory,
+            $customerFactory,
             $customerRepository,
             $channelRepository,
             $currencyRepository,
@@ -37,15 +39,15 @@ final class OrderFactorySpec extends ObjectBehavior
         $this->shouldImplement(OrderFactoryInterface::class);
     }
 
-    function it_delegates_creating_new_order(FactoryInterface $defaultFactory, OrderInterface $order)
+    function it_delegates_creating_new_order(FactoryInterface $orderFactory, OrderInterface $order)
     {
-        $defaultFactory->createNew()->willReturn($order);
+        $orderFactory->createNew()->willReturn($order);
 
         $this->createNew()->shouldReturn($order);
     }
 
     function it_creates_order_for_customer_with_default_channel_locale_and_currency(
-        FactoryInterface $defaultFactory,
+        FactoryInterface $orderFactory,
         CustomerRepositoryInterface $customerRepository,
         ChannelRepositoryInterface $channelRepository,
         RepositoryInterface $currencyRepository,
@@ -56,7 +58,7 @@ final class OrderFactorySpec extends ObjectBehavior
         CurrencyInterface $currency,
         LocaleInterface $locale
     ) {
-        $defaultFactory->createNew()->willReturn($order);
+        $orderFactory->createNew()->willReturn($order);
         $customerRepository->findOneBy(['email' => 'customer@example.com'])->willReturn($customer);
         $channelRepository->findOneBy(['enabled' => true])->willReturn($channel);
 
@@ -74,13 +76,38 @@ final class OrderFactorySpec extends ObjectBehavior
         $this->createForCustomer('customer@example.com')->shouldReturn($order);
     }
 
-    function it_throws_exception_if_there_is_no_customer_with_passed_email(CustomerRepositoryInterface $customerRepository)
-    {
+    function it_creates_order_for_new_customer_with_default_channel_locale_and_currency(
+        FactoryInterface $orderFactory,
+        FactoryInterface $customerFactory,
+        CustomerRepositoryInterface $customerRepository,
+        ChannelRepositoryInterface $channelRepository,
+        RepositoryInterface $currencyRepository,
+        RepositoryInterface $localeRepository,
+        OrderInterface $order,
+        CustomerInterface $customer,
+        ChannelInterface $channel,
+        CurrencyInterface $currency,
+        LocaleInterface $locale
+    ) {
+        $orderFactory->createNew()->willReturn($order);
         $customerRepository->findOneBy(['email' => 'customer@example.com'])->willReturn(null);
 
-        $this
-            ->shouldThrow(\InvalidArgumentException::class)
-            ->during('createForCustomer', ['customer@example.com'])
-        ;
+        $customerFactory->createNew()->willReturn($customer);
+        $customer->setEmail('customer@example.com')->shouldBeCalled();
+
+        $channelRepository->findOneBy(['enabled' => true])->willReturn($channel);
+
+        $currencyRepository->findOneBy([])->willReturn($currency);
+        $currency->getCode()->willReturn('USD');
+
+        $localeRepository->findOneBy([])->willReturn($locale);
+        $locale->getCode()->willReturn('en_US');
+
+        $order->setCustomer($customer)->shouldBeCalled();
+        $order->setChannel($channel)->shouldBeCalled();
+        $order->setCurrencyCode('USD')->shouldBeCalled();
+        $order->setLocaleCode('en_US')->shouldBeCalled();
+
+        $this->createForCustomer('customer@example.com')->shouldReturn($order);
     }
 }

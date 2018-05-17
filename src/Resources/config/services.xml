@@ -10,6 +10,9 @@
         <service id="Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderCustomerSelectType">
             <tag name="form.type" />
         </service>
+        <service id="Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderCustomerCreateType">
+            <tag name="form.type" />
+        </service>
         <service id="Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType">
             <argument>%sylius.model.order.class%</argument>
             <argument>%sylius.form.type.order.validation_groups%</argument>
@@ -34,6 +37,7 @@
 
         <service id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory" decorates="sylius.factory.order" public="false">
             <argument type="service" id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory.inner" />
+            <argument type="service" id="sylius.factory.customer" />
             <argument type="service" id="sylius.repository.customer" />
             <argument type="service" id="sylius.repository.channel" />
             <argument type="service" id="sylius.repository.currency" />

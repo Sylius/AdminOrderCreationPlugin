@@ -7,6 +7,8 @@ sylius_admin_order_creation_select_order_customer:
 sylius_admin_order_creation_order_create:
     path: /admin/orders/new/{customerEmail}
     methods: [GET, POST]
+    options:
+        expose: true
     defaults:
         _controller: sylius.controller.order:createAction
         _sylius:
@@ -18,3 +20,6 @@ sylius_admin_order_creation_order_create:
             factory:
                 method: createForCustomer
                 arguments: [$customerEmail]
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
