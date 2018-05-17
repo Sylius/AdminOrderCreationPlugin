@@ -8,6 +8,7 @@ use Payum\Core\Payum;
 use Payum\Core\Security\GenericTokenFactoryInterface;
 use Payum\Core\Security\TokenInterface;
 use PhpSpec\ObjectBehavior;
+use Sylius\AdminOrderCreationPlugin\Provider\PaymentTokenProviderInterface;
 use Sylius\AdminOrderCreationPlugin\Sender\OrderPaymentLinkSenderInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
@@ -16,77 +17,27 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 
 final class PaymentLinkCreationListenerSpec extends ObjectBehavior
 {
-    function let(Payum $payum, ObjectManager $orderManager, OrderPaymentLinkSenderInterface $orderPaymentLinkSender)
-    {
-        $this->beConstructedWith($payum, $orderManager, $orderPaymentLinkSender, 'sylius_shop_order_after_pay');
+    function let(
+        PaymentTokenProviderInterface $paymentTokenProvider,
+        ObjectManager $orderManager,
+        OrderPaymentLinkSenderInterface $orderPaymentLinkSender
+    ) {
+        $this->beConstructedWith($paymentTokenProvider, $orderManager, $orderPaymentLinkSender);
     }
 
-    function it_sets_authorize_link_for_last_order_new_payment_requiring_authorization_and_sends_it(
-        Payum $payum,
+    function it_sets_after_url_from_token_of_last_order_new_payment_and_sends_it(
+        PaymentTokenProviderInterface $paymentTokenProvider,
         ObjectManager $orderManager,
         OrderPaymentLinkSenderInterface $orderPaymentLinkSender,
-        GenericTokenFactoryInterface $tokenFactory,
         TokenInterface $token,
         GenericEvent $event,
         OrderInterface $order,
-        PaymentInterface $payment,
-        PaymentMethodInterface $paymentMethod,
-        GatewayConfigInterface $gatewayConfig
+        PaymentInterface $payment
     ) {
         $event->getSubject()->willReturn($order);
         $order->getLastPayment(PaymentInterface::STATE_NEW)->willReturn($payment);
 
-        $payment->getMethod()->willReturn($paymentMethod);
-        $paymentMethod->getGatewayConfig()->willReturn($gatewayConfig);
-
-        $gatewayConfig->getConfig()->willReturn(['use_authorize' => true]);
-        $gatewayConfig->getGatewayName()->willReturn('PAYPAL');
-
-        $payum->getTokenFactory()->willReturn($tokenFactory);
-
-        $tokenFactory
-            ->createAuthorizeToken('PAYPAL', $payment, 'sylius_shop_order_after_pay')
-            ->willReturn($token)
-        ;
-
-        $token->getAfterUrl()->willReturn('http://url-to-pay.com');
-
-        $payment->setDetails(['payment-link' => 'http://url-to-pay.com'])->shouldBeCalled();
-        $orderPaymentLinkSender->sendPaymentLink($order)->shouldBeCalled();
-
-        $orderManager->flush()->shouldBeCalled();
-
-        $this->setPaymentLink($event);
-    }
-
-    function it_sets_capture_link_for_last_order_new_payment_requiring_authorization(
-        Payum $payum,
-        ObjectManager $orderManager,
-        OrderPaymentLinkSenderInterface $orderPaymentLinkSender,
-        GenericTokenFactoryInterface $tokenFactory,
-        TokenInterface $token,
-        GenericEvent $event,
-        OrderInterface $order,
-        PaymentInterface $payment,
-        PaymentMethodInterface $paymentMethod,
-        GatewayConfigInterface $gatewayConfig
-    ) {
-        $event->getSubject()->willReturn($order);
-        $order->getLastPayment(PaymentInterface::STATE_NEW)->willReturn($payment);
-
-        $payment->getMethod()->willReturn($paymentMethod);
-        $paymentMethod->getGatewayConfig()->willReturn($gatewayConfig);
-
-        $gatewayConfig->getConfig()->willReturn(['use_authorize' => false]);
-        $gatewayConfig->getGatewayName()->willReturn('PAYPAL');
-
-        $payum->getTokenFactory()->willReturn($tokenFactory);
-
-        $tokenFactory
-            ->createCaptureToken('PAYPAL', $payment, 'sylius_shop_order_after_pay')
-            ->willReturn($token)
-        ;
-
+        $paymentTokenProvider->getPaymentToken($payment)->willReturn($token);
         $token->getAfterUrl()->willReturn('http://url-to-pay.com');
 
         $payment->setDetails(['payment-link' => 'http://url-to-pay.com'])->shouldBeCalled();

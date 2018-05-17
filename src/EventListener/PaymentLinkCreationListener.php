@@ -3,21 +3,17 @@
 namespace Sylius\AdminOrderCreationPlugin\EventListener;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Payum\Core\Model\GatewayConfigInterface;
-use Payum\Core\Payum;
-use Payum\Core\Security\GenericTokenFactoryInterface;
-use Payum\Core\Security\TokenInterface;
+use Sylius\AdminOrderCreationPlugin\Provider\PaymentTokenProviderInterface;
 use Sylius\AdminOrderCreationPlugin\Sender\OrderPaymentLinkSenderInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
-use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Webmozart\Assert\Assert;
 
 final class PaymentLinkCreationListener
 {
-    /** @var Payum */
-    private $payum;
+    /** @var PaymentTokenProviderInterface */
+    private $paymentTokenProvider;
 
     /** @var ObjectManager */
     private $orderManager;
@@ -25,19 +21,14 @@ final class PaymentLinkCreationListener
     /** @var OrderPaymentLinkSenderInterface */
     private $orderPaymentLinkSender;
 
-    /** @var string */
-    private $afterPayRoute;
-
     public function __construct(
-        Payum $payum,
+        PaymentTokenProviderInterface $paymentTokenProvider,
         ObjectManager $orderManager,
-        OrderPaymentLinkSenderInterface $orderPaymentLinkSender,
-        string $afterPayRoute
+        OrderPaymentLinkSenderInterface $orderPaymentLinkSender
     ) {
-        $this->payum = $payum;
+        $this->paymentTokenProvider = $paymentTokenProvider;
         $this->orderManager = $orderManager;
         $this->orderPaymentLinkSender = $orderPaymentLinkSender;
-        $this->afterPayRoute = $afterPayRoute;
     }
 
     public function setPaymentLink(GenericEvent $event): void
@@ -51,32 +42,10 @@ final class PaymentLinkCreationListener
             return;
         }
 
-        $token = $this->getPaymentToken($payment, $this->payum->getTokenFactory());
-
+        $token = $this->paymentTokenProvider->getPaymentToken($payment);
         $payment->setDetails(['payment-link' => $token->getAfterUrl()]);
 
         $this->orderPaymentLinkSender->sendPaymentLink($order);
         $this->orderManager->flush();
-    }
-
-    private function getPaymentToken(PaymentInterface $payment, GenericTokenFactoryInterface $tokenFactory): TokenInterface
-    {
-        /** @var PaymentMethodInterface $paymentMethod */
-        $paymentMethod = $payment->getMethod();
-        /** @var GatewayConfigInterface $gatewayConfig */
-        $gatewayConfig = $paymentMethod->getGatewayConfig();
-
-        if (
-            isset($gatewayConfig->getConfig()['use_authorize']) &&
-            $gatewayConfig->getConfig()['use_authorize'] === true
-        ) {
-            return $tokenFactory->createAuthorizeToken(
-                $gatewayConfig->getGatewayName(), $payment, $this->afterPayRoute
-            );
-        }
-
-        return $tokenFactory->createCaptureToken(
-            $gatewayConfig->getGatewayName(), $payment, $this->afterPayRoute
-        );
     }
 }
