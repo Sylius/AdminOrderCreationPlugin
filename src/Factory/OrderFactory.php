@@ -58,7 +58,7 @@ final class OrderFactory implements OrderFactoryInterface
 
     public function createForCustomer(string $customerEmail): OrderInterface
     {
-        $customer = $this->getNewOrderCustomer($customerEmail);
+        $customer = $this->getCustomerForOrder($customerEmail);
 
         $order = $this->decoratedFactory->createNew();
         assert($order instanceof OrderInterface);
@@ -77,7 +77,7 @@ final class OrderFactory implements OrderFactoryInterface
         return $order;
     }
 
-    private function getNewOrderCustomer(string $email): CustomerInterface
+    private function getCustomerForOrder(string $email): CustomerInterface
     {
         $customer = $this->customerRepository->findOneBy(['email' => $email]);
 
