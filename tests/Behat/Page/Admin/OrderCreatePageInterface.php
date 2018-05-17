@@ -11,6 +11,8 @@ interface OrderCreatePageInterface extends CreatePageInterface
 {
     public function addProduct(string $productName): void;
 
+    public function addMultipleProducts(string $productName, int $quantity): void;
+
     public function specifyShippingAddress(AddressInterface $address): void;
 
     public function selectShippingMethod(string $shippingMethodName): void;

@@ -19,7 +19,9 @@
     <div class="ui segment">
         {{ form_start(form, {'action': path('sylius_admin_order_creation_order_create', { 'customerEmail': app.request.attributes.get('customerEmail') }), 'attr': {'class': 'ui loadable form', 'novalidate': 'novalidate'}}) }}
 
-        {{ form_row(form.items) }}
+        <div id="items">
+            {{ form_row(form.items) }}
+        </div>
         {{ form_row(form.promotionCoupon) }}
         {{ form_row(form.shippingAddress) }}
         {{ form_row(form.shipments) }}

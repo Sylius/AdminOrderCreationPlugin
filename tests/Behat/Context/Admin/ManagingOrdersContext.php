@@ -79,6 +79,14 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
+     * @When I add :quantity of :product to this order
+     */
+    public function addMultipleProductsToThisOrder(int $quantity, ProductInterface $product): void
+    {
+        $this->orderCreatePage->addMultipleProducts($product->getName(), $quantity);
+    }
+
+    /**
      * @When /^I specify this order shipping (address as "[^"]+", "[^"]+", "[^"]+", "[^"]+" for "[^"]+")$/
      */
     public function specifyTheShippingAddressAs(AddressInterface $address): void
