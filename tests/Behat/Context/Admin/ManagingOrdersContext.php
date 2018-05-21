@@ -87,6 +87,14 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
+     * @When I remove :product from this order
+     */
+    public function removeProductFromThisOrder(ProductInterface $product): void
+    {
+        $this->orderCreatePage->removeProduct($product->getId());
+    }
+
+    /**
      * @When /^I specify this order shipping (address as "[^"]+", "[^"]+", "[^"]+", "[^"]+" for "[^"]+")$/
      */
     public function specifyTheShippingAddressAs(AddressInterface $address): void

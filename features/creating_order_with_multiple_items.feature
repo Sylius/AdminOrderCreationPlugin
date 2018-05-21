@@ -29,3 +29,19 @@ Feature: Creating order with multiple items
         Then I should be notified that order has been successfully created
         And the order's total should be "$2,340.00"
         And there should be one not paid nor shipped order for "jon.snow@the-wall.com" in the registry
+
+    @ui @javascript
+    Scenario: Being able to remove items during order creation
+        When I create a new order for "jon.snow@the-wall.com"
+        And I add 3 of "Stark Coat" to this order
+        And I add "Lannister Banner" to this order
+        And I add "Greyjoy Boat" to this order
+        And I add 5 of "Targaryen Shield" to this order
+        And I remove "Greyjoy Boat" from this order
+        And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
+        And I select "Free" shipping method
+        And I select "Cash on Delivery" payment method
+        And I place this order
+        Then I should be notified that order has been successfully created
+        And the order's total should be "$1,340.00"
+        And there should be one not paid nor shipped order for "jon.snow@the-wall.com" in the registry

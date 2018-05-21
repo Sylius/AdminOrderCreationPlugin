@@ -32,6 +32,12 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
         $item->fillField('Quantity', $quantity);
     }
 
+    public function removeProduct(int $productId): void
+    {
+        $item = $this->getItemWithProductSelected($productId);
+        $item->clickLink('Delete');
+    }
+
     public function specifyShippingAddress(AddressInterface $address): void
     {
         $this->fillAddressData(
@@ -87,5 +93,17 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
     private function getLastOrderItem(): NodeElement
     {
         return $this->getDocument()->find('css', '#items [data-form-collection="item"]:last-child');
+    }
+
+    private function getItemWithProductSelected(int $productId): NodeElement
+    {
+        /** @var NodeElement $item */
+        foreach ($this->getDocument()->findAll('css', '#items [data-form-collection="item"]') as $item) {
+            if ((int) $item->find('css', 'select')->getValue() === $productId) {
+                return $item;
+            }
+        }
+
+        throw new \Exception(sprintf('There is no item with product with id "%d" selected', $productId));
     }
 }
