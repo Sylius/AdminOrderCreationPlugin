@@ -14,3 +14,9 @@ sylius_grid:
                             link:
                                 route: sylius_admin_order_creation_select_order_customer
                                 parameters: []
+
+sylius_mailer:
+    emails:
+        order_created_in_admin_panel:
+            subject: 'sylius_admin_order_creation.email.order_created.subject'
+            template: 'SyliusAdminOrderCreationPlugin:Emails:orderCreated.html.twig'

@@ -1,3 +1,7 @@
 sylius_admin_order_creation:
     ui:
         new_customer_email: 'New customer email'
+    email:
+        order_created:
+            subject: "New order has been created for you"
+            body: "New order has been created for you in Admin panel. Check it out in your orders history. To pay for this order, click {{ link }}"

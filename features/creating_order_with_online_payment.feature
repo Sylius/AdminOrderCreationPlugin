@@ -13,7 +13,7 @@ Feature: Creating order with online payment
         And there is a customer account "jon.snow@the-wall.com"
         And I am logged in as an administrator
 
-    @ui @javascript @todo
+    @ui @javascript @email
     Scenario: Creating an order with paypal payment for an existing customer
         When I create a new order for "jon.snow@the-wall.com"
         And I add "Stark Coat" to this order
@@ -22,5 +22,6 @@ Feature: Creating order with online payment
         And I select "Paypal" payment method
         And I place this order
         Then I should be notified that order has been successfully created
-        And I should be able to copy payment link for a customer
-        And there should be one not paid nor shipped order for "ned.stark@the-wall.com" in the registry
+        And there should be a payment link displayed next to order's payment
+        And there should be a payment link sent to "jon.snow@the-wall.com"
+        And there should be one not paid nor shipped order for "jon.snow@the-wall.com" in the registry

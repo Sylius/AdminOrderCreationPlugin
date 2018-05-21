@@ -1,0 +1,8 @@
+{% block subject %}
+    {{ 'sylius_admin_order_creation.email.order_created.subject'|trans }}
+{% endblock %}
+
+{% block body %}
+    {% set link = '<a href="' ~ paymentLink ~ '">this link</a>' %}
+    {{ 'sylius_admin_order_creation.email.order_created.body'|trans({'link': link}) }}
+{% endblock %}

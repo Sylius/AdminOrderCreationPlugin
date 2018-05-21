@@ -15,6 +15,7 @@
             <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderCreatePage" />
             <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderShowPage" />
             <argument type="service" id="sylius.behat.notification_checker" />
+            <argument type="service" id="__symfony__.sylius.behat.email_checker" />
             <tag name="fob.context_service" />
         </service>
     </services>

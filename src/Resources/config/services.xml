@@ -47,8 +47,24 @@
         <service id="Sylius\AdminOrderCreationPlugin\EventListener\OrderCreationListener">
             <argument type="service" id="sylius.order_processing.order_processor" />
             <argument type="service" id="sm.factory" />
-            <tag name="kernel.event_listener" event="sylius.order.pre_create" method="processOrderBeforeCreation" />
-            <tag name="kernel.event_listener" event="sylius.order.pre_create" method="completeOrderBeforeCreation" />
+            <tag name="kernel.event_listener" event="sylius.order.pre_admin_create" method="processOrderBeforeCreation" />
+            <tag name="kernel.event_listener" event="sylius.order.pre_admin_create" method="completeOrderBeforeCreation" />
+        </service>
+
+        <service id="Sylius\AdminOrderCreationPlugin\EventListener\PaymentLinkCreationListener">
+            <argument type="service" id="Sylius\AdminOrderCreationPlugin\Provider\PaymentTokenProvider" />
+            <argument type="service" id="sylius.manager.order" />
+            <argument type="service" id="Sylius\AdminOrderCreationPlugin\Sender\OrderPaymentLinkSender" />
+            <tag name="kernel.event_listener" event="sylius.order.post_admin_create" method="setPaymentLink" />
+        </service>
+
+        <service id="Sylius\AdminOrderCreationPlugin\Sender\OrderPaymentLinkSender">
+            <argument type="service" id="sylius.email_sender" />
+        </service>
+
+        <service id="Sylius\AdminOrderCreationPlugin\Provider\PaymentTokenProvider">
+            <argument type="service" id="payum" />
+            <argument type="string">sylius_shop_order_after_pay</argument>
         </service>
     </services>
 </container>

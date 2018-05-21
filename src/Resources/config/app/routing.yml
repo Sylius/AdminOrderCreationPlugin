@@ -12,6 +12,7 @@ sylius_admin_order_creation_order_create:
     defaults:
         _controller: sylius.controller.order:createAction
         _sylius:
+            event: admin_create
             section: admin
             permission: true
             template: SyliusAdminOrderCreationPlugin::orderCreate.html.twig
