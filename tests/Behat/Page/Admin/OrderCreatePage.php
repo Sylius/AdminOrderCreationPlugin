@@ -46,6 +46,14 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
         );
     }
 
+    public function specifyBillingAddress(AddressInterface $address): void
+    {
+        $this->fillAddressData(
+            $this->getDocument()->find('css', 'div[id*="billingAddress"]'),
+            $address
+        );
+    }
+
     public function selectShippingMethod(string $shippingMethodName): void
     {
         $shipmentsCollection = $this->getDocument()->find('css', '#sylius_admin_order_creation_new_order_shipments');

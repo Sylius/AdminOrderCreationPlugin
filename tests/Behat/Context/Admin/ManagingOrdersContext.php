@@ -109,6 +109,14 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
+     * @When /^I specify this order billing (address as "[^"]+", "[^"]+", "[^"]+", "[^"]+" for "[^"]+")$/
+     */
+    public function specifyTheBillingAddressAs(AddressInterface $address): void
+    {
+        $this->orderCreatePage->specifyBillingAddress($address);
+    }
+
+    /**
      * @When I select :shippingMethodName shipping method
      */
     public function selectShippingMethod(string $shippingMethodName): void
