@@ -52,7 +52,7 @@ final class NewOrderType extends AbstractResourceType
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
                 $orderData = $event->getData();
 
-                if (isset($orderData['shippingAddress']) && !isset($orderData['billingAddress'])) {
+                if (isset($orderData['shippingAddress']) && $this->isBillingAddressEmpty($orderData)) {
                     $orderData['billingAddress'] = $orderData['shippingAddress'];
 
                     $event->setData($orderData);
@@ -64,5 +64,21 @@ final class NewOrderType extends AbstractResourceType
     public function getBlockPrefix(): string
     {
         return 'sylius_admin_order_creation_new_order';
+    }
+
+    private function isBillingAddressEmpty(array $orderData): bool
+    {
+        if (!isset($orderData['billingAddress'])) {
+            return true;
+        }
+
+        return
+            empty($orderData['billingAddress']['firstName']) &&
+            empty($orderData['billingAddress']['lastName']) &&
+            empty($orderData['billingAddress']['street']) &&
+            empty($orderData['billingAddress']['countryCode']) &&
+            empty($orderData['billingAddress']['city']) &&
+            empty($orderData['billingAddress']['postcode'])
+        ;
     }
 }

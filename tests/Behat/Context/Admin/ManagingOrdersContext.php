@@ -184,4 +184,30 @@ final class ManagingOrdersContext implements Context
             'shippingState' => 'Ready',
         ]));
     }
+
+    /**
+     * @Then this order shipping address should be :customerName, :street, :postcode, :city, :countryName
+     */
+    public function thisOrderShippingAddressShouldBe(
+        string $customerName,
+        string $street,
+        string $postcode,
+        string $city,
+        string $countryName
+    ): void {
+        Assert::true($this->orderShowPage->hasShippingAddress($customerName, $street, $postcode, $city, $countryName));
+    }
+
+    /**
+     * @Then this order billing address should be :customerName, :street, :postcode, :city, :countryName
+     */
+    public function thisOrderBillingAddressShouldBe(
+        string $customerName,
+        string $street,
+        string $postcode,
+        string $city,
+        string $countryName
+    ): void {
+        Assert::true($this->orderShowPage->hasBillingAddress($customerName, $street, $postcode, $city, $countryName));
+    }
 }
