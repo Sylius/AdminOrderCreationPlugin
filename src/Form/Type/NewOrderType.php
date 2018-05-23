@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sylius\AdminOrderCreationPlugin\Form\Type;
 
 use Sylius\Bundle\AddressingBundle\Form\Type\AddressType;
+use Sylius\Bundle\MoneyBundle\Form\Type\MoneyType;
 use Sylius\Bundle\PromotionBundle\Form\Type\PromotionCouponToCodeType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -49,6 +50,16 @@ final class NewOrderType extends AbstractResourceType
                 'allow_delete' => true,
                 'by_reference' => false,
             ])
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
+                $event
+                    ->getForm()
+                    ->add('customTotal', MoneyType::class, [
+                        'label' => 'sylius_admin_order_creation.form.order.order_price',
+                        'mapped' => false,
+                        'currency' => $event->getData()->getCurrencyCode(),
+                    ])
+                ;
+            })
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
                 $orderData = $event->getData();
 

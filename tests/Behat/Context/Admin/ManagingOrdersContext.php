@@ -127,7 +127,7 @@ final class ManagingOrdersContext implements Context
     /**
      * @When I specify order price as :price
      */
-    public function specifyOrderPriceAs(int $price): void
+    public function specifyOrderPriceAs(string $price): void
     {
         $this->orderCreatePage->specifyOrderPrice(str_replace(['$', '€', '£'], '', $price));
     }
