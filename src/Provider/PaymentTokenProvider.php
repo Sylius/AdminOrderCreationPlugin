@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sylius\AdminOrderCreationPlugin\Provider;
 
 use Payum\Core\Model\GatewayConfigInterface;

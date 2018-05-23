@@ -73,12 +73,12 @@ final class NewOrderType extends AbstractResourceType
         }
 
         return
-            empty($orderData['billingAddress']['firstName']) &&
-            empty($orderData['billingAddress']['lastName']) &&
-            empty($orderData['billingAddress']['street']) &&
-            empty($orderData['billingAddress']['countryCode']) &&
-            empty($orderData['billingAddress']['city']) &&
-            empty($orderData['billingAddress']['postcode'])
+            $orderData['billingAddress']['firstName'] === '' &&
+            $orderData['billingAddress']['lastName'] === '' &&
+            $orderData['billingAddress']['street'] === '' &&
+            $orderData['billingAddress']['countryCode'] === '' &&
+            $orderData['billingAddress']['city'] === '' &&
+            $orderData['billingAddress']['postcode'] === ''
         ;
     }
 }

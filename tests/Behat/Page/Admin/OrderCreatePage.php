@@ -12,7 +12,7 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
 {
     public function addProduct(string $productName): void
     {
-        $item =$this->addItemAndWaitForIt();
+        $item = $this->addItemAndWaitForIt();
         $item->selectFieldOption('Variant', $productName);
     }
 
@@ -93,9 +93,7 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
             return $this->countItems() > $itemsCount;
         });
 
-        $items = $this->getDocument()->findAll('css', '#items [data-form-collection="item"]');
-
-        return $items[count($items)-1];
+        return $this->getDocument()->find('css', '#items [data-form-collection="item"]:last-child');
     }
 
     private function countItems(): int
