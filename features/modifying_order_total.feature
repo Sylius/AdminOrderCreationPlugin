@@ -22,7 +22,7 @@ Feature: Modifying order total
         And I specify order price as "$200"
         And I place this order
         Then I should be notified that order has been successfully created
-        And its total should be $200.00
+        And the order's total should be "$200.00"
 
     @ui @javascript
     Scenario: Not being able to place order with price below 0

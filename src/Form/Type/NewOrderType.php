@@ -55,7 +55,6 @@ final class NewOrderType extends AbstractResourceType
                     ->getForm()
                     ->add('customTotal', MoneyType::class, [
                         'label' => 'sylius_admin_order_creation.form.order.order_price',
-                        'mapped' => false,
                         'currency' => $event->getData()->getCurrencyCode(),
                     ])
                 ;
