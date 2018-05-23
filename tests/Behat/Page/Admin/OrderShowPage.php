@@ -14,4 +14,16 @@ final class OrderShowPage extends ShowPage implements OrderShowPageInterface
 
         return null !== $lastPayment->find('css', '#payment-link');
     }
+
+    public function hasOrderPriceValidationMessage(string $message): bool
+    {
+        $customTotalElement = $this->getDocument()->find('css', '.field:contains("Order price")');
+        $validationError = $customTotalElement->find('css', '.sylius-validation-error');
+
+        if (null === $validationError) {
+            return false;
+        }
+
+        return $validationError->getText() === $message;
+    }
 }
