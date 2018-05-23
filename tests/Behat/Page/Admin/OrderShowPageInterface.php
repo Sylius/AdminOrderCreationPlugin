@@ -11,4 +11,6 @@ interface OrderShowPageInterface extends ShowPageInterface
     public function hasPaymentLink(): bool;
 
     public function hasOrderPriceValidationMessage(string $message): bool;
+
+    public function hasUnitPriceValidationMessage(string $productName, string $message): bool;
 }

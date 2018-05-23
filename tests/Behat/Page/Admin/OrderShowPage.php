@@ -26,4 +26,11 @@ final class OrderShowPage extends ShowPage implements OrderShowPageInterface
 
         return $validationError->getText() === $message;
     }
+
+    public function hasUnitPriceValidationMessage(string $productName, string $message): bool
+    {
+        $item = $this->getDocument()->find('css', sprintf('table tr:contains("%s")', $productName));
+
+
+    }
 }

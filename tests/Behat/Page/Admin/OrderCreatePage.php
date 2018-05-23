@@ -84,6 +84,13 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
         $this->getDocument()->fillField('Order price', $orderPrice);
     }
 
+    public function specifyUnitPrice(int $itemProductId, string $unitPrice): void
+    {
+        $item = $this->getItemWithProductSelected($itemProductId);
+
+        $item->fillField('Unit price', $unitPrice);
+    }
+
     public function placeOrder(): void
     {
         $this->getDocument()->pressButton('Create');

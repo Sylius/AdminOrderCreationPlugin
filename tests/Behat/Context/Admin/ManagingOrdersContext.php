@@ -141,6 +141,17 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
+     * @When I specify :product price as :price
+     */
+    public function specifyUnitPriceAs(ProductInterface $product, string $price): void
+    {
+        $this->orderCreatePage->specifyUnitPrice(
+            $product->getId(),
+            str_replace(['$', '€', '£'], '', $price)
+        );
+    }
+
+    /**
      * @When I place this order
      */
     public function placeThisOrder(): void
@@ -165,6 +176,16 @@ final class ManagingOrdersContext implements Context
     public function shouldBeNotifiedThatOrderPriceCannotBeBelow0(): void
     {
         Assert::true($this->orderCreatePage->hasOrderPriceValidationMessage('Order price cannot be below 0'));
+    }
+
+    /**
+     * @Then I should be notified that :product price cannot be below 0
+     */
+    public function shouldBeNotifiedThatProductPriceCannotBeBelow0(ProductInterface $product): void
+    {
+        Assert::true(
+            $this->orderShowPage->hasUnitPriceValidationMessage($product->getName(), 'Price cannot be below 0')
+        );
     }
 
     /**
