@@ -70,6 +70,11 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
         $paymentsCollection->selectFieldOption('Payment Method', $paymentMethodName);
     }
 
+    public function specifyOrderPrice(string $orderPrice): void
+    {
+        $this->getDocument()->fillField('Order price', $orderPrice);
+    }
+
     public function placeOrder(): void
     {
         $this->getDocument()->pressButton('Create');

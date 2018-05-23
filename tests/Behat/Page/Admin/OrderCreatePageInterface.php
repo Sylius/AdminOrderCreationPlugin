@@ -21,5 +21,7 @@ interface OrderCreatePageInterface extends CreatePageInterface
 
     public function selectPaymentMethod(string $paymentMethodName): void;
 
+    public function specifyOrderPrice(string $orderPrice): void;
+
     public function placeOrder(): void;
 }

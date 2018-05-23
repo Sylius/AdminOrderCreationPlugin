@@ -125,6 +125,14 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
+     * @When I specify order price as :price
+     */
+    public function specifyOrderPriceAs(int $price): void
+    {
+        $this->orderCreatePage->specifyOrderPrice(str_replace(['$', '€', '£'], '', $price));
+    }
+
+    /**
      * @When I place this order
      */
     public function placeThisOrder(): void
@@ -139,6 +147,17 @@ final class ManagingOrdersContext implements Context
     {
         $this->notificationChecker->checkNotification(
             'Order has been successfully created',
+            NotificationType::success()
+        );
+    }
+
+    /**
+     * @Then I should be notified that order price cannot be below 0
+     */
+    public function shouldBeNotifiedThatOrderPriceCannotBeBelow0(): void
+    {
+        $this->notificationChecker->checkNotification(
+            'Order price cannot be below 0',
             NotificationType::success()
         );
     }
