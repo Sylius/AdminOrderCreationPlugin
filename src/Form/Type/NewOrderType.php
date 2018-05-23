@@ -49,6 +49,7 @@ final class NewOrderType extends AbstractResourceType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
+                'required' => false,
             ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
                 $event

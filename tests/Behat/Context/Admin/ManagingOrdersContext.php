@@ -156,10 +156,7 @@ final class ManagingOrdersContext implements Context
      */
     public function shouldBeNotifiedThatOrderPriceCannotBeBelow0(): void
     {
-        $this->notificationChecker->checkNotification(
-            'Order price cannot be below 0',
-            NotificationType::success()
-        );
+        Assert::true($this->orderCreatePage->hasOrderPriceValidationMessage('Order price cannot be below 0'));
     }
 
     /**

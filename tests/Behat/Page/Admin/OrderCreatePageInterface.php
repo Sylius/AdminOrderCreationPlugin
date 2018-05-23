@@ -24,4 +24,6 @@ interface OrderCreatePageInterface extends CreatePageInterface
     public function specifyOrderPrice(string $orderPrice): void;
 
     public function placeOrder(): void;
+
+    public function hasOrderPriceValidationMessage(string $message): bool;
 }

@@ -80,6 +80,18 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
         $this->getDocument()->pressButton('Create');
     }
 
+    public function hasOrderPriceValidationMessage(string $message): bool
+    {
+        $customTotalElement = $this->getDocument()->find('css', '.field:contains("Order price")');
+        $validationError = $customTotalElement->find('css', '.sylius-validation-error');
+
+        if (null === $validationError) {
+            return false;
+        }
+
+        return $validationError->getText() === $message;
+    }
+
     private function fillAddressData(NodeElement $addressForm, AddressInterface $address): void
     {
         $addressForm->fillField('First name', $address->getFirstName());
