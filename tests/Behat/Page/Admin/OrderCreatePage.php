@@ -79,6 +79,8 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
 
     public function specifyOrderPrice(string $orderPrice): void
     {
+        $this->clickOnTabAndWait('Custom total');
+
         $this->getDocument()->fillField('Order price', $orderPrice);
     }
 
@@ -89,6 +91,8 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
 
     public function hasOrderPriceValidationMessage(string $message): bool
     {
+        $this->clickOnTabAndWait('Custom total');
+
         $customTotalElement = $this->getDocument()->find('css', '.field:contains("Order price")');
         $validationError = $customTotalElement->find('css', '.sylius-validation-error');
 
