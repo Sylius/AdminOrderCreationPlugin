@@ -109,6 +109,14 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
+     * @When /^I specify this order billing (address as "[^"]+", "[^"]+", "[^"]+", "[^"]+" for "[^"]+")$/
+     */
+    public function specifyTheBillingAddressAs(AddressInterface $address): void
+    {
+        $this->orderCreatePage->specifyBillingAddress($address);
+    }
+
+    /**
      * @When I select :shippingMethodName shipping method
      */
     public function selectShippingMethod(string $shippingMethodName): void
@@ -175,5 +183,31 @@ final class ManagingOrdersContext implements Context
             'paymentState' => 'Awaiting payment',
             'shippingState' => 'Ready',
         ]));
+    }
+
+    /**
+     * @Then this order shipping address should be :customerName, :street, :postcode, :city, :countryName
+     */
+    public function thisOrderShippingAddressShouldBe(
+        string $customerName,
+        string $street,
+        string $postcode,
+        string $city,
+        string $countryName
+    ): void {
+        Assert::true($this->orderShowPage->hasShippingAddress($customerName, $street, $postcode, $city, $countryName));
+    }
+
+    /**
+     * @Then this order billing address should be :customerName, :street, :postcode, :city, :countryName
+     */
+    public function thisOrderBillingAddressShouldBe(
+        string $customerName,
+        string $street,
+        string $postcode,
+        string $city,
+        string $countryName
+    ): void {
+        Assert::true($this->orderShowPage->hasBillingAddress($customerName, $street, $postcode, $city, $countryName));
     }
 }

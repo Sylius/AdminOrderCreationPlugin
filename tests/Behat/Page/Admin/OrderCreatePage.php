@@ -12,22 +12,13 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
 {
     public function addProduct(string $productName): void
     {
-        $this->getDocument()->clickLink('Add');
-
-        $item = $this->getLastOrderItem();
+        $item = $this->addItemAndWaitForIt();
         $item->selectFieldOption('Variant', $productName);
     }
 
     public function addMultipleProducts(string $productName, int $quantity): void
     {
-        $itemsCount = $this->countItems();
-        $this->getDocument()->clickLink('Add');
-
-        $this->getDocument()->waitFor(1, function () use ($itemsCount) {
-            return $this->countItems() > $itemsCount;
-        });
-
-        $item = $this->getLastOrderItem();
+        $item = $this->addItemAndWaitForIt();
         $item->selectFieldOption('Variant', $productName);
         $item->fillField('Quantity', $quantity);
     }
@@ -42,6 +33,14 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
     {
         $this->fillAddressData(
             $this->getDocument()->find('css', 'div[id*="shippingAddress"]'),
+            $address
+        );
+    }
+
+    public function specifyBillingAddress(AddressInterface $address): void
+    {
+        $this->fillAddressData(
+            $this->getDocument()->find('css', 'div[id*="billingAddress"]'),
             $address
         );
     }
@@ -85,14 +84,21 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
         $addressForm->fillField('Postcode', $address->getPostcode());
     }
 
+    private function addItemAndWaitForIt(): NodeElement
+    {
+        $itemsCount = $this->countItems();
+        $this->getDocument()->clickLink('Add');
+
+        $this->getDocument()->waitFor(10, function () use ($itemsCount) {
+            return $this->countItems() > $itemsCount;
+        });
+
+        return $this->getDocument()->find('css', '#items [data-form-collection="item"]:last-child');
+    }
+
     private function countItems(): int
     {
         return count($this->getDocument()->findAll('css', '#items [data-form-collection="item"]'));
-    }
-
-    private function getLastOrderItem(): NodeElement
-    {
-        return $this->getDocument()->find('css', '#items [data-form-collection="item"]:last-child');
     }
 
     private function getItemWithProductSelected(int $productId): NodeElement

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sylius\AdminOrderCreationPlugin\EventListener;
 
 use Doctrine\Common\Persistence\ObjectManager;

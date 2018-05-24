@@ -17,6 +17,8 @@ interface OrderCreatePageInterface extends CreatePageInterface
 
     public function specifyShippingAddress(AddressInterface $address): void;
 
+    public function specifyBillingAddress(AddressInterface $address): void;
+
     public function selectShippingMethod(string $shippingMethodName): void;
 
     public function selectPaymentMethod(string $paymentMethodName): void;
