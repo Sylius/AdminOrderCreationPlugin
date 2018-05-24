@@ -1,0 +1,4 @@
+sylius_admin_order_creation:
+    order:
+        custom_total:
+            min: 'Order price cannot be below 0'

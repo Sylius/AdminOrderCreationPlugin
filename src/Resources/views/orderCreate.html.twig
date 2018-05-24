@@ -27,6 +27,8 @@
         {{ form_row(form.billingAddress) }}
         {{ form_row(form.shipments) }}
         {{ form_row(form.payments) }}
+        <hr/>
+        {{ form_row(form.customTotal) }}
 
         {% include '@SyliusUi/Form/Buttons/_create.html.twig' with {'paths': {'cancel': path(configuration.getRouteName('index'), configuration.vars.route.parameters|default({}))}} %}
 
