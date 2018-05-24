@@ -40,7 +40,7 @@ final class OrderItemType extends AbstractResourceType
                 'class' => ProductVariant::class,
                 'label' => 'sylius.ui.variant',
             ])
-            ->add('unitPrice', MoneyType::class, [
+            ->add('customUnitPrice', MoneyType::class, [
                 'label' => 'sylius.ui.unit_price',
                 //temporary solution
                 'currency' => 'USD',

@@ -66,5 +66,13 @@
             <argument type="service" id="payum" />
             <argument type="string">sylius_shop_order_after_pay</argument>
         </service>
+
+        <service
+            id="sylius.order_processing.order_prices_recalculator"
+            class="Sylius\AdminOrderCreationPlugin\Recalculator\OrderPricesRecalculator"
+        >
+            <argument type="service" id="sylius.calculator.product_variant_price" />
+            <tag name="sylius.order_processor" priority="40"/>
+        </service>
     </services>
 </container>
