@@ -24,18 +24,14 @@
             <div id="items" class="content active">
                 {{ form_row(form.items) }}
             </div>
-            <div class="title"><i class="dropdown icon"></i> {{ 'sylius.ui.coupon'|trans }}</div>
-            <div id="items" class="content">
-                {{ form_row(form.promotionCoupon) }}
-            </div>
-            <div class="title"><i class="dropdown icon"></i> {{ 'sylius.ui.shipping_address'|trans }} & {{ 'sylius.ui.billing_address'|trans }}</div>
+            <div class="title"><i class="dropdown icon"></i> {{ 'sylius.ui.shipping_address'|trans }} &amp; {{ 'sylius.ui.billing_address'|trans }}</div>
             <div class="content">
                 <div class="ui horizontal segments">
                     <div class="ui segment">{{ form_row(form.shippingAddress) }}</div>
                     <div class="ui segment">{{ form_row(form.billingAddress) }}</div>
                 </div>
             </div>
-            <div class="title"><i class="dropdown icon"></i> {{ 'sylius.ui.shipments'|trans }} & {{ 'sylius.ui.payments'|trans }}</div>
+            <div class="title"><i class="dropdown icon"></i> {{ 'sylius.ui.shipments'|trans }} &amp; {{ 'sylius.ui.payments'|trans }}</div>
             <div class="content">
                 <div class="ui horizontal segments">
                     <div class="ui segment">{{ form_row(form.shipments) }}</div>
