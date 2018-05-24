@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Sylius\AdminOrderCreationPlugin\Form\Type;
 
+use Sylius\Bundle\MoneyBundle\Form\Type\MoneyType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Sylius\Component\Core\Model\ProductVariant;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\DataMapperInterface;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class OrderItemType extends AbstractResourceType
 {
@@ -37,6 +39,11 @@ final class OrderItemType extends AbstractResourceType
             ->add('variant', EntityType::class, [
                 'class' => ProductVariant::class,
                 'label' => 'sylius.ui.variant',
+            ])
+            ->add('unitPrice', MoneyType::class, [
+                'label' => 'sylius.ui.unit_price',
+                //temporary solution
+                'currency' => 'USD',
             ])
             ->setDataMapper($this->dataMapper)
         ;
