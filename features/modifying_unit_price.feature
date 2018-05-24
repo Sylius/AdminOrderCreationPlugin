@@ -18,10 +18,10 @@ Feature: Modifying unit price
         When I create a new order for "jon.snow@the-wall.com"
         And I add 5 of "Stark Coat" to this order
         And I add 2 of "Lannister Banner" to this order
+        And I specify item with "Stark Coat" price as "$5"
         And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
         And I select "Free" shipping method
         And I select "Cash on Delivery" payment method
-        And I specify "Stark Coat" price as "$5"
         And I place this order
         Then I should be notified that order has been successfully created
         And the order's total should be "$45.00"
@@ -30,9 +30,9 @@ Feature: Modifying unit price
     Scenario: Not being able to set order item unit price below 0
         When I create a new order for "jon.snow@the-wall.com"
         And I add 5 of "Stark Coat" to this order
+        And I specify item with "Stark Coat" price as "-$5"
         And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
         And I select "Free" shipping method
         And I select "Cash on Delivery" payment method
-        And I specify "Stark Coat" price as "-$5"
         And I place this order
-        Then I should be notified that "Stark Coat" price cannot be below 0
+        Then I should be notified that item with "Stark Coat" price cannot be below 0

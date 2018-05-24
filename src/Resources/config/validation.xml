@@ -10,4 +10,13 @@
             </constraint>
         </property>
     </class>
+    <class name="Sylius\AdminOrderCreationPlugin\Entity\OrderItem">
+        <property name="customUnitPrice">
+            <constraint name="Range">
+                <option name="min">0</option>
+                <option name="minMessage">sylius_admin_order_creation.order_item.custom_unit_price.min</option>
+                <option name="groups">sylius</option>
+            </constraint>
+        </property>
+    </class>
 </constraint-mapping>

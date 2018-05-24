@@ -6,11 +6,11 @@ namespace spec\Sylius\AdminOrderCreationPlugin\Recalculator;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
+use Sylius\AdminOrderCreationPlugin\Entity\OrderInterface;
 use Sylius\AdminOrderCreationPlugin\Entity\OrderItem;
 use Sylius\Component\Core\Calculator\ProductVariantPriceCalculatorInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
-use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Customer\Model\CustomerGroupInterface;
 use Sylius\Component\Order\Model\OrderInterface as BaseOrderInterface;
@@ -82,7 +82,7 @@ final class OrderPricesRecalculatorSpec extends ObjectBehavior
     function it_throws_exception_if_passed_order_is_not_a_core_order(BaseOrderInterface $order): void
     {
         $this
-            ->shouldThrow(\InvalidArgumentException::class)
+            ->shouldThrow(\Exception::class)
             ->during('process', [$order])
         ;
     }

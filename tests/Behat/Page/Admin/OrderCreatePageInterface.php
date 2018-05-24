@@ -30,4 +30,6 @@ interface OrderCreatePageInterface extends CreatePageInterface
     public function placeOrder(): void;
 
     public function hasOrderPriceValidationMessage(string $message): bool;
+
+    public function hasUnitPriceValidationMessage(int $productId, string $message): bool;
 }
