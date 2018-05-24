@@ -19,10 +19,10 @@ Feature: Modifying order total
         And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
         And I select "Free" shipping method
         And I select "Cash on Delivery" payment method
-        And I specify order price as "$200"
+        And I specify order price as "$123.45"
         And I place this order
         Then I should be notified that order has been successfully created
-        And the order's total should be "$200.00"
+        And the order's total should be "$123.45"
 
     @ui @javascript
     Scenario: Not being able to place order with price below 0
