@@ -4,7 +4,7 @@ namespace Sylius\AdminOrderCreationPlugin\Entity;
 
 use Sylius\Component\Core\Model\OrderItem as BaseItemOrder;
 
-class OrderItem extends BaseItemOrder
+class OrderItem extends BaseItemOrder implements OrderItemInterface
 {
     /** @var int|null */
     private $customUnitPrice;
