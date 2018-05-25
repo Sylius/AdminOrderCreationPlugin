@@ -84,6 +84,13 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
         $this->getDocument()->fillField('Order price', $orderPrice);
     }
 
+    public function specifyUnitPrice(int $itemProductId, string $unitPrice): void
+    {
+        $item = $this->getItemWithProductSelected($itemProductId);
+
+        $item->fillField('Unit price', $unitPrice);
+    }
+
     public function placeOrder(): void
     {
         $this->getDocument()->pressButton('Create');
@@ -94,13 +101,15 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
         $this->clickOnTabAndWait('Custom total');
 
         $customTotalElement = $this->getDocument()->find('css', '.field:contains("Order price")');
-        $validationError = $customTotalElement->find('css', '.sylius-validation-error');
 
-        if (null === $validationError) {
-            return false;
-        }
+        return null !== $customTotalElement->find('css', sprintf('.sylius-validation-error:contains("%s")', $message));
+    }
 
-        return $validationError->getText() === $message;
+    public function hasUnitPriceValidationMessage(int $productId, string $message): bool
+    {
+        $item = $this->getItemWithProductSelected($productId);
+
+        return null !== $item->find('css', sprintf('.sylius-validation-error:contains("%s")', $message));
     }
 
     private function fillAddressData(NodeElement $addressForm, AddressInterface $address): void

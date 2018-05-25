@@ -26,3 +26,6 @@ sylius_order:
         order:
             classes:
                 model: Sylius\AdminOrderCreationPlugin\Entity\Order
+        order_item:
+            classes:
+                model: Sylius\AdminOrderCreationPlugin\Entity\OrderItem
