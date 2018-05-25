@@ -19,16 +19,30 @@
     <div class="ui segment">
         {{ form_start(form, {'action': path('sylius_admin_order_creation_order_create', { 'customerEmail': app.request.attributes.get('customerEmail') }), 'attr': {'class': 'ui loadable form', 'novalidate': 'novalidate'}}) }}
 
-        <div id="items">
-            {{ form_row(form.items) }}
+        <div class="ui styled fluid accordion">
+            <div class="title active"><i class="dropdown icon"></i> {{ 'sylius.ui.items'|trans }}</div>
+            <div id="items" class="content active">
+                {{ form_row(form.items) }}
+            </div>
+            <div class="title"><i class="dropdown icon"></i> {{ 'sylius.ui.shipping_address'|trans }} &amp; {{ 'sylius.ui.billing_address'|trans }}</div>
+            <div class="content">
+                <div class="ui horizontal segments">
+                    <div class="ui segment">{{ form_row(form.shippingAddress) }}</div>
+                    <div class="ui segment">{{ form_row(form.billingAddress) }}</div>
+                </div>
+            </div>
+            <div class="title"><i class="dropdown icon"></i> {{ 'sylius.ui.shipments'|trans }} &amp; {{ 'sylius.ui.payments'|trans }}</div>
+            <div class="content">
+                <div class="ui horizontal segments">
+                    <div class="ui segment">{{ form_row(form.shipments) }}</div>
+                    <div class="ui segment">{{ form_row(form.payments) }}</div>
+                </div>
+            </div>
+            <div class="title"><i class="dropdown icon"></i> {{ 'sylius_admin_order_creation.ui.custom_total'|trans }}</div>
+            <div class="content">
+                {{ form_row(form.customTotal) }}
+            </div>
         </div>
-        {{ form_row(form.promotionCoupon) }}
-        {{ form_row(form.shippingAddress) }}
-        {{ form_row(form.billingAddress) }}
-        {{ form_row(form.shipments) }}
-        {{ form_row(form.payments) }}
-        <hr/>
-        {{ form_row(form.customTotal) }}
 
         {% include '@SyliusUi/Form/Buttons/_create.html.twig' with {'paths': {'cancel': path(configuration.getRouteName('index'), configuration.vars.route.parameters|default({}))}} %}
 

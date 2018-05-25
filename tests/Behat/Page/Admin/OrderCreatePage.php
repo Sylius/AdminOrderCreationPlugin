@@ -12,12 +12,16 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
 {
     public function addProduct(string $productName): void
     {
+        $this->clickOnTabAndWait('Items');
+
         $item = $this->addItemAndWaitForIt();
         $item->selectFieldOption('Variant', $productName);
     }
 
     public function addMultipleProducts(string $productName, int $quantity): void
     {
+        $this->clickOnTabAndWait('Items');
+
         $item = $this->addItemAndWaitForIt();
         $item->selectFieldOption('Variant', $productName);
         $item->fillField('Quantity', $quantity);
@@ -31,6 +35,8 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
 
     public function specifyShippingAddress(AddressInterface $address): void
     {
+        $this->clickOnTabAndWait('Shipping address & Billing address');
+
         $this->fillAddressData(
             $this->getDocument()->find('css', 'div[id*="shippingAddress"]'),
             $address
@@ -47,6 +53,8 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
 
     public function selectShippingMethod(string $shippingMethodName): void
     {
+        $this->clickOnTabAndWait('Shipments & Payments');
+
         $shipmentsCollection = $this->getDocument()->find('css', '#sylius_admin_order_creation_new_order_shipments');
 
         $shipmentsCollection->clickLink('Add');
@@ -71,6 +79,8 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
 
     public function specifyOrderPrice(string $orderPrice): void
     {
+        $this->clickOnTabAndWait('Custom total');
+
         $this->getDocument()->fillField('Order price', $orderPrice);
     }
 
@@ -81,6 +91,8 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
 
     public function hasOrderPriceValidationMessage(string $message): bool
     {
+        $this->clickOnTabAndWait('Custom total');
+
         $customTotalElement = $this->getDocument()->find('css', '.field:contains("Order price")');
         $validationError = $customTotalElement->find('css', '.sylius-validation-error');
 
@@ -106,7 +118,7 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
         $itemsCount = $this->countItems();
         $this->getDocument()->clickLink('Add');
 
-        $this->getDocument()->waitFor(10, function () use ($itemsCount) {
+        $this->getDocument()->waitFor(1, function () use ($itemsCount) {
             return $this->countItems() > $itemsCount;
         });
 
@@ -128,5 +140,24 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
         }
 
         throw new \Exception(sprintf('There is no item with product with id "%d" selected', $productId));
+    }
+
+    private function clickOnTabAndWait(string $tabName): void
+    {
+        $tab = $this->getDocument()->find('css', sprintf('.title:contains("%s")', $tabName));
+
+        if ($tab->hasClass('active')) {
+            return;
+        }
+
+        $tab->click();
+
+        $this->getDocument()->waitFor(1, function () use ($tabName) {
+            return $this
+                ->getDocument()
+                ->find('css', sprintf('.title:contains("%s") + .content', $tabName))
+                ->hasClass('active')
+            ;
+        });
     }
 }
