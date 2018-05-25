@@ -15,7 +15,10 @@ final class NewOrderCustomerPage extends SymfonyPage implements NewOrderCustomer
 
     public function selectCustomer(string $customerEmail): void
     {
-        $this->getDocument()->selectFieldOption('Customer', $customerEmail);
+        $this
+            ->getDocument()
+            ->selectFieldOption('sylius_admin_order_creation_new_order_customer_select_customer', $customerEmail)
+        ;
     }
 
     public function next(): void

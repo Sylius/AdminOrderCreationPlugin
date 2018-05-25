@@ -4,14 +4,25 @@
 {% form_theme createCustomerForm '@SyliusAdmin/Form/theme.html.twig' %}
 
 {% block content %}
-    {{ form_start(selectCustomerForm)}}
-        {{ form_row(selectCustomerForm.customer) }}
-        <button class="ui primary button" type="submit">Next</button>
-    {{ form_end(selectCustomerForm) }}
-    {{ form_start(createCustomerForm)}}
-        {{ form_row(createCustomerForm.customer) }}
-        <button class="ui positive button" type="submit"><i class="icon plus"></i>Create new</button>
-    {{ form_end(createCustomerForm) }}
+    <div class="ui center aligned basic segment">
+        {{ form_start(selectCustomerForm)}}
+        <div class="ui left icon action input">
+            {{ form_widget(selectCustomerForm.customer) }}
+            <button class="ui blue submit button">{{ 'sylius.ui.next'|trans }}</button>
+        </div>
+        {{ form_end(selectCustomerForm) }}
+        <div class="ui horizontal divider">
+            {{ 'sylius.ui.or'|trans }}
+        </div>
+        {{ form_start(createCustomerForm)}}
+        <div class="ui left icon action input">
+            {{ form_widget(createCustomerForm.customer, {'attr': {'placeholder': 'sylius_admin_order_creation.ui.new_customer_email'|trans}}) }}
+            <button class="ui green right labeled icon button">
+                <i class="plus icon"></i> {{ 'sylius_admin_order_creation.ui.create_new'|trans }}
+            </button>
+        </div>
+        {{ form_end(createCustomerForm) }}
+    </div>
 {% endblock %}
 
 {% block javascripts %}
