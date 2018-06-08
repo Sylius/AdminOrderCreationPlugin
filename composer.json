@@ -6,7 +6,7 @@
     "require": {
         "php": "^7.1",
 
-        "sylius/sylius": "^1.1",
+        "sylius/sylius": "^1.2",
         "friendsofsymfony/jsrouting-bundle": "^2.2"
     },
     "require-dev": {
@@ -45,5 +45,6 @@
     },
     "config": {
         "bin-dir": "bin"
-    }
+    },
+    "minimum-stability": "RC"
 }
