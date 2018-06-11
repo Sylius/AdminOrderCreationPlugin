@@ -35,7 +35,7 @@ sylius_admin_order_creation_ajax_customer:
                 arguments: $email
 
 sylius_admin_order_creation_ajax_customer_by_email:
-    path: /customer-serach-by-code
+    path: /customer-search-by-code
     methods: [GET]
     defaults:
         _controller: sylius.controller.customer:indexAction
