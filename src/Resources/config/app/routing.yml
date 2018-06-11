@@ -31,7 +31,8 @@ sylius_admin_order_creation_ajax_customer:
         _sylius:
             permission: true
             repository:
-                method: findAll
+                method: findByEmailPart
+                arguments: $email
 
 sylius_admin_order_creation_ajax_customer_by_email:
     path: /customer-serach-by-code

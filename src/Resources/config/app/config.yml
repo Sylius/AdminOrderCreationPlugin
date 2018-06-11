@@ -29,3 +29,9 @@ sylius_order:
         order_item:
             classes:
                 model: Sylius\AdminOrderCreationPlugin\Entity\OrderItem
+
+sylius_customer:
+    resources:
+        customer:
+            classes:
+                repository: Sylius\AdminOrderCreationPlugin\Doctrine\ORM\CustomerRepository

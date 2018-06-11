@@ -31,7 +31,7 @@ final class CustomerAutocompleteChoiceType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['remote_criteria_type'] = 'contains';
-        $view->vars['remote_criteria_name'] = 'phrase';
+        $view->vars['remote_criteria_name'] = 'email';
     }
 
     /**
