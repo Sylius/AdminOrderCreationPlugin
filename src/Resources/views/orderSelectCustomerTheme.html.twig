@@ -1,0 +1,8 @@
+{% extends '@SyliusAdmin/Form/theme.html.twig' %}
+
+{% block sylius_customer_autocomplete_choice_row %}
+    {{ form_row(form, {
+        'remote_url': path('sylius_admin_order_creation_ajax_customer'),
+        'load_edit_url': path('sylius_admin_order_creation_ajax_customer_by_email')
+    }) }}
+{% endblock %}
