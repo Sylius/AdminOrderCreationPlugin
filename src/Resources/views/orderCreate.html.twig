@@ -50,18 +50,3 @@
         {{ form_end(form, {'render_rest': false}) }}
     </div>
 {% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-
-    <script>
-        $(document).ready(function() {
-            $('[data-form-collection="add"]').on('click', function() {
-                setTimeout(function() {
-                    console.log('autocomplete');
-                    $('.sylius-autocomplete').autoComplete();
-                }, 500);
-            });
-        });
-    </script>
-{% endblock %}

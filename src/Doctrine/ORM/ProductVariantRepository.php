@@ -6,7 +6,7 @@ namespace Sylius\AdminOrderCreationPlugin\Doctrine\ORM;
 
 use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductVariantRepository as BaseProductVariantRepository;
 
-final class ProductVariantRepository extends BaseProductVariantRepository
+final class ProductVariantRepository extends BaseProductVariantRepository implements ProductVariantRepositoryInterface
 {
     public function findByPhrase(string $phrase, string $locale): array
     {
