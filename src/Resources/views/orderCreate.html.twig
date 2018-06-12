@@ -4,7 +4,7 @@
 
 {% block title %}{{ header|trans }} {{ parent() }}{% endblock %}
 
-{% form_theme form '@SyliusAdmin/Form/theme.html.twig' %}
+{% form_theme form '@SyliusAdminOrderCreationPlugin/orderItemCollectionTheme.html.twig' %}
 
 {% block content %}
     <div class="ui stackable two column grid">
@@ -49,4 +49,19 @@
         {{ form_row(form._token) }}
         {{ form_end(form, {'render_rest': false}) }}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        $(document).ready(function() {
+            $('[data-form-collection="add"]').on('click', function() {
+                setTimeout(function() {
+                    console.log('autocomplete');
+                    $('.sylius-autocomplete').autoComplete();
+                }, 500);
+            });
+        });
+    </script>
 {% endblock %}
