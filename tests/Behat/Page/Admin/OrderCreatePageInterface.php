@@ -13,7 +13,7 @@ interface OrderCreatePageInterface extends CreatePageInterface
 
     public function addMultipleProducts(string $productName, int $quantity): void;
 
-    public function removeProduct(int $productId): void;
+    public function removeProduct(string $productName): void;
 
     public function specifyShippingAddress(AddressInterface $address): void;
 
@@ -25,11 +25,11 @@ interface OrderCreatePageInterface extends CreatePageInterface
 
     public function specifyOrderPrice(string $orderPrice): void;
 
-    public function specifyUnitPrice(int $itemProductId, string $unitPrice): void;
+    public function specifyUnitPrice(string $itemProductName, string $unitPrice): void;
 
     public function placeOrder(): void;
 
     public function hasOrderPriceValidationMessage(string $message): bool;
 
-    public function hasUnitPriceValidationMessage(int $productId, string $message): bool;
+    public function hasUnitPriceValidationMessage(string $productName, string $message): bool;
 }

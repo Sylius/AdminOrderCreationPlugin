@@ -97,7 +97,7 @@ final class ManagingOrdersContext implements Context
      */
     public function removeProductFromThisOrder(ProductInterface $product): void
     {
-        $this->orderCreatePage->removeProduct($product->getId());
+        $this->orderCreatePage->removeProduct($product->getName());
     }
 
     /**
@@ -146,7 +146,7 @@ final class ManagingOrdersContext implements Context
     public function specifyItemWithProductUnitPriceAs(ProductInterface $product, string $price): void
     {
         $this->orderCreatePage->specifyUnitPrice(
-            $product->getId(),
+            $product->getName(),
             str_replace(['$', '€', '£'], '', $price)
         );
     }
@@ -184,7 +184,7 @@ final class ManagingOrdersContext implements Context
     public function shouldBeNotifiedThatItemWithProductPriceCannotBeBelow0(ProductInterface $product): void
     {
         Assert::true(
-            $this->orderCreatePage->hasUnitPriceValidationMessage($product->getId(), 'Price cannot be below 0')
+            $this->orderCreatePage->hasUnitPriceValidationMessage($product->getName(), 'Price cannot be below 0')
         );
     }
 

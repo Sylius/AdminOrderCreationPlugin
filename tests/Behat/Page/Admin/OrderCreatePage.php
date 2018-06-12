@@ -41,13 +41,16 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
         $this->clickOnTabAndWait('Items');
 
         $item = $this->addItemAndWaitForIt();
-        $item->selectFieldOption('Variant', $productName);
+
+        $this->autoCompleteSelector->selectOption($item, $productName);
         $item->fillField('Quantity', $quantity);
     }
 
-    public function removeProduct(int $productId): void
+    public function removeProduct(string $productName): void
     {
-        $item = $this->getItemWithProductSelected($productId);
+        $item = $this->getItemWithProductSelected($productName);
+        $item->focus();
+
         $item->clickLink('Delete');
     }
 
@@ -102,9 +105,9 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
         $this->getDocument()->fillField('Order price', $orderPrice);
     }
 
-    public function specifyUnitPrice(int $itemProductId, string $unitPrice): void
+    public function specifyUnitPrice(string $itemProductName, string $unitPrice): void
     {
-        $item = $this->getItemWithProductSelected($itemProductId);
+        $item = $this->getItemWithProductSelected($itemProductName);
 
         $item->fillField('Unit price', $unitPrice);
     }
@@ -123,9 +126,9 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
         return null !== $customTotalElement->find('css', sprintf('.sylius-validation-error:contains("%s")', $message));
     }
 
-    public function hasUnitPriceValidationMessage(int $productId, string $message): bool
+    public function hasUnitPriceValidationMessage(string $productName, string $message): bool
     {
-        $item = $this->getItemWithProductSelected($productId);
+        $item = $this->getItemWithProductSelected($productName);
 
         return null !== $item->find('css', sprintf('.sylius-validation-error:contains("%s")', $message));
     }
@@ -157,16 +160,18 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
         return count($this->getDocument()->findAll('css', '#items [data-form-collection="item"]'));
     }
 
-    private function getItemWithProductSelected(int $productId): NodeElement
+    private function getItemWithProductSelected(string $productName): NodeElement
     {
         /** @var NodeElement $item */
         foreach ($this->getDocument()->findAll('css', '#items [data-form-collection="item"]') as $item) {
-            if ((int) $item->find('css', 'select')->getValue() === $productId) {
+            $selectedProduct = $item->find('css', '.sylius-autocomplete .text')->getText();
+
+            if (strpos($selectedProduct, $productName) !== false) {
                 return $item;
             }
         }
 
-        throw new \Exception(sprintf('There is no item with product with id "%d" selected', $productId));
+        throw new \Exception(sprintf('There is no item with product with name "%d" selected', $productName));
     }
 
     private function clickOnTabAndWait(string $tabName): void
