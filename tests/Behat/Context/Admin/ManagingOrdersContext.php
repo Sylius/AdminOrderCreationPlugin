@@ -32,6 +32,9 @@ final class ManagingOrdersContext implements Context
     /** @var OrderPreviewPageInterface */
     private $orderPreviewPage;
 
+    /** @var OrderPreviewPageInterface */
+    private $orderPreviewPage;
+
     /** @var OrderShowPageInterface */
     private $orderShowPage;
 
@@ -53,6 +56,7 @@ final class ManagingOrdersContext implements Context
     public function __construct(
         OrderIndexPageInterface $orderIndexPage,
         NewOrderCustomerPageInterface $newOrderCustomerPage,
+        OrderCreatePageInterface $orderCreatePage,
         OrderPreviewPageInterface $orderPreviewPage,
         OrderShowPageInterface $orderShowPage,
         ReorderPageInterface $reorderPage,
@@ -63,6 +67,7 @@ final class ManagingOrdersContext implements Context
     ) {
         $this->orderIndexPage = $orderIndexPage;
         $this->newOrderCustomerPage = $newOrderCustomerPage;
+        $this->orderCreatePage = $orderCreatePage;
         $this->orderPreviewPage = $orderPreviewPage;
         $this->orderShowPage = $orderShowPage;
         $this->reorderPage = $reorderPage;
@@ -311,6 +316,7 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
+<<<<<<< HEAD
      * @Then this order shipping method should be :shippingMethodName
      */
     public function thisOrderShippingMethodShouldBe(string $shippingMethodName): void
