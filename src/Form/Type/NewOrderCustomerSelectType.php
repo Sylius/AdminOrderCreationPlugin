@@ -12,7 +12,7 @@ final class NewOrderCustomerSelectType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('customer', CustomerAutoCompleteChoiceType::class, [
+            ->add('customer', CustomerAutocompleteChoiceType::class, [
                 'multiple' => false,
                 'required' => true,
             ])
