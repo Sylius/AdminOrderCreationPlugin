@@ -2,12 +2,17 @@
 
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\NewOrderCustomerPage" parent="sylius.behat.symfony_page" />
+        <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\NewOrderCustomerPage" parent="sylius.behat.symfony_page">
+            <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector" />
+        </service>
         <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderCreatePage" parent="sylius.behat.page.admin.crud.create">
             <argument>sylius_admin_order_creation_create_order</argument>
+            <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector" />
         </service>
         <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderIndexPage" parent="sylius.behat.page.admin.order.index" />
-        <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderShowPage" parent="sylius.behat.page.admin.order.show" />
+        <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderShowPage" parent="sylius.behat.page.admin.order.show">
+
+        </service>
 
         <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Context\Admin\ManagingOrdersContext">
             <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderIndexPage"/>
@@ -18,5 +23,7 @@
             <argument type="service" id="__symfony__.sylius.behat.email_checker" />
             <tag name="fob.context_service" />
         </service>
+
+        <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector" />
     </services>
 </container>

@@ -5,17 +5,35 @@ declare(strict_types=1);
 namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin;
 
 use Behat\Mink\Element\NodeElement;
+use Behat\Mink\Session;
 use Sylius\Behat\Page\Admin\Crud\CreatePage;
 use Sylius\Component\Core\Model\AddressInterface;
+use Symfony\Component\Routing\RouterInterface;
+use Tests\Sylius\AdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector;
 
 final class OrderCreatePage extends CreatePage implements OrderCreatePageInterface
 {
+    /** @var AutoCompleteSelector */
+    private $autoCompleteSelector;
+
+    public function __construct(
+        Session $session,
+        array $parameters,
+        RouterInterface $router,
+        string $routeName,
+        AutoCompleteSelector $autoCompleteSelector
+    ) {
+        parent::__construct($session, $parameters, $router, $routeName);
+
+        $this->autoCompleteSelector = $autoCompleteSelector;
+    }
+
     public function addProduct(string $productName): void
     {
         $this->clickOnTabAndWait('Items');
-
         $item = $this->addItemAndWaitForIt();
-        $item->selectFieldOption('Variant', $productName);
+
+        $this->autoCompleteSelector->selectOption($item, $productName);
     }
 
     public function addMultipleProducts(string $productName, int $quantity): void
