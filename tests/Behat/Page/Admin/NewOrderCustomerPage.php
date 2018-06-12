@@ -15,9 +15,20 @@ final class NewOrderCustomerPage extends SymfonyPage implements NewOrderCustomer
 
     public function selectCustomer(string $customerEmail): void
     {
+        $this->getDocument()->find('css', '.sylius-autocomplete .icon')->click();
+
+        $this->getDocument()->waitFor(1, function() {
+            return $this
+                ->getDocument()
+                ->find('css', '.sylius-autocomplete .menu')
+                ->hasClass('visible')
+            ;
+        });
+
         $this
             ->getDocument()
-            ->selectFieldOption('sylius_admin_order_creation_new_order_customer_select_customer', $customerEmail)
+            ->find('css', sprintf('.sylius-autocomplete .menu .item:contains("%s")', $customerEmail))
+            ->click()
         ;
     }
 
