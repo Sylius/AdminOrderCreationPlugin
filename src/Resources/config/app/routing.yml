@@ -22,29 +22,9 @@ sylius_admin_order_creation_order_create:
                 method: createForCustomer
                 arguments: [$customerEmail]
 
-sylius_admin_order_creation_ajax_customer:
-    path: /customer-search
-    methods: [GET]
-    defaults:
-        _controller: sylius.controller.customer:indexAction
-        _format: json
-        _sylius:
-            permission: true
-            repository:
-                method: findByEmailPart
-                arguments: $email
-
-sylius_admin_order_creation_ajax_customer_by_email:
-    path: /customer-search-by-email
-    methods: [GET]
-    defaults:
-        _controller: sylius.controller.customer:indexAction
-        _format: json
-        _sylius:
-            permission: true
-            repository:
-                method: findBy
-                arguments: [email: $email]
+sylius_admin_order_creation_ajax:
+    prefix: /ajax
+    resource: "@SyliusAdminOrderCreationPlugin/Resources/config/app/ajax.yml"
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

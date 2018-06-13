@@ -35,3 +35,9 @@ sylius_customer:
         customer:
             classes:
                 repository: Sylius\AdminOrderCreationPlugin\Doctrine\ORM\CustomerRepository
+
+sylius_product:
+    resources:
+        product_variant:
+            classes:
+                repository: Sylius\AdminOrderCreationPlugin\Doctrine\ORM\ProductVariantRepository

@@ -4,10 +4,27 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin;
 
+use Behat\Mink\Session;
 use Sylius\Behat\Page\SymfonyPage;
+use Symfony\Component\Routing\RouterInterface;
+use Tests\Sylius\AdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector;
 
 final class NewOrderCustomerPage extends SymfonyPage implements NewOrderCustomerPageInterface
 {
+    /** @var AutoCompleteSelector */
+    private $autoCompleteSelector;
+
+    public function __construct(
+        Session $session,
+        array $parameters,
+        RouterInterface $router,
+        AutoCompleteSelector $autoCompleteSelector
+    ) {
+        parent::__construct($session, $parameters, $router);
+
+        $this->autoCompleteSelector = $autoCompleteSelector;
+    }
+
     public function getRouteName(): string
     {
         return 'sylius_admin_order_creation_select_order_customer';
@@ -15,21 +32,7 @@ final class NewOrderCustomerPage extends SymfonyPage implements NewOrderCustomer
 
     public function selectCustomer(string $customerEmail): void
     {
-        $this->getDocument()->find('css', '.sylius-autocomplete .icon')->click();
-
-        $this->getDocument()->waitFor(1, function() {
-            return $this
-                ->getDocument()
-                ->find('css', '.sylius-autocomplete .menu')
-                ->hasClass('visible')
-            ;
-        });
-
-        $this
-            ->getDocument()
-            ->find('css', sprintf('.sylius-autocomplete .menu .item:contains("%s")', $customerEmail))
-            ->click()
-        ;
+        $this->autoCompleteSelector->selectOption($this->getDocument(), $customerEmail);
     }
 
     public function next(): void
