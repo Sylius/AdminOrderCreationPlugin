@@ -6,7 +6,7 @@ namespace Sylius\AdminOrderCreationPlugin\Doctrine\ORM;
 
 use Sylius\Bundle\CoreBundle\Doctrine\ORM\CustomerRepository as BaseCustomerRepository;
 
-final class CustomerRepository extends BaseCustomerRepository
+final class CustomerRepository extends BaseCustomerRepository implements CustomerRepositoryInterface
 {
     public function findByEmailPart(string $email): array
     {
