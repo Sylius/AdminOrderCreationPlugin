@@ -4,6 +4,18 @@ sylius_admin_order_creation_select_order_customer:
     defaults:
         _controller: Sylius\AdminOrderCreationPlugin\Controller\SelectNewOrderCustomerAction
 
+sylius_admin_order_creation_order_preview:
+    path: /admin/orders/new/{customerEmail}/preview
+    methods: [GET, POST]
+    defaults:
+        _controller: sylius.controller.order:previewAction
+        _sylius:
+            form:
+                type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
+            factory:
+                method: createForCustomer
+                arguments: [$customerEmail]
+
 sylius_admin_order_creation_order_create:
     path: /admin/orders/new/{customerEmail}
     methods: [GET, POST]

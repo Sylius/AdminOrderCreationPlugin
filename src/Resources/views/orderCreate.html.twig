@@ -16,6 +16,10 @@
             {% include configuration.vars.templates.toolbar|default('@SyliusAdmin/Crud/_toolbar.html.twig') ignore missing %}
         </div>
     </div>
-
-    {% include '@SyliusAdminOrderCreationPlugin/Order/_form.html.twig' %}
+    <div class="ui segment">
+        {{ form_start(form), 'attr': {'class': 'ui loadable form', 'novalidate': 'novalidate'}}) }}
+    </div>
+    {% include '@SyliusAdminOrderCreationPlugin/Order/_form.html.twig' with {
+        'action': path('sylius_admin_order_creation_order_preview', {'customerEmail': app.request.attributes.get('customerEmail')})
+    } %}
 {% endblock %}

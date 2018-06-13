@@ -1,0 +1,16 @@
+{% extends 'SyliusAdminBundle::layout.html.twig' %}
+
+{% block title %}Order preview{% endblock %}
+
+{% form_theme form '@SyliusAdmin/Form/theme.html.twig' %}
+
+{% block content %}
+    {{ dump(order) }}
+
+    {{ form(form, {
+        'action': path('sylius_admin_order_creation_order_create', {'customerEmail': app.request.attributes.get('customerEmail')}),
+        'attr': {'style': 'display: none;', 'novalidate': 'novalidate', 'id': form.vars.id },
+        'method': 'POST'
+    }) }}
+    <button type="submit" form="{{ form.vars.name }}" class="ui button green">Confirm</button>
+{% endblock %}
