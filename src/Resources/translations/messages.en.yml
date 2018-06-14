@@ -10,4 +10,5 @@ sylius_admin_order_creation:
         create_new: 'Create new'
         custom_total: 'Custom total'
         new_customer_email: 'New customer email'
+        order_preview: 'Order preview'
         reorder: 'Reorder'

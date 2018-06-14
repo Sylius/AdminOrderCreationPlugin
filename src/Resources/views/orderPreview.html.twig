@@ -1,11 +1,89 @@
 {% extends 'SyliusAdminBundle::layout.html.twig' %}
 
+{% import '@SyliusUi/Macro/flags.html.twig' as flags %}
+
 {% block title %}Order preview{% endblock %}
 
 {% form_theme form '@SyliusAdmin/Form/theme.html.twig' %}
 
 {% block content %}
-    {{ dump(order) }}
+    <div class="ui stackable two column grid">
+        <div class="ten wide column">
+            <h1 class="ui header">
+                <i class="circular cart icon"></i>
+                <div class="content">
+                    {{ 'sylius_admin_order_creation.ui.order_preview'|trans }}
+                    <div class="sub header">
+                        <div class="ui horizontal divided list">
+                            <div class="item" id="sylius-order-currency">
+                                {{ order.currencyCode }}
+                            </div>
+                            <div class="item" id="sylius-order-state">
+                                {% include [('@SyliusAdmin/Order/Label/State' ~ '/' ~ order.state ~ '.html.twig'), '@SyliusUi/Label/_default.html.twig'] with {'value': ('sylius.ui.' ~ order.state)|trans} %}
+                            </div>
+                            <div class="item">
+                                {{ flags.fromLocaleCode(order.localeCode) }}{{ order.localeCode|locale }}
+                            </div>
+                            <div class="item">
+                                {{ 'sylius.ui.purchased_from'|trans }}
+                                <span class="ui large empty horizontal circular label" style="background-color: {{ order.channel.color }}"></span> <strong>{{ order.channel }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h1>
+        </div>
+    </div>
+    <div class="ui stackable grid">
+        <div class="twelve wide column">
+            <div class="ui segment">
+                {% include '@SyliusAdmin/Order/Show/_summary.html.twig' %}
+            </div>
+        </div>
+        <div class="four wide column">
+            {% include '@SyliusAdmin/Order/Show/_customer.html.twig' with {'customer': order.customer} %}
+            <h4 class="ui top attached styled header">
+                {{ 'sylius.ui.shipping_address'|trans }}
+            </h4>
+            <div class="ui attached segment" id="shipping-address">
+                {% include '@SyliusAdmin/Common/_address.html.twig' with {'address': order.shippingAddress} %}
+            </div>
+            <h4 class="ui attached styled header">
+                {{ 'sylius.ui.billing_address'|trans }}
+            </h4>
+            <div class="ui attached segment" id="billing-address">
+                {% include '@SyliusAdmin/Common/_address.html.twig' with {'address': order.billingAddress} %}
+            </div>
+        </div>
+    </div>
+    <div class="ui stackable grid">
+        <div class="eight wide column">
+            <div class="ui segment" id="payment-state">
+                {% if order.hasPayments %}
+                    <h3 class="ui dividing header">{{ 'sylius.ui.payments'|trans }}</h3>
+                    <div class="ui relaxed divided list" id="sylius-payments">
+                        {% for payment in order.payments %}
+                            {% include '@SyliusAdmin/Order/Show/_payment.html.twig' %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="eight wide column">
+            <div class="ui segment" id="shipping-state">
+                {% if order.hasShipments %}
+                    <h3 class="ui dividing header" id="shipping-state">{{ 'sylius.ui.shipments'|trans }}</h3>
+                    <div class="ui relaxed divided list" id="sylius-shipments">
+                        {% for shipment in order.shipments %}
+                            {% include '@SyliusAdmin/Order/Show/_shipment.html.twig' %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="ui divider"></div>
 
     {{ form(form, {
         'action': path('sylius_admin_order_creation_order_create', {'customerEmail': app.request.attributes.get('customerEmail')}),

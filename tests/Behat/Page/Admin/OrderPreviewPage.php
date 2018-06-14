@@ -35,6 +35,6 @@ final class OrderPreviewPage extends SymfonyPage implements OrderPreviewPageInte
 
     public function hasConfirmButton(): bool
     {
-        return true;
+        return null !== $this->getDocument()->findButton('Confirm');
     }
 }
