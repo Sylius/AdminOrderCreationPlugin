@@ -13,6 +13,7 @@
         <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Context\Admin\ManagingOrdersContext">
             <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderIndexPage"/>
             <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\NewOrderCustomerPage" />
+            <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderCreatePage" />
             <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderPreviewPage" />
             <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderShowPage" />
             <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\ReorderPage" />

@@ -19,6 +19,8 @@ final class OrderController extends BaseOrderController
 
         $order = $form->handleRequest($request)->getData();
 
+        $this->get('sylius.order_processing.order_processor')->process($order);
+
         return $this->render('@SyliusAdminOrderCreationPlugin/orderPreview.html.twig', [
             'order' => $order,
             'form' => $form->createView(),
