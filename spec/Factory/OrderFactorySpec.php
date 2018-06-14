@@ -2,15 +2,21 @@
 
 namespace spec\Sylius\AdminOrderCreationPlugin\Factory;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
+use Sylius\AdminOrderCreationPlugin\Entity\OrderItemInterface;
 use Sylius\AdminOrderCreationPlugin\Factory\OrderFactoryInterface;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
+use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 use Sylius\Component\Currency\Model\CurrencyInterface;
 use Sylius\Component\Locale\Model\LocaleInterface;
+use Sylius\Component\Order\Modifier\OrderItemQuantityModifierInterface;
+use Sylius\Component\Order\Modifier\OrderModifierInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
@@ -19,27 +25,33 @@ final class OrderFactorySpec extends ObjectBehavior
     function let(
         FactoryInterface $orderFactory,
         FactoryInterface $customerFactory,
+        FactoryInterface $orderItemFactory,
         CustomerRepositoryInterface $customerRepository,
         ChannelRepositoryInterface $channelRepository,
         RepositoryInterface $currencyRepository,
-        RepositoryInterface $localeRepository
+        RepositoryInterface $localeRepository,
+        OrderModifierInterface $orderModifier,
+        OrderItemQuantityModifierInterface $orderItemQuantityModifier
     ) {
         $this->beConstructedWith(
             $orderFactory,
             $customerFactory,
+            $orderItemFactory,
             $customerRepository,
             $channelRepository,
             $currencyRepository,
-            $localeRepository
+            $localeRepository,
+            $orderModifier,
+            $orderItemQuantityModifier
         );
     }
 
-    function it_implements_order_factory_interface()
+    function it_implements_order_factory_interface(): void
     {
         $this->shouldImplement(OrderFactoryInterface::class);
     }
 
-    function it_delegates_creating_new_order(FactoryInterface $orderFactory, OrderInterface $order)
+    function it_delegates_creating_new_order(FactoryInterface $orderFactory, OrderInterface $order): void
     {
         $orderFactory->createNew()->willReturn($order);
 
@@ -57,7 +69,7 @@ final class OrderFactorySpec extends ObjectBehavior
         ChannelInterface $channel,
         CurrencyInterface $currency,
         LocaleInterface $locale
-    ) {
+    ): void {
         $orderFactory->createNew()->willReturn($order);
         $customerRepository->findOneBy(['email' => 'customer@example.com'])->willReturn($customer);
         $channelRepository->findOneBy(['enabled' => true])->willReturn($channel);
@@ -88,7 +100,7 @@ final class OrderFactorySpec extends ObjectBehavior
         ChannelInterface $channel,
         CurrencyInterface $currency,
         LocaleInterface $locale
-    ) {
+    ): void {
         $orderFactory->createNew()->willReturn($order);
         $customerRepository->findOneBy(['email' => 'customer@example.com'])->willReturn(null);
 
@@ -109,5 +121,84 @@ final class OrderFactorySpec extends ObjectBehavior
         $order->setLocaleCode('en_US')->shouldBeCalled();
 
         $this->createForCustomer('customer@example.com')->shouldReturn($order);
+    }
+
+    function it_creates_order_from_an_existing_order(
+        FactoryInterface $orderFactory,
+        FactoryInterface $orderItemFactory,
+        OrderModifierInterface $orderModifier,
+        OrderItemQuantityModifierInterface $orderItemQuantityModifier,
+        OrderInterface $order,
+        OrderInterface $reorder,
+        ChannelInterface $channel,
+        CustomerInterface $customer,
+        OrderItemInterface $firstOrderItem,
+        OrderItemInterface $secondOrderItem,
+        OrderItemInterface $firstNewOrderItem,
+        OrderItemInterface $secondNewOrderItem,
+        ProductVariantInterface $firstProductVariant,
+        ProductVariantInterface $secondProductVariant,
+        AddressInterface $shippingAddress,
+        AddressInterface $billingAddress
+    ): void {
+        $orderFactory->createNew()->willReturn($reorder);
+        $order->getChannel()->willReturn($channel);
+        $order->getCustomer()->willReturn($customer);
+        $order->getCurrencyCode()->willReturn('USD');
+        $order->getLocaleCode()->willReturn('en_US');
+        $order->getNotes()->willReturn('test_notes');
+        $order->getShippingAddress()->willReturn($shippingAddress);
+        $order->getBillingAddress()->willReturn($billingAddress);
+
+        $reorder->setChannel($channel)->shouldBeCalled();
+        $reorder->setCustomer($customer)->shouldBeCalled();
+        $reorder->setCurrencyCode('USD')->shouldBeCalled();
+        $reorder->setLocaleCode('en_US')->shouldBeCalled();
+        $reorder->setNotes('test_notes')->shouldBeCalled();
+        $reorder->setBillingAddress($billingAddress)->shouldBeCalled();
+        $reorder->setShippingAddress($shippingAddress)->shouldBeCalled();
+
+        $order->getItems()->willReturn(new ArrayCollection([
+            $firstOrderItem->getWrappedObject(),
+            $secondOrderItem->getWrappedObject()
+        ]));
+
+        $firstOrderItem->getUnitPrice()->willReturn(10);
+        $firstOrderItem->getVariant()->willReturn($firstProductVariant);
+        $firstOrderItem->getQuantity()->willReturn(1);
+        $firstOrderItem->getProductName()->willReturn('test_product_name_01');
+        $firstOrderItem->getVariantName()->willReturn('test_variant_name_01');
+
+        $secondOrderItem->getUnitPrice()->willReturn(20);
+        $secondOrderItem->getVariant()->willReturn($secondProductVariant);
+        $secondOrderItem->getQuantity()->willReturn(2);
+        $secondOrderItem->getProductName()->willReturn('test_product_name_02');
+        $secondOrderItem->getVariantName()->willReturn('test_variant_name_02');
+
+        $orderItemFactory->createNew()->willReturn($firstNewOrderItem, $secondNewOrderItem);
+
+        $firstProductVariant->isTracked()->willReturn(true);
+        $firstProductVariant->isInStock()->willReturn(true);
+
+        $secondProductVariant->isTracked()->willReturn(true);
+        $secondProductVariant->isInStock()->willReturn(true);
+
+        $firstNewOrderItem->setVariant($firstProductVariant)->shouldBeCalled();
+        $firstNewOrderItem->setUnitPrice(10)->shouldBeCalled();
+        $firstNewOrderItem->setProductName('test_product_name_01')->shouldBeCalled();
+        $firstNewOrderItem->setVariantName('test_variant_name_01')->shouldBeCalled();
+
+        $secondNewOrderItem->setVariant($secondProductVariant)->shouldBeCalled();
+        $secondNewOrderItem->setUnitPrice(20)->shouldBeCalled();
+        $secondNewOrderItem->setProductName('test_product_name_02')->shouldBeCalled();
+        $secondNewOrderItem->setVariantName('test_variant_name_02')->shouldBeCalled();
+
+        $orderItemQuantityModifier->modify($firstNewOrderItem, 1)->shouldBeCalled();
+        $orderItemQuantityModifier->modify($secondNewOrderItem, 2)->shouldBeCalled();
+
+        $orderModifier->addToOrder($reorder, $firstNewOrderItem)->shouldBeCalled();
+        $orderModifier->addToOrder($reorder, $secondNewOrderItem)->shouldBeCalled();
+
+        $this->createFromExistingOrder($order);
     }
 }

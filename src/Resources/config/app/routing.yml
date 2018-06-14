@@ -22,6 +22,24 @@ sylius_admin_order_creation_order_create:
                 method: createForCustomer
                 arguments: [$customerEmail]
 
+sylius_admin_order_creation_reorder:
+    path: /admin/orders/{id}/reorder
+    methods: [GET, POST]
+    options:
+        expose: true
+    defaults:
+        _controller: sylius.controller.order:createAction
+        _sylius:
+            event: admin_create
+            section: admin
+            permission: true
+            template: SyliusAdminOrderCreationPlugin::orderCreate.html.twig
+            form:
+                type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
+            factory:
+                method: createFromExistingOrder
+                arguments: ["expr:service('sylius.repository.order').find($id)"]
+
 sylius_admin_order_creation_ajax:
     prefix: /ajax
     resource: "@SyliusAdminOrderCreationPlugin/Resources/config/app/ajax.yml"

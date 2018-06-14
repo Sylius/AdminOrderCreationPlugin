@@ -14,6 +14,16 @@ sylius_grid:
                             link:
                                 route: sylius_admin_order_creation_select_order_customer
                                 parameters: []
+                item:
+                    reorder:
+                        type: default
+                        label: sylius_admin_order_creation.ui.reorder
+                        icon: 'cart plus'
+                        options:
+                            link:
+                                route: sylius_admin_order_creation_reorder
+                                parameters:
+                                    id: resource.id
 
 sylius_mailer:
     emails:
