@@ -8,7 +8,7 @@ sylius_admin_order_creation_order_preview:
     path: /admin/orders/new/{customerEmail}/preview
     methods: [GET, POST]
     defaults:
-        _controller: sylius.controller.order:previewAction
+        _controller: Sylius\AdminOrderCreationPlugin\Controller\OrderPreviewAction
         _sylius:
             form:
                 type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType

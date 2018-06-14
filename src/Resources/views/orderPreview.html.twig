@@ -4,9 +4,11 @@
 
 {% block title %}Order preview{% endblock %}
 
-{% form_theme form '@SyliusAdmin/Form/theme.html.twig' %}
+{% form_theme form '@SyliusAdminOrderCreationPlugin/orderItemCollectionTheme.html.twig' %}
 
 {% block content %}
+    {% set order = form.vars.data %}
+
     <div class="ui stackable two column grid">
         <div class="ten wide column">
             <h1 class="ui header">
@@ -119,5 +121,5 @@
         'attr': {'style': 'display: none;', 'novalidate': 'novalidate', 'id': form.vars.id },
         'method': 'POST'
     }) }}
-    <button type="submit" form="{{ form.vars.name }}" class="ui button green">Confirm</button>
+    <button type="submit" form="{{ form.vars.name }}" class="ui button green">{{ 'sylius_admin_order_creation.ui.confirm'|trans }}</button>
 {% endblock %}

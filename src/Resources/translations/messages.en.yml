@@ -7,6 +7,7 @@ sylius_admin_order_creation:
         order:
             order_price: 'Order price'
     ui:
+        confirm: 'Confirm'
         create_new: 'Create new'
         custom_total: 'Custom total'
         new_customer_email: 'New customer email'
