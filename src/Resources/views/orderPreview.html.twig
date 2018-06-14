@@ -41,7 +41,36 @@
             </div>
         </div>
         <div class="four wide column">
-            {% include '@SyliusAdmin/Order/Show/_customer.html.twig' with {'customer': order.customer} %}
+            <div class="ui fluid card" id="customer">
+                <div class="content">
+                    <span class="header sylius-customer-name">{{ order.customer.fullName }}</span>
+                    <div class="meta">
+                        <span class="date">{{ 'sylius.ui.customer_since'|trans }} {{ order.customer.createdAt|format_date }}.</span>
+                    </div>
+                </div>
+                <div class="extra content">
+                    <a href="mailto:{{ order.customer.email }}">
+                        <i class="envelope icon"></i>
+                        {{ order.customer.email }}
+                    </a>
+                </div>
+                {% if order.customer.phoneNumber is not empty %}
+                    <div class="extra content">
+                    <span>
+                        <i class="phone icon"></i>
+                        {{ order.customer.phoneNumber }}
+                    </span>
+                    </div>
+                {% endif %}
+                {% if order.customerIp is defined and order.customerIp is not empty %}
+                    <div class="extra content" id="ipAddress">
+                    <span>
+                        <i class="desktop icon"></i>
+                        {{ order.customerIp }}
+                    </span>
+                    </div>
+                {% endif %}
+            </div>
             <h4 class="ui top attached styled header">
                 {{ 'sylius.ui.shipping_address'|trans }}
             </h4>

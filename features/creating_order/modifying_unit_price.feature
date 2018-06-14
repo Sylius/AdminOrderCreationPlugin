@@ -22,7 +22,7 @@ Feature: Modifying unit price
         And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
         And I select "Free" shipping method
         And I select "Cash on Delivery" payment method
-        And I place this order
+        And I place and confirm this order
         Then I should be notified that order has been successfully created
         And the order's total should be "$45.00"
 
@@ -34,5 +34,5 @@ Feature: Modifying unit price
         And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
         And I select "Free" shipping method
         And I select "Cash on Delivery" payment method
-        And I place this order
+        And I place and confirm this order
         Then I should be notified that item with "Stark Coat" price cannot be below 0

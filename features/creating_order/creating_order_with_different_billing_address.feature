@@ -21,7 +21,7 @@ Feature: Creating order with different billing address
         And I specify this order billing address as "Rivendell", "Elm Street", "444", "United States" for "Ned Stark"
         And I select "Free" shipping method
         And I select "Cash on Delivery" payment method
-        And I place this order
+        And I place and confirm this order
         Then I should be notified that order has been successfully created
         And this order shipping address should be "Jon Snow", "Frost Alley", "90210", "Ankh-Morpork", "United States"
         And this order billing address should be "Ned Stark", "Elm Street", "444", "Rivendell", "United States"

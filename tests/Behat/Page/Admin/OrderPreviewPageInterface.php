@@ -15,4 +15,6 @@ interface OrderPreviewPageInterface
     public function hasPayment(string $paymentName): bool;
 
     public function hasConfirmButton(): bool;
+
+    public function confirm(): void;
 }

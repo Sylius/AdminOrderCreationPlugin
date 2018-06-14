@@ -20,7 +20,7 @@ Feature: Modifying order total
         And I select "Free" shipping method
         And I select "Cash on Delivery" payment method
         And I specify order price as "$123.45"
-        And I place this order
+        And I place and confirm this order
         Then I should be notified that order has been successfully created
         And the order's total should be "$123.45"
 
@@ -32,5 +32,5 @@ Feature: Modifying order total
         And I select "Free" shipping method
         And I select "Cash on Delivery" payment method
         And I specify order price as "-$200"
-        And I place this order
+        And I place and confirm this order
         Then I should be notified that order price cannot be below 0
