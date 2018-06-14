@@ -15,22 +15,22 @@ final class OrderPreviewPage extends SymfonyPage implements OrderPreviewPageInte
 
     public function getTotal(): string
     {
-        return '$100.00';
+        return str_replace('Total: ', '', $this->getDocument()->find('css', 'td#total')->getText());
     }
 
     public function getShippingTotal(): string
     {
-        return '$0.00';
+        return str_replace('Shipping total: ', '', $this->getDocument()->find('css', 'td#shipping-total')->getText());
     }
 
     public function hasProduct(string $productName): bool
     {
-        return true;
+        return $this->getDocument()->has('css', sprintf('.sylius-product-name:contains("%s")', $productName));
     }
 
     public function hasPayment(string $paymentName): bool
     {
-        return true;
+        return $this->getDocument()->has('css', sprintf('#sylius-payments .item:contains("%s")', $paymentName));
     }
 
     public function hasConfirmButton(): bool
