@@ -209,6 +209,15 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
+     * @When I place and confirm this order
+     */
+    public function placeAndConfirmThisOrder(): void
+    {
+        $this->orderCreatePage->placeOrder();
+        $this->orderPreviewPage->confirm();
+    }
+
+    /**
      * @Then I should be notified that order has been successfully created
      */
     public function shouldBeNotifiedThatOrderHasBeenSuccessfullyCreated(): void
