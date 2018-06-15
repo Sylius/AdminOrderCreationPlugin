@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin;
+namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Admin;
 
-use Sylius\Behat\Page\Admin\Crud\CreatePageInterface;
 use Sylius\Component\Core\Model\AddressInterface;
 
-interface OrderCreatePageInterface extends CreatePageInterface
+interface OrderCreateFormElementInterface
 {
     public function addProduct(string $productName): void;
 
@@ -32,4 +31,8 @@ interface OrderCreatePageInterface extends CreatePageInterface
     public function hasOrderPriceValidationMessage(string $message): bool;
 
     public function hasUnitPriceValidationMessage(string $productName, string $message): bool;
+
+    public function getPreFilledBillingAddress(): AddressInterface;
+
+    public function getPreFilledShippingAddress(): AddressInterface;
 }

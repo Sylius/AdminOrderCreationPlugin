@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin;
+namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Admin;
 
 use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Session;
-use Sylius\Behat\Page\Admin\Crud\CreatePage;
+use Sylius\Component\Core\Model\Address;
 use Sylius\Component\Core\Model\AddressInterface;
-use Symfony\Component\Routing\RouterInterface;
+use Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Element;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector;
 
-final class OrderCreatePage extends CreatePage implements OrderCreatePageInterface
+class OrderCreateFormElement extends Element implements OrderCreateFormElementInterface
 {
     /** @var AutoCompleteSelector */
     private $autoCompleteSelector;
@@ -19,14 +19,15 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
     public function __construct(
         Session $session,
         array $parameters,
-        RouterInterface $router,
-        string $routeName,
         AutoCompleteSelector $autoCompleteSelector
     ) {
-        parent::__construct($session, $parameters, $router, $routeName);
+        parent::__construct($session, $parameters);
 
         $this->autoCompleteSelector = $autoCompleteSelector;
     }
+
+    public const TYPE_BILLING = 'billing';
+    public const TYPE_SHIPPING = 'shipping';
 
     public function addProduct(string $productName): void
     {
@@ -133,6 +134,34 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
         return null !== $item->find('css', sprintf('.sylius-validation-error:contains("%s")', $message));
     }
 
+    public function getPreFilledBillingAddress(): AddressInterface
+    {
+        return $this->getPreFilledAddress(self::TYPE_BILLING);
+    }
+
+    public function getPreFilledShippingAddress(): AddressInterface
+    {
+        return $this->getPreFilledAddress(self::TYPE_SHIPPING);
+    }
+
+    protected function getDefinedElements(): array
+    {
+        return array_merge(parent::getDefinedElements(), [
+            'billing_city' => '#sylius_admin_order_creation_new_order_billingAddress_city',
+            'billing_country' => '#sylius_admin_order_creation_new_order_billingAddress_countryCode',
+            'billing_first_name' => '#sylius_admin_order_creation_new_order_billingAddress_firstName',
+            'billing_last_name' => '#sylius_admin_order_creation_new_order_billingAddress_lastName',
+            'billing_street' => '#sylius_admin_order_creation_new_order_billingAddress_street',
+            'billing_postcode' => '#sylius_admin_order_creation_new_order_billingAddress_postcode',
+            'shipping_city' => '#sylius_admin_order_creation_new_order_shippingAddress_city',
+            'shipping_country' => '#sylius_admin_order_creation_new_order_shippingAddress_countryCode',
+            'shipping_first_name' => '#sylius_admin_order_creation_new_order_shippingAddress_firstName',
+            'shipping_last_name' => '#sylius_admin_order_creation_new_order_shippingAddress_lastName',
+            'shipping_postcode' => '#sylius_admin_order_creation_new_order_shippingAddress_postcode',
+            'shipping_street' => '#sylius_admin_order_creation_new_order_shippingAddress_street',
+        ]);
+    }
+
     private function fillAddressData(NodeElement $addressForm, AddressInterface $address): void
     {
         $addressForm->fillField('First name', $address->getFirstName());
@@ -191,5 +220,19 @@ final class OrderCreatePage extends CreatePage implements OrderCreatePageInterfa
                 ->hasClass('active')
             ;
         });
+    }
+
+    private function getPreFilledAddress(string $type): AddressInterface
+    {
+        $address = new Address();
+
+        $address->setFirstName($this->getElement(sprintf('%s_first_name', $type))->getValue());
+        $address->setLastName($this->getElement(sprintf('%s_last_name', $type))->getValue());
+        $address->setStreet($this->getElement(sprintf('%s_street', $type))->getValue());
+        $address->setCountryCode($this->getElement(sprintf('%s_country', $type))->getValue());
+        $address->setCity($this->getElement(sprintf('%s_city', $type))->getValue());
+        $address->setPostcode($this->getElement(sprintf('%s_postcode', $type))->getValue());
+
+        return $address;
     }
 }

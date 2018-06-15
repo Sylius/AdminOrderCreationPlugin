@@ -40,10 +40,13 @@
         <service id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory" decorates="sylius.factory.order" public="false">
             <argument type="service" id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory.inner" />
             <argument type="service" id="sylius.factory.customer" />
+            <argument type="service" id="sylius.factory.order_item" />
             <argument type="service" id="sylius.repository.customer" />
             <argument type="service" id="sylius.repository.channel" />
             <argument type="service" id="sylius.repository.currency" />
             <argument type="service" id="sylius.repository.locale" />
+            <argument type="service" id="sylius.order_modifier" />
+            <argument type="service" id="sylius.order_item_quantity_modifier"/>
         </service>
 
         <service id="Sylius\AdminOrderCreationPlugin\EventListener\OrderCreationListener">

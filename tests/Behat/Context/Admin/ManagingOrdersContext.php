@@ -5,16 +5,19 @@ declare(strict_types=1);
 namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Context\Admin;
 
 use Behat\Behat\Context\Context;
+use Sylius\AdminOrderCreationPlugin\Entity\OrderInterface;
 use Sylius\Behat\NotificationType;
 use Sylius\Behat\Service\NotificationCheckerInterface;
+use Sylius\Component\Addressing\Comparator\AddressComparatorInterface;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Test\Services\EmailCheckerInterface;
+use Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Admin\OrderCreateFormElementInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\NewOrderCustomerPageInterface;
-use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderCreatePageInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderIndexPageInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderShowPageInterface;
+use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\ReorderPageInterface;
 use Webmozart\Assert\Assert;
 
 final class ManagingOrdersContext implements Context
@@ -25,11 +28,14 @@ final class ManagingOrdersContext implements Context
     /** @var NewOrderCustomerPageInterface */
     private $newOrderCustomerPage;
 
-    /** @var OrderCreatePageInterface */
-    private $orderCreatePage;
-
     /** @var OrderShowPageInterface */
     private $orderShowPage;
+
+    /** @var ReorderPageInterface */
+    private $reorderPage;
+
+    /** @var OrderCreateFormElementInterface */
+    private $orderCreateFormElement;
 
     /** @var NotificationCheckerInterface */
     private $notificationChecker;
@@ -37,20 +43,27 @@ final class ManagingOrdersContext implements Context
     /** @var EmailCheckerInterface */
     private $emailChecker;
 
+    /** @var AddressComparatorInterface */
+    private $addressComparator;
+
     public function __construct(
         OrderIndexPageInterface $orderIndexPage,
         NewOrderCustomerPageInterface $newOrderCustomerPage,
-        OrderCreatePageInterface $orderCreatePage,
         OrderShowPageInterface $orderShowPage,
+        ReorderPageInterface $reorderPage,
+        OrderCreateFormElementInterface $orderCreateFormElement,
         NotificationCheckerInterface $notificationChecker,
-        EmailCheckerInterface $emailChecker
+        EmailCheckerInterface $emailChecker,
+        AddressComparatorInterface $addressComparator
     ) {
         $this->orderIndexPage = $orderIndexPage;
         $this->newOrderCustomerPage = $newOrderCustomerPage;
-        $this->orderCreatePage = $orderCreatePage;
         $this->orderShowPage = $orderShowPage;
+        $this->reorderPage = $reorderPage;
+        $this->orderCreateFormElement = $orderCreateFormElement;
         $this->notificationChecker = $notificationChecker;
         $this->emailChecker = $emailChecker;
+        $this->addressComparator = $addressComparator;
     }
 
     /**
@@ -81,7 +94,7 @@ final class ManagingOrdersContext implements Context
      */
     public function addProductToThisOrder(ProductInterface $product): void
     {
-        $this->orderCreatePage->addProduct($product->getName());
+        $this->orderCreateFormElement->addProduct($product->getName());
     }
 
     /**
@@ -89,7 +102,7 @@ final class ManagingOrdersContext implements Context
      */
     public function addMultipleProductsToThisOrder(int $quantity, ProductInterface $product): void
     {
-        $this->orderCreatePage->addMultipleProducts($product->getName(), $quantity);
+        $this->orderCreateFormElement->addMultipleProducts($product->getName(), $quantity);
     }
 
     /**
@@ -97,7 +110,7 @@ final class ManagingOrdersContext implements Context
      */
     public function removeProductFromThisOrder(ProductInterface $product): void
     {
-        $this->orderCreatePage->removeProduct($product->getName());
+        $this->orderCreateFormElement->removeProduct($product->getName());
     }
 
     /**
@@ -105,7 +118,7 @@ final class ManagingOrdersContext implements Context
      */
     public function specifyTheShippingAddressAs(AddressInterface $address): void
     {
-        $this->orderCreatePage->specifyShippingAddress($address);
+        $this->orderCreateFormElement->specifyShippingAddress($address);
     }
 
     /**
@@ -113,7 +126,7 @@ final class ManagingOrdersContext implements Context
      */
     public function specifyTheBillingAddressAs(AddressInterface $address): void
     {
-        $this->orderCreatePage->specifyBillingAddress($address);
+        $this->orderCreateFormElement->specifyBillingAddress($address);
     }
 
     /**
@@ -121,7 +134,7 @@ final class ManagingOrdersContext implements Context
      */
     public function selectShippingMethod(string $shippingMethodName): void
     {
-        $this->orderCreatePage->selectShippingMethod($shippingMethodName);
+        $this->orderCreateFormElement->selectShippingMethod($shippingMethodName);
     }
 
     /**
@@ -129,7 +142,7 @@ final class ManagingOrdersContext implements Context
      */
     public function selectPaymentMethod(string $paymentMethodName): void
     {
-        $this->orderCreatePage->selectPaymentMethod($paymentMethodName);
+        $this->orderCreateFormElement->selectPaymentMethod($paymentMethodName);
     }
 
     /**
@@ -137,7 +150,7 @@ final class ManagingOrdersContext implements Context
      */
     public function specifyOrderPriceAs(string $price): void
     {
-        $this->orderCreatePage->specifyOrderPrice(str_replace(['$', '€', '£'], '', $price));
+        $this->orderCreateFormElement->specifyOrderPrice(str_replace(['$', '€', '£'], '', $price));
     }
 
     /**
@@ -145,7 +158,7 @@ final class ManagingOrdersContext implements Context
      */
     public function specifyItemWithProductUnitPriceAs(ProductInterface $product, string $price): void
     {
-        $this->orderCreatePage->specifyUnitPrice(
+        $this->orderCreateFormElement->specifyUnitPrice(
             $product->getName(),
             str_replace(['$', '€', '£'], '', $price)
         );
@@ -156,7 +169,15 @@ final class ManagingOrdersContext implements Context
      */
     public function placeThisOrder(): void
     {
-        $this->orderCreatePage->placeOrder();
+        $this->orderCreateFormElement->placeOrder();
+    }
+
+    /**
+     * @When I reorder the order :order
+     */
+    public function iReorderTheOrder(OrderInterface $order): void
+    {
+        $this->reorderPage->open(['id' => $order->getId()]);
     }
 
     /**
@@ -175,7 +196,7 @@ final class ManagingOrdersContext implements Context
      */
     public function shouldBeNotifiedThatOrderPriceCannotBeBelow0(): void
     {
-        Assert::true($this->orderCreatePage->hasOrderPriceValidationMessage('Order price cannot be below 0'));
+        Assert::true($this->orderCreateFormElement->hasOrderPriceValidationMessage('Order price cannot be below 0'));
     }
 
     /**
@@ -184,7 +205,7 @@ final class ManagingOrdersContext implements Context
     public function shouldBeNotifiedThatItemWithProductPriceCannotBeBelow0(ProductInterface $product): void
     {
         Assert::true(
-            $this->orderCreatePage->hasUnitPriceValidationMessage($product->getName(), 'Price cannot be below 0')
+            $this->orderCreateFormElement->hasUnitPriceValidationMessage($product->getName(), 'Price cannot be below 0')
         );
     }
 
@@ -246,5 +267,27 @@ final class ManagingOrdersContext implements Context
         string $countryName
     ): void {
         Assert::true($this->orderShowPage->hasBillingAddress($customerName, $street, $postcode, $city, $countryName));
+    }
+
+    /**
+     * @Then /^the (address "[^"]+", "[^"]+", "[^"]+", "[^"]+", "[^"]+") should be specified as billing address$/
+     */
+    public function theAddressShouldBeSpecifiedAsBillingAddress(AddressInterface $address): void
+    {
+        Assert::true($this->addressComparator->equal(
+            $address,
+            $this->orderCreateFormElement->getPreFilledBillingAddress()
+        ));
+    }
+
+    /**
+     * @Then /^the (address "[^"]+", "[^"]+", "[^"]+", "[^"]+", "[^"]+") should be specified as shipping address$/
+     */
+    public function theAddressShouldBeSpecifiedAsShippingAddress(AddressInterface $address): void
+    {
+        Assert::true($this->addressComparator->equal(
+            $address,
+            $this->orderCreateFormElement->getPreFilledShippingAddress()
+        ));
     }
 }

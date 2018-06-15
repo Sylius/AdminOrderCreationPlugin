@@ -10,4 +10,6 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 interface OrderFactoryInterface extends FactoryInterface
 {
     public function createForCustomer(string $customerEmail): OrderInterface;
+
+    public function createFromExistingOrder(OrderInterface $order): OrderInterface;
 }
