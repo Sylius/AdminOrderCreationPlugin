@@ -19,7 +19,7 @@ Feature: Reordering previously placed order with different data
         And the customer chose "Free" shipping method with "Cash on Delivery" payment
         And I am logged in as an administrator
 
-    @todo
+    @javascript
     Scenario: Reordering previously placed order with different addresses
         When I reorder the order "#00000666"
         And I specify this order shipping address as "Los Angeles", "Frost Alley", "90210", "United States" for "Lucifer Morningstar"
@@ -28,7 +28,7 @@ Feature: Reordering previously placed order with different data
         Then I should be notified that order has been successfully created
         And this order shipping address should be "Lucifer Morningstar", "Frost Alley", "90210", "Los Angeles", "United States"
         And this order billing address should be "Mazikeen Lilim", "Pacific Coast Hwy", "90806", "Los Angeles", "United States"
-        And there should be one not paid nor shipped order for "jon.snow@the-wall.com" in the registry
+        And there should be 2 not paid nor shipped orders for "jon.snow@the-wall.com" in the registry
 
     @todo
     Scenario: Reordering previously placed order with different shipping method

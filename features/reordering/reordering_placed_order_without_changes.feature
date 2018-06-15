@@ -35,14 +35,13 @@ Feature: Reordering previously placed order
         When I reorder the order "#00000666"
         Then the "Paypal" payment method should be selected
 
-    @todo
     Scenario: Reordering previously placed order with the same addresses
         When I reorder the order "#00000666"
         And I place this order
         Then I should be notified that order has been successfully created
         And this order shipping address should be "Jon Snow", "Frost Alley", "90210", "Ankh-Morpork", "United States"
         And this order billing address should be "Ned Stark", "Elm Street", "444", "Rivendell", "United States"
-        And there should be one not paid nor shipped order for "jon.snow@the-wall.com" in the registry
+        And there should be 2 not paid nor shipped orders for "jon.snow@the-wall.com" in the registry
 
     @todo
     Scenario: Reordering previously placed order with the same shipping method
@@ -50,7 +49,7 @@ Feature: Reordering previously placed order
         And I place this order
         Then I should be notified that order has been successfully created
         And this order shipping method should be "Free"
-        And there should be one not paid nor shipped order for "jon.snow@the-wall.com" in the registry
+        And there should be 2 not paid nor shipped orders for "jon.snow@the-wall.com" in the registry
 
     @todo
     Scenario: Reordering previously placed order with the same payment method
@@ -58,4 +57,4 @@ Feature: Reordering previously placed order
         And I place this order
         Then I should be notified that order has been successfully created
         And this order payment method should be "Cash on Delivery"
-        And there should be one not paid nor shipped order for "jon.snow@the-wall.com" in the registry
+        And there should be 2 not paid nor shipped orders for "jon.snow@the-wall.com" in the registry

@@ -259,6 +259,24 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
+     * @Then there should be :amountOfOrders not paid nor shipped orders for :customer in the registry
+     */
+    public function thereShouldBeOneOrdersForInTheRegistry(int $amountOfOrders, CustomerInterface $customer): void
+    {
+        $this->orderIndexPage->open();
+
+        Assert::same(
+            $amountOfOrders,
+            $this->orderIndexPage->countOrders([
+                'customer' => $customer->getEmail(),
+                'state' => 'New',
+                'paymentState' => 'Awaiting payment',
+                'shippingState' => 'Ready',
+            ])
+        );
+    }
+
+    /**
      * @Then this order shipping address should be :customerName, :street, :postcode, :city, :countryName
      */
     public function thisOrderShippingAddressShouldBe(
