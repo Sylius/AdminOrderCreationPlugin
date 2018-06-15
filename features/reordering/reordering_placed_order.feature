@@ -1,6 +1,6 @@
 @reordering @ui
 Feature: Reordering previously placed order
-    In order to reorder the same order as a Customer placed before in the name of this Customer
+    In order to reorder a previously placed order in the name of Customer
     As an Administrator
     I want to be able to reorder a previously placed order in Admin panel
 
@@ -17,10 +17,10 @@ Feature: Reordering previously placed order
         And the customer chose "Free" shipping method with "Cash on Delivery" payment
         And I am logged in as an administrator
 
-    Scenario: Having billing address section filled with address information taken from previously placed order
+    Scenario: Having billing address section specified with address information taken from previously placed order
         When I reorder the order "#00000666"
-        Then the address "Ned Stark", "Elm Street", "444", "Rivendell", "United States" should be filled as billing address
+        Then the address "Ned Stark", "Elm Street", "444", "Rivendell", "United States" should be specified as billing address
 
-    Scenario: Having shipping address section filled with address information taken from previously placed order
+    Scenario: Having shipping address section specified with address information taken from previously placed order
         When I reorder the order "#00000666"
-        Then the address "Jon Snow", "Frost Alley", "90210", "Ankh-Morpork", "United States" should be filled as shipping address
+        Then the address "Jon Snow", "Frost Alley", "90210", "Ankh-Morpork", "United States" should be specified as shipping address

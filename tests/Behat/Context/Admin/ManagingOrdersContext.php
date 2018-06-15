@@ -270,9 +270,9 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
-     * @Then /^the (address "[^"]+", "[^"]+", "[^"]+", "[^"]+", "[^"]+") should be filled as billing address$/
+     * @Then /^the (address "[^"]+", "[^"]+", "[^"]+", "[^"]+", "[^"]+") should be specified as billing address$/
      */
-    public function theAddressShouldBeFilledAsBillingAddress(AddressInterface $address): void
+    public function theAddressShouldBeSpecifiedAsBillingAddress(AddressInterface $address): void
     {
         Assert::true($this->addressComparator->equal(
             $address,
@@ -281,9 +281,9 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
-     * @Then /^the (address "[^"]+", "[^"]+", "[^"]+", "[^"]+", "[^"]+") should be filled as shipping address$/
+     * @Then /^the (address "[^"]+", "[^"]+", "[^"]+", "[^"]+", "[^"]+") should be specified as shipping address$/
      */
-    public function theAddressShouldBeFilledAsShippingAddress(AddressInterface $address): void
+    public function theAddressShouldBeSpecifiedAsShippingAddress(AddressInterface $address): void
     {
         Assert::true($this->addressComparator->equal(
             $address,

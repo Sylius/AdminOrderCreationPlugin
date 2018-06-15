@@ -11,9 +11,6 @@ use Behat\Mink\Exception\ElementNotFoundException;
 use Behat\Mink\Selector\SelectorsHandler;
 use Behat\Mink\Session;
 
-/**
- * It is a copy-passed class from UrbanaraCatalogPromotionBundle
- */
 abstract class Element
 {
     /** @var Session */
@@ -33,14 +30,9 @@ abstract class Element
 
     protected function getParameter(string $name): NodeElement
     {
-        return isset($this->parameters[$name]) ? $this->parameters[$name] : null;
+        return $this->parameters[$name] ?? null;
     }
 
-    /**
-     * Defines elements by returning an array with items being:
-     *  - :elementName => :cssLocator
-     *  - :elementName => [:selectorType => :locator]
-     */
     protected function getDefinedElements(): array
     {
         return [];
@@ -109,12 +101,6 @@ abstract class Element
         );
     }
 
-    /**
-     * @param string|array $selector
-     * @param SelectorsHandler $selectorsHandler
-     *
-     * @return string
-     */
     private function getSelectorAsXpath($selector, SelectorsHandler $selectorsHandler): string
     {
         $selectorType = is_array($selector) ? key($selector) : 'css';
@@ -123,14 +109,14 @@ abstract class Element
         return $selectorsHandler->selectorToXpath($selectorType, $locator);
     }
 
-    private function resolveParameters(string $name, array $parameters, array $definedElements)
+    private function resolveParameters(string $name, array $parameters, array $definedElements): string
     {
         if (!is_array($definedElements[$name])) {
             return strtr($definedElements[$name], $parameters);
         }
 
         array_map(
-            function ($definedElement) use ($parameters) {
+            function ($definedElement) use ($parameters): string {
                 return strtr($definedElement, $parameters);
             }, $definedElements[$name]
         );
