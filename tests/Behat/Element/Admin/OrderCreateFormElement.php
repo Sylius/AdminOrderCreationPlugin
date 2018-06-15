@@ -80,6 +80,27 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         );
     }
 
+    public function getAvailableShippingMethods(): array
+    {
+        $this->clickOnTabAndWait('Shipments & Payments');
+
+        $shipmentsCollection = $this->getDocument()->find('css', '#sylius_admin_order_creation_new_order_shipments');
+
+        if (count($shipmentsCollection->findAll('css', '[data-form-collection="item"]')) === 0) {
+            $shipmentsCollection->clickLink('Add');
+        }
+
+        $shippingMethods = $this->getDocument()->findAll('css', sprintf(
+            '#sylius_admin_order_creation_new_order_shipments [data-form-collection="item"]:last-child select option'
+        ));
+
+        $shippingMethods = array_map(function(NodeElement $option) : string {
+            return $option->getText();
+        }, $shippingMethods);
+
+        return $shippingMethods;
+    }
+
     public function selectShippingMethod(string $shippingMethodName): void
     {
         $this->clickOnTabAndWait('Shipments & Payments');

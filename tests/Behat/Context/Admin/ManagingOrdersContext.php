@@ -141,6 +141,26 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
+     * @Then I should have :shippingMethodName shipping method available to select
+     */
+    public function shouldHaveShippingMethodAvailableToSelect(string $shippingMethodName): void
+    {
+        Assert::oneOf($shippingMethodName, $this->orderCreatePage->getAvailableShippingMethods());
+    }
+
+    /**
+     * @Then I should not have :shippingMethodName shipping method available to select
+     */
+    public function shouldNotHaveShippingMethodAvailableToSelect(string $shippingMethodName): void
+    {
+        foreach ($this->orderCreatePage->getAvailableShippingMethods() as $availableShippingMethod) {
+            if ($shippingMethodName === $availableShippingMethod) {
+                throw new \Exception(sprintf('Shipping method "%s" should not be available', $shippingMethodName));
+            }
+        }
+    }
+
+    /**
      * @When I select :shippingMethodName shipping method
      */
     public function selectShippingMethod(string $shippingMethodName): void

@@ -20,6 +20,9 @@ interface OrderCreateFormElementInterface
 
     public function specifyBillingAddress(AddressInterface $address): void;
 
+    /** @return array|string[] */
+    public function getAvailableShippingMethods(): array;
+
     public function selectShippingMethod(string $shippingMethodName): void;
 
     public function selectPaymentMethod(string $paymentMethodName): void;
