@@ -48,6 +48,8 @@
             <argument type="service" id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory.inner" />
             <argument type="service" id="sylius.factory.customer" />
             <argument type="service" id="sylius.factory.order_item" />
+            <argument type="service" id="sylius.factory.shipment" />
+            <argument type="service" id="sylius.factory.payment" />
             <argument type="service" id="sylius.repository.customer" />
             <argument type="service" id="sylius.repository.channel" />
             <argument type="service" id="sylius.repository.currency" />

@@ -303,7 +303,23 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
-     * @Then /^the (address "[^"]+", "[^"]+", "[^"]+", "[^"]+", "[^"]+") should be specified as billing address$/
+     * @Then this order shipping method should be :shippingMethodName
+     */
+    public function thisOrderShippingMethodShouldBe(string $shippingMethodName): void
+    {
+        Assert::true($this->orderShowPage->hasShipment($shippingMethodName));
+    }
+
+    /**
+     * @Then this order payment method should be :paymentMethodName
+     */
+    public function thisOrderPaymentMethodShouldBe(string $paymentMethodName): void
+    {
+        Assert::true($this->orderShowPage->hasPayment($paymentMethodName));
+    }
+
+    /**
+     * @Then /^the (address "[^"]+", "[^"]+", "[^"]+", "[^"]+", "[^"]+") should be filled as billing address$/
      */
     public function theAddressShouldBeSpecifiedAsBillingAddress(AddressInterface $address): void
     {
@@ -362,5 +378,27 @@ final class ManagingOrdersContext implements Context
     public function shouldBeAbleToConfirmOrderCreation(): void
     {
         Assert::true($this->orderPreviewPage->hasConfirmButton());
+    }
+
+    /**
+     * @Then the :shippingMethodName shipping method should be selected
+     */
+    public function theShippingMethodShouldBeSelected(string $shippingMethodName): void
+    {
+        Assert::same(
+            $this->orderCreateFormElement->getShippingMethodName(),
+            $shippingMethodName
+        );
+    }
+
+    /**
+     * @Then the :paymentMethodName payment method should be selected
+     */
+    public function thePaymentMethodShouldBeSelected(string $paymentMethodName): void
+    {
+        Assert::same(
+            $this->orderCreateFormElement->getPaymentMethodName(),
+            $paymentMethodName
+        );
     }
 }

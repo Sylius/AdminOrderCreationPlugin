@@ -35,4 +35,8 @@ interface OrderCreateFormElementInterface
     public function getPreFilledBillingAddress(): AddressInterface;
 
     public function getPreFilledShippingAddress(): AddressInterface;
+
+    public function getShippingMethodName(): string;
+
+    public function getPaymentMethodName(): string;
 }
