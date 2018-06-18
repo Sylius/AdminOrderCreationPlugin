@@ -16,6 +16,7 @@ use Sylius\Component\Core\Test\Services\EmailCheckerInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Admin\OrderCreateFormElementInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\NewOrderCustomerPageInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderIndexPageInterface;
+use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderPreviewPageInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderShowPageInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\ReorderPageInterface;
 use Webmozart\Assert\Assert;
@@ -27,6 +28,9 @@ final class ManagingOrdersContext implements Context
 
     /** @var NewOrderCustomerPageInterface */
     private $newOrderCustomerPage;
+
+    /** @var OrderPreviewPageInterface */
+    private $orderPreviewPage;
 
     /** @var OrderShowPageInterface */
     private $orderShowPage;
@@ -49,6 +53,7 @@ final class ManagingOrdersContext implements Context
     public function __construct(
         OrderIndexPageInterface $orderIndexPage,
         NewOrderCustomerPageInterface $newOrderCustomerPage,
+        OrderPreviewPageInterface $orderPreviewPage,
         OrderShowPageInterface $orderShowPage,
         ReorderPageInterface $reorderPage,
         OrderCreateFormElementInterface $orderCreateFormElement,
@@ -58,6 +63,7 @@ final class ManagingOrdersContext implements Context
     ) {
         $this->orderIndexPage = $orderIndexPage;
         $this->newOrderCustomerPage = $newOrderCustomerPage;
+        $this->orderPreviewPage = $orderPreviewPage;
         $this->orderShowPage = $orderShowPage;
         $this->reorderPage = $reorderPage;
         $this->orderCreateFormElement = $orderCreateFormElement;
@@ -181,6 +187,15 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
+     * @When I place and confirm this order
+     */
+    public function placeAndConfirmThisOrder(): void
+    {
+        $this->orderCreateFormElement->placeOrder();
+        $this->orderPreviewPage->confirm();
+    }
+
+    /**
      * @Then I should be notified that order has been successfully created
      */
     public function shouldBeNotifiedThatOrderHasBeenSuccessfullyCreated(): void
@@ -289,5 +304,45 @@ final class ManagingOrdersContext implements Context
             $address,
             $this->orderCreateFormElement->getPreFilledShippingAddress()
         ));
+    }
+
+    /**
+     * @Then I should see preview of the order with total :total
+     */
+    public function shouldSeePreviewOfTheOrderWithTotal(string $total): void
+    {
+        Assert::same($this->orderPreviewPage->getTotal(), $total);
+    }
+
+    /**
+     * @Then this order should contain :productName product
+     */
+    public function orderShouldContainProduct(string $productName): void
+    {
+        Assert::true($this->orderPreviewPage->hasProduct($productName));
+    }
+
+    /**
+     * @Then its shipping total should be :shippingTotal
+     */
+    public function orderShippingTotalShouldBe(string $shippingTotal): void
+    {
+        Assert::same($this->orderPreviewPage->getShippingTotal(), $shippingTotal);
+    }
+
+    /**
+     * @Then it should have one :paymentName payment
+     */
+    public function orderShouldHaveOnePaymentWithName(string $paymentName): void
+    {
+        Assert::true($this->orderPreviewPage->hasPayment($paymentName));
+    }
+
+    /**
+     * @Then I should be able to confirm order creation
+     */
+    public function shouldBeAbleToConfirmOrderCreation(): void
+    {
+        Assert::true($this->orderPreviewPage->hasConfirmButton());
     }
 }

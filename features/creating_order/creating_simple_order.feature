@@ -20,7 +20,7 @@ Feature: Creating simple order
         And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
         And I select "Free" shipping method
         And I select "Cash on Delivery" payment method
-        And I place this order
+        And I place and confirm this order
         Then I should be notified that order has been successfully created
         And there should be one not paid nor shipped order for "jon.snow@the-wall.com" in the registry
 
@@ -31,6 +31,6 @@ Feature: Creating simple order
         And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
         And I select "Free" shipping method
         And I select "Cash on Delivery" payment method
-        And I place this order
+        And I place and confirm this order
         Then I should be notified that order has been successfully created
         And there should be one not paid nor shipped order for "ned.stark@the-wall.com" in the registry

@@ -9,6 +9,13 @@
             <argument type="service" id="twig" />
         </service>
 
+        <service id="Sylius\AdminOrderCreationPlugin\Controller\OrderPreviewAction">
+            <argument type="service" id="sylius.factory.order" />
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="sylius.order_processing.order_processor" />
+            <argument type="service" id="twig" />
+        </service>
+
         <service id="Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderCustomerSelectType">
             <tag name="form.type" />
         </service>

@@ -17,6 +17,6 @@
         </div>
     </div>
     {% include '@SyliusAdminOrderCreationPlugin/Order/_form.html.twig' with {
-        'action': path('sylius_admin_order_creation_order_preview', {'customerEmail': app.request.attributes.get('customerEmail')})
+        'action': path('sylius_admin_order_creation_reorder', {'id': app.request.attributes.get('id')})
     } %}
 {% endblock %}

@@ -1,0 +1,125 @@
+{% extends 'SyliusAdminBundle::layout.html.twig' %}
+
+{% import '@SyliusUi/Macro/flags.html.twig' as flags %}
+
+{% block title %}Order preview{% endblock %}
+
+{% form_theme form '@SyliusAdminOrderCreationPlugin/orderItemCollectionTheme.html.twig' %}
+
+{% block content %}
+    {% set order = form.vars.data %}
+
+    <div class="ui stackable two column grid">
+        <div class="ten wide column">
+            <h1 class="ui header">
+                <i class="circular cart icon"></i>
+                <div class="content">
+                    {{ 'sylius_admin_order_creation.ui.order_preview'|trans }}
+                    <div class="sub header">
+                        <div class="ui horizontal divided list">
+                            <div class="item" id="sylius-order-currency">
+                                {{ order.currencyCode }}
+                            </div>
+                            <div class="item" id="sylius-order-state">
+                                {% include [('@SyliusAdmin/Order/Label/State' ~ '/' ~ order.state ~ '.html.twig'), '@SyliusUi/Label/_default.html.twig'] with {'value': ('sylius.ui.' ~ order.state)|trans} %}
+                            </div>
+                            <div class="item">
+                                {{ flags.fromLocaleCode(order.localeCode) }}{{ order.localeCode|locale }}
+                            </div>
+                            <div class="item">
+                                {{ 'sylius.ui.purchased_from'|trans }}
+                                <span class="ui large empty horizontal circular label" style="background-color: {{ order.channel.color }}"></span> <strong>{{ order.channel }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h1>
+        </div>
+    </div>
+    <div class="ui stackable grid">
+        <div class="twelve wide column">
+            <div class="ui segment">
+                {% include '@SyliusAdmin/Order/Show/_summary.html.twig' %}
+            </div>
+        </div>
+        <div class="four wide column">
+            <div class="ui fluid card" id="customer">
+                <div class="content">
+                    <span class="header sylius-customer-name">{{ order.customer.fullName }}</span>
+                    <div class="meta">
+                        <span class="date">{{ 'sylius.ui.customer_since'|trans }} {{ order.customer.createdAt|format_date }}.</span>
+                    </div>
+                </div>
+                <div class="extra content">
+                    <a href="mailto:{{ order.customer.email }}">
+                        <i class="envelope icon"></i>
+                        {{ order.customer.email }}
+                    </a>
+                </div>
+                {% if order.customer.phoneNumber is not empty %}
+                    <div class="extra content">
+                    <span>
+                        <i class="phone icon"></i>
+                        {{ order.customer.phoneNumber }}
+                    </span>
+                    </div>
+                {% endif %}
+                {% if order.customerIp is defined and order.customerIp is not empty %}
+                    <div class="extra content" id="ipAddress">
+                    <span>
+                        <i class="desktop icon"></i>
+                        {{ order.customerIp }}
+                    </span>
+                    </div>
+                {% endif %}
+            </div>
+            <h4 class="ui top attached styled header">
+                {{ 'sylius.ui.shipping_address'|trans }}
+            </h4>
+            <div class="ui attached segment" id="shipping-address">
+                {% include '@SyliusAdmin/Common/_address.html.twig' with {'address': order.shippingAddress} %}
+            </div>
+            <h4 class="ui attached styled header">
+                {{ 'sylius.ui.billing_address'|trans }}
+            </h4>
+            <div class="ui attached segment" id="billing-address">
+                {% include '@SyliusAdmin/Common/_address.html.twig' with {'address': order.billingAddress} %}
+            </div>
+        </div>
+    </div>
+    <div class="ui stackable grid">
+        <div class="eight wide column">
+            <div class="ui segment">
+                {% if order.hasPayments %}
+                    <h3 class="ui dividing header">{{ 'sylius.ui.payments'|trans }}</h3>
+                    <div class="ui relaxed divided list" id="sylius-payments">
+                        {% for payment in order.payments %}
+                            {% include '@SyliusAdmin/Order/Show/_payment.html.twig' %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="eight wide column">
+            <div class="ui segment">
+                {% if order.hasShipments %}
+                    <h3 class="ui dividing header" id="shipping-state">{{ 'sylius.ui.shipments'|trans }}</h3>
+                    <div class="ui relaxed divided list" id="sylius-shipments">
+                        {% for shipment in order.shipments %}
+                            {% include '@SyliusAdmin/Order/Show/_shipment.html.twig' %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="ui divider"></div>
+
+    {{ form(form, {
+        'action': path('sylius_admin_order_creation_order_create', {'customerEmail': app.request.attributes.get('customerEmail')}),
+        'attr': {'style': 'display: none;', 'novalidate': 'novalidate', 'id': form.vars.id },
+        'method': 'POST'
+    }) }}
+    <button type="submit" form="{{ form.vars.name }}" class="ui button green">{{ 'sylius_admin_order_creation.ui.confirm'|trans }}</button>
+{% endblock %}

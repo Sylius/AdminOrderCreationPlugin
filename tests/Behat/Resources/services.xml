@@ -8,10 +8,12 @@
         <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderIndexPage" parent="sylius.behat.page.admin.order.index" />
         <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderShowPage" parent="sylius.behat.page.admin.order.show" />
         <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\ReorderPage" parent="sylius.behat.symfony_page" />
+        <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderPreviewPage" parent="sylius.behat.symfony_page" />
 
         <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Context\Admin\ManagingOrdersContext">
             <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderIndexPage"/>
             <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\NewOrderCustomerPage" />
+            <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderPreviewPage" />
             <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderShowPage" />
             <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\ReorderPage" />
             <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Admin\OrderCreateFormElement" />
