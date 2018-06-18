@@ -192,7 +192,7 @@ final class OrderFactory implements OrderFactoryInterface
 
             /** @var ShipmentInterface $newShipment */
             $newShipment = $this->shipmentFactory->createNew();
-            $newShipment->setOrder($order);
+            $newShipment->setOrder($reorder);
             $newShipment->setMethod($shipment->getMethod());
 
             $reorder->addShipment($newShipment);
@@ -216,7 +216,7 @@ final class OrderFactory implements OrderFactoryInterface
 
             /** @var PaymentInterface $newPayment */
             $newPayment = $this->paymentFactory->createNew();
-            $newPayment->setOrder($order);
+            $newPayment->setOrder($reorder);
             $newPayment->setMethod($payment->getMethod());
 
             $reorder->addPayment($newPayment);

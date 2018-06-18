@@ -1,6 +1,6 @@
 @reordering @ui
 Feature: Reordering previously placed order with different data
-    In order to reorder the same order as a Customer placed before in the name of this Customer
+    In order to reorder an order placed by Customer in the name of this Customer
     As an Administrator
     I want to be able to reorder a previously placed order with different data in Admin panel
 

@@ -89,6 +89,8 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
 
     public function selectPaymentMethod(string $paymentMethodName): void
     {
+        $this->clickOnTabAndWait('Shipments & Payments');
+
         $paymentsCollection = $this->getDocument()->find('css', '#sylius_admin_order_creation_new_order_payments');
 
         $paymentsCollection->clickLink('Add');

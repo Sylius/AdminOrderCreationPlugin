@@ -26,13 +26,13 @@ Feature: Reordering previously placed order
 
     Scenario: Having shipping address section filled with address information taken from previously placed order
         When I reorder the order "#00000666"
-        Then the address "Jon Snow", "Frost Alley", "90210", "Ankh-Morpork", "United States" should be filled as shipping address
+        Then the address "Jon Snow", "Frost Alley", "90210", "Ankh-Morpork", "United States" should be specified as shipping address
 
-    Scenario: Having shipping method chosen with option taken from previously placed order
+    Scenario: Having shipping method taken from previously placed order
         When I reorder the order "#00000666"
         Then the "DHL" shipping method should be selected
 
-    Scenario: Having payment method chosen with option taken from previously placed order
+    Scenario: Having payment method taken from previously placed order
         When I reorder the order "#00000666"
         Then the "Bank Transfer" payment method should be selected
 

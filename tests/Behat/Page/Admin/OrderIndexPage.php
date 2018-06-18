@@ -38,9 +38,7 @@ final class OrderIndexPage extends IndexPage implements OrderIndexPageInterface
             $rows = $this->tableAccessor->getRowsWithFields($this->getElement('table'), $parameters);
 
             return count($rows);
-        } catch (\InvalidArgumentException $exception) {
-            return 0;
-        } catch (ElementNotFoundException $exception) {
+        } catch (\Exception $exception) {
             return 0;
         }
     }
