@@ -14,7 +14,7 @@ Feature: Reordering previously placed order
         And the store has a payment method "Paypal" with a code "PAYPAL" and Paypal Express Checkout gateway
         And there is a customer account "jon.snow@the-wall.com"
         And a customer "jon.snow@the-wall.com" placed an order "#00000666"
-        And the customer bought a single "Stark Coat"
+        And the customer bought 2 "Stark Coat" products
         And the customer "Jon Snow" addressed it to "Frost Alley", "90210" "Ankh-Morpork" in the "United States"
         And for the billing address of "Ned Stark" in the "Elm Street", "444" "Rivendell", "United States"
         And the customer chose "DHL" shipping method with "Bank Transfer" payment
@@ -36,6 +36,11 @@ Feature: Reordering previously placed order
         When I reorder the order "#00000666"
         Then the "Bank Transfer" payment method should be selected
 
+    @todo
+    Scenario: Having products taken from previously placed order
+        When I reorder the order "#00000666"
+        Then 2 "Stark Coat" products should be added
+
     Scenario: Reordering previously placed order with the same addresses
         When I reorder the order "#00000666"
         And I place this order
@@ -56,4 +61,13 @@ Feature: Reordering previously placed order
         And I place this order
         Then I should be notified that order has been successfully created
         And this order payment method should be "Bank Transfer"
+        And there should be 2 not paid nor shipped orders for "jon.snow@the-wall.com" in the registry
+
+    @todo
+    Scenario: Reordering previously placed order with the same products
+        When I reorder the order "#00000666"
+        And I place this order
+        Then I should be notified that order has been successfully created
+        And this order payment method should be "Bank Transfer"
+        And the product named "Stark Coat" should be in the items list
         And there should be 2 not paid nor shipped orders for "jon.snow@the-wall.com" in the registry
