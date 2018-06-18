@@ -191,7 +191,7 @@ final class ManagingOrdersContext implements Context
      */
     public function placeAndConfirmThisOrder(): void
     {
-        $this->orderCreatePage->placeOrder();
+        $this->orderCreateFormElement->placeOrder();
         $this->orderPreviewPage->confirm();
     }
 

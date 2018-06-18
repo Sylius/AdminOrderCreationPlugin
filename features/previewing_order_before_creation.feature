@@ -1,6 +1,6 @@
 @managing_orders
 Feature: Previewing order before creation
-    In order to be sure about details about the order I am placing
+    In order to be sure about details of the order I am placing
     As an Administrator
     I want to see order preview before placing it
 
