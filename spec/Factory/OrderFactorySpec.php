@@ -11,21 +11,28 @@ use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Core\Model\PaymentInterface;
+use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
+use Sylius\Component\Core\Model\ShipmentInterface;
+use Sylius\Component\Core\Model\ShippingMethodInterface;
 use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 use Sylius\Component\Currency\Model\CurrencyInterface;
 use Sylius\Component\Locale\Model\LocaleInterface;
 use Sylius\Component\Order\Modifier\OrderItemQuantityModifierInterface;
 use Sylius\Component\Order\Modifier\OrderModifierInterface;
+use Sylius\Component\Payment\Factory\PaymentFactoryInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class OrderFactorySpec extends ObjectBehavior
 {
     function let(
-        FactoryInterface $orderFactory,
+        FactoryInterface $decoratedFactory,
         FactoryInterface $customerFactory,
         FactoryInterface $orderItemFactory,
+        FactoryInterface $shipmentFactory,
+        PaymentFactoryInterface $paymentFactory,
         CustomerRepositoryInterface $customerRepository,
         ChannelRepositoryInterface $channelRepository,
         RepositoryInterface $currencyRepository,
@@ -34,9 +41,11 @@ final class OrderFactorySpec extends ObjectBehavior
         OrderItemQuantityModifierInterface $orderItemQuantityModifier
     ) {
         $this->beConstructedWith(
-            $orderFactory,
+            $decoratedFactory,
             $customerFactory,
             $orderItemFactory,
+            $shipmentFactory,
+            $paymentFactory,
             $customerRepository,
             $channelRepository,
             $currencyRepository,
@@ -51,15 +60,15 @@ final class OrderFactorySpec extends ObjectBehavior
         $this->shouldImplement(OrderFactoryInterface::class);
     }
 
-    function it_delegates_creating_new_order(FactoryInterface $orderFactory, OrderInterface $order): void
+    function it_delegates_creating_new_order(FactoryInterface $decoratedFactory, OrderInterface $order): void
     {
-        $orderFactory->createNew()->willReturn($order);
+        $decoratedFactory->createNew()->willReturn($order);
 
         $this->createNew()->shouldReturn($order);
     }
 
     function it_creates_order_for_customer_with_default_channel_locale_and_currency(
-        FactoryInterface $orderFactory,
+        FactoryInterface $decoratedFactory,
         CustomerRepositoryInterface $customerRepository,
         ChannelRepositoryInterface $channelRepository,
         RepositoryInterface $currencyRepository,
@@ -70,7 +79,7 @@ final class OrderFactorySpec extends ObjectBehavior
         CurrencyInterface $currency,
         LocaleInterface $locale
     ): void {
-        $orderFactory->createNew()->willReturn($order);
+        $decoratedFactory->createNew()->willReturn($order);
         $customerRepository->findOneBy(['email' => 'customer@example.com'])->willReturn($customer);
         $channelRepository->findOneBy(['enabled' => true])->willReturn($channel);
 
@@ -89,7 +98,7 @@ final class OrderFactorySpec extends ObjectBehavior
     }
 
     function it_creates_order_for_new_customer_with_default_channel_locale_and_currency(
-        FactoryInterface $orderFactory,
+        FactoryInterface $decoratedFactory,
         FactoryInterface $customerFactory,
         CustomerRepositoryInterface $customerRepository,
         ChannelRepositoryInterface $channelRepository,
@@ -101,7 +110,7 @@ final class OrderFactorySpec extends ObjectBehavior
         CurrencyInterface $currency,
         LocaleInterface $locale
     ): void {
-        $orderFactory->createNew()->willReturn($order);
+        $decoratedFactory->createNew()->willReturn($order);
         $customerRepository->findOneBy(['email' => 'customer@example.com'])->willReturn(null);
 
         $customerFactory->createNew()->willReturn($customer);
@@ -124,14 +133,22 @@ final class OrderFactorySpec extends ObjectBehavior
     }
 
     function it_creates_order_from_an_existing_order(
-        FactoryInterface $orderFactory,
+        FactoryInterface $decoratedFactory,
         FactoryInterface $orderItemFactory,
+        FactoryInterface $shipmentFactory,
+        PaymentFactoryInterface $paymentFactory,
         OrderModifierInterface $orderModifier,
         OrderItemQuantityModifierInterface $orderItemQuantityModifier,
         OrderInterface $order,
         OrderInterface $reorder,
         ChannelInterface $channel,
         CustomerInterface $customer,
+        ShipmentInterface $shipment,
+        ShipmentInterface $newShipment,
+        ShippingMethodInterface $shippingMethod,
+        PaymentInterface $payment,
+        PaymentInterface $newPayment,
+        PaymentMethodInterface $paymentMethod,
         OrderItemInterface $firstOrderItem,
         OrderItemInterface $secondOrderItem,
         OrderItemInterface $firstNewOrderItem,
@@ -141,7 +158,7 @@ final class OrderFactorySpec extends ObjectBehavior
         AddressInterface $shippingAddress,
         AddressInterface $billingAddress
     ): void {
-        $orderFactory->createNew()->willReturn($reorder);
+        $decoratedFactory->createNew()->willReturn($reorder);
         $order->getChannel()->willReturn($channel);
         $order->getCustomer()->willReturn($customer);
         $order->getCurrencyCode()->willReturn('USD');
@@ -157,6 +174,30 @@ final class OrderFactorySpec extends ObjectBehavior
         $reorder->setNotes('test_notes')->shouldBeCalled();
         $reorder->setBillingAddress($billingAddress)->shouldBeCalled();
         $reorder->setShippingAddress($shippingAddress)->shouldBeCalled();
+
+        $order->hasShipments()->willReturn(true);
+        $order->getShipments()->willReturn(new ArrayCollection([$shipment->getWrappedObject()]));
+
+        $shipment->getState()->willReturn(ShipmentInterface::STATE_SHIPPED);
+        $shipment->getMethod()->willReturn($shippingMethod);
+
+        $shipmentFactory->createNew()->willReturn($newShipment);
+        $newShipment->setOrder($reorder)->shouldBeCalled();
+        $newShipment->setMethod($shippingMethod)->shouldBeCalled();
+
+        $reorder->addShipment($newShipment)->shouldBeCalled();
+
+        $order->hasPayments()->willReturn(true);
+        $order->getPayments()->willReturn(new ArrayCollection([$payment->getWrappedObject()]));
+
+        $payment->getState()->willReturn(PaymentInterface::STATE_COMPLETED);
+        $payment->getMethod()->willReturn($paymentMethod);
+
+        $paymentFactory->createNew()->willReturn($newPayment);
+        $newPayment->setOrder($reorder)->shouldBeCalled();
+        $newPayment->setMethod($paymentMethod)->shouldBeCalled();
+
+        $reorder->addPayment($newPayment)->shouldBeCalled();
 
         $order->getItems()->willReturn(new ArrayCollection([
             $firstOrderItem->getWrappedObject(),

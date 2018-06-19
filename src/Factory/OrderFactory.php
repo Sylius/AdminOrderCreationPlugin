@@ -9,12 +9,15 @@ use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
+use Sylius\Component\Core\Model\ShipmentInterface;
 use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 use Sylius\Component\Currency\Model\CurrencyInterface;
 use Sylius\Component\Locale\Model\LocaleInterface;
 use Sylius\Component\Order\Modifier\OrderItemQuantityModifierInterface;
 use Sylius\Component\Order\Modifier\OrderModifierInterface;
+use Sylius\Component\Payment\Factory\PaymentFactoryInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
@@ -28,6 +31,12 @@ final class OrderFactory implements OrderFactoryInterface
 
     /** @var FactoryInterface */
     private $orderItemFactory;
+
+    /** @var FactoryInterface */
+    private $shipmentFactory;
+
+    /** @var PaymentFactoryInterface */
+    private $paymentFactory;
 
     /** @var CustomerRepositoryInterface */
     private $customerRepository;
@@ -51,6 +60,8 @@ final class OrderFactory implements OrderFactoryInterface
         FactoryInterface $decoratedFactory,
         FactoryInterface $customerFactory,
         FactoryInterface $orderItemFactory,
+        FactoryInterface $shipmentFactory,
+        PaymentFactoryInterface $paymentFactory,
         CustomerRepositoryInterface $customerRepository,
         ChannelRepositoryInterface $channelRepository,
         RepositoryInterface $currencyRepository,
@@ -61,6 +72,8 @@ final class OrderFactory implements OrderFactoryInterface
         $this->decoratedFactory = $decoratedFactory;
         $this->customerFactory = $customerFactory;
         $this->orderItemFactory = $orderItemFactory;
+        $this->shipmentFactory = $shipmentFactory;
+        $this->paymentFactory = $paymentFactory;
         $this->customerRepository = $customerRepository;
         $this->channelRepository = $channelRepository;
         $this->currencyRepository = $currencyRepository;
@@ -117,6 +130,8 @@ final class OrderFactory implements OrderFactoryInterface
         $reorder->setBillingAddress(clone $billingAddress);
         $reorder->setShippingAddress(clone $shippingAddress);
 
+        $this->copyShipmentToReorder($order, $reorder);
+        $this->copyPaymentToReorder($order, $reorder);
         $this->copyOrderItemsToReorder($order, $reorder);
 
         return $reorder;
@@ -160,6 +175,51 @@ final class OrderFactory implements OrderFactoryInterface
 
             $this->orderItemQuantityModifier->modify($newItem, $orderItem->getQuantity());
             $this->orderModifier->addToOrder($reorder, $newItem);
+        }
+    }
+
+    private function copyShipmentToReorder(OrderInterface $order, OrderInterface $reorder): void
+    {
+        if (!$order->hasShipments()) {
+            return;
+        }
+
+        /** @var ShipmentInterface $shipment */
+        foreach ($order->getShipments() as $shipment) {
+            if (ShipmentInterface::STATE_CANCELLED === $shipment->getState()) {
+                continue;
+            }
+
+            /** @var ShipmentInterface $newShipment */
+            $newShipment = $this->shipmentFactory->createNew();
+            $newShipment->setOrder($reorder);
+            $newShipment->setMethod($shipment->getMethod());
+
+            $reorder->addShipment($newShipment);
+        }
+    }
+
+    private function copyPaymentToReorder(OrderInterface $order, OrderInterface $reorder): void
+    {
+        if (!$order->hasPayments()) {
+            return;
+        }
+
+        /** @var PaymentInterface $payment */
+        foreach ($order->getPayments() as $payment) {
+            if (
+                PaymentInterface::STATE_CANCELLED === $payment->getState() ||
+                PaymentInterface::STATE_FAILED === $payment->getState()
+            ) {
+                continue;
+            }
+
+            /** @var PaymentInterface $newPayment */
+            $newPayment = $this->paymentFactory->createNew();
+            $newPayment->setOrder($reorder);
+            $newPayment->setMethod($payment->getMethod());
+
+            $reorder->addPayment($newPayment);
         }
     }
 }

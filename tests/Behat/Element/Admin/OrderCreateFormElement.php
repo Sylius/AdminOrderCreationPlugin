@@ -89,6 +89,8 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
 
     public function selectPaymentMethod(string $paymentMethodName): void
     {
+        $this->clickOnTabAndWait('Shipments & Payments');
+
         $paymentsCollection = $this->getDocument()->find('css', '#sylius_admin_order_creation_new_order_payments');
 
         $paymentsCollection->clickLink('Add');
@@ -144,6 +146,16 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         return $this->getPreFilledAddress(self::TYPE_SHIPPING);
     }
 
+    public function getShippingMethodName(): string
+    {
+        return $this->getElement('selected_shipping_method')->getText();
+    }
+
+    public function getPaymentMethodName(): string
+    {
+        return $this->getElement('selected_payment_method')->getText();
+    }
+
     protected function getDefinedElements(): array
     {
         return array_merge(parent::getDefinedElements(), [
@@ -153,6 +165,8 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
             'billing_last_name' => '#sylius_admin_order_creation_new_order_billingAddress_lastName',
             'billing_street' => '#sylius_admin_order_creation_new_order_billingAddress_street',
             'billing_postcode' => '#sylius_admin_order_creation_new_order_billingAddress_postcode',
+            'selected_payment_method' => '#sylius_admin_order_creation_new_order_payments_0_method option[selected="selected"]',
+            'selected_shipping_method' => '#sylius_admin_order_creation_new_order_shipments_0_method option[selected="selected"]',
             'shipping_city' => '#sylius_admin_order_creation_new_order_shippingAddress_city',
             'shipping_country' => '#sylius_admin_order_creation_new_order_shippingAddress_countryCode',
             'shipping_first_name' => '#sylius_admin_order_creation_new_order_shippingAddress_firstName',

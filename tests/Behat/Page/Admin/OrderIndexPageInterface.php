@@ -9,4 +9,6 @@ use Sylius\Behat\Page\Admin\Order\IndexPageInterface;
 interface OrderIndexPageInterface extends IndexPageInterface
 {
     public function createOrder(): void;
+
+    public function countOrders(array $parameters): int;
 }
