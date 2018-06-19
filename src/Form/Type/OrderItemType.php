@@ -35,7 +35,7 @@ final class OrderItemType extends AbstractResourceType
             ->add('quantity', IntegerType::class, [
                 'attr' => ['min' => 1],
                 'label' => 'sylius.ui.quantity',
-                'data' => 1,
+                'empty_data' => 1,
             ])
             ->add('variant', ResourceAutocompleteChoiceType::class, [
                 'label' => 'sylius.ui.variant',

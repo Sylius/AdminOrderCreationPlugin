@@ -20,3 +20,15 @@
         'action': path('sylius_admin_order_creation_reorder', {'id': app.request.attributes.get('id')})
     } %}
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        $(document).ready(function() {
+            $('[data-form-collection="item"] .sylius-autocomplete.dropdown').each(function() {
+                $(this).dropdown('set text', $(this).find('input[type="hidden"]').val());
+            });
+        });
+    </script>
+{% endblock %}

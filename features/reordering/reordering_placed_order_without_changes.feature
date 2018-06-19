@@ -36,7 +36,7 @@ Feature: Reordering previously placed order
         When I reorder the order "#00000666"
         Then the "Bank Transfer" payment method should be selected
 
-    @todo
+    @javascript
     Scenario: Having products taken from previously placed order
         When I reorder the order "#00000666"
         Then 2 "Stark Coat" products should be added
@@ -63,7 +63,6 @@ Feature: Reordering previously placed order
         And this order payment method should be "Bank Transfer"
         And there should be 2 not paid nor shipped orders for "jon.snow@the-wall.com" in the registry
 
-    @todo
     Scenario: Reordering previously placed order with the same products
         When I reorder the order "#00000666"
         And I place this order

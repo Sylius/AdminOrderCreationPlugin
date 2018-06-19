@@ -50,10 +50,8 @@ Feature: Reordering previously placed order with different data
         And there should be a payment link sent to "jon.snow@the-wall.com"
         And there should be 2 not paid nor shipped orders for "jon.snow@the-wall.com" in the registry
 
-    @todo
     Scenario: Reordering previously placed order with different products
         When I reorder the order "#00000666"
-        And I place this order
         And I add 3 of "Greyjoy Boat" to this order
         And I add "Targaryen Shield" to this order
         And I remove "Stark Coat" from this order
