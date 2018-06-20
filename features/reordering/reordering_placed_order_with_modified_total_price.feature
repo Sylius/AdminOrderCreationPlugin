@@ -1,8 +1,8 @@
 @reordering @ui @javascript
-Feature: Reordering previously placed order with modified unit price
-    In order to reorder an order placed by Customer with custom unit price in the name of this Customer
+Feature: Reordering previously placed order with modified total price
+    In order to reorder an order placed by Customer with custom order total price in the name of this Customer
     As an Administrator
-    I want to be able to reorder a previously placed order with modified unit price in Admin panel
+    I want to be able to reorder a previously placed order with modified order total price in Admin panel
 
     Background:
         Given the store operates on a single channel in "United States"
@@ -17,15 +17,15 @@ Feature: Reordering previously placed order with modified unit price
         And the customer chose "Free" shipping method with "Cash on Delivery" payment
         And I am logged in as an administrator
 
-    Scenario: Reordering previously placed order with modified unit price
+    Scenario: Reordering previously placed order with modified total price
         When I reorder the order "#00000666"
-        And I specify item with "Stark Coat" price as "$50.00"
+        And I specify order price as "$123.45"
         And I place this order
         Then I should be notified that order has been successfully created
-        And the order's total should be "$50.00"
+        And the order's total should be "$123.45"
 
-    Scenario: Trying to reorder previously placed order with modified unit price below 0
+    Scenario: Trying to reorder previously placed order with modified total price below 0
         When I reorder the order "#00000666"
-        And I specify item with "Stark Coat" price as "-$50.00"
+        And I specify order price as "-$50.00"
         And I place this order
-        Then I should be notified that item with "Stark Coat" price cannot be below 0
+        Then I should be notified that order price cannot be below 0
