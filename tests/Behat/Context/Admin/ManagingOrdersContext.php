@@ -116,7 +116,7 @@ final class ManagingOrdersContext implements Context
      */
     public function removeProductFromThisOrder(ProductInterface $product): void
     {
-        $this->orderCreateFormElement->removeProduct($product->getName());
+        $this->orderCreateFormElement->removeProduct($product->getCode());
     }
 
     /**
@@ -165,7 +165,7 @@ final class ManagingOrdersContext implements Context
     public function specifyItemWithProductUnitPriceAs(ProductInterface $product, string $price): void
     {
         $this->orderCreateFormElement->specifyUnitPrice(
-            $product->getName(),
+            $product->getCode(),
             str_replace(['$', '€', '£'], '', $price)
         );
     }
@@ -220,7 +220,7 @@ final class ManagingOrdersContext implements Context
     public function shouldBeNotifiedThatItemWithProductPriceCannotBeBelow0(ProductInterface $product): void
     {
         Assert::true(
-            $this->orderCreateFormElement->hasUnitPriceValidationMessage($product->getName(), 'Price cannot be below 0')
+            $this->orderCreateFormElement->hasUnitPriceValidationMessage($product->getCode(), 'Price cannot be below 0')
         );
     }
 
@@ -400,5 +400,21 @@ final class ManagingOrdersContext implements Context
             $this->orderCreateFormElement->getPaymentMethodName(),
             $paymentMethodName
         );
+    }
+
+    /**
+     * @Then the product named :productName should not be in the items list
+     */
+    public function theProductShouldNotBeInTheItemsList(string $productName): void
+    {
+        Assert::false($this->orderShowPage->isProductInTheList($productName));
+    }
+
+    /**
+     * @Then :quantity :product products should be added
+     */
+    public function productsShouldBeAdded(int $quantity, ProductInterface $product): void
+    {
+        Assert::true($this->orderCreateFormElement->hasProductWithQuantity($product->getCode(), $quantity));
     }
 }

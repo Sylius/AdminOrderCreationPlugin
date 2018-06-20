@@ -12,7 +12,9 @@ interface OrderCreateFormElementInterface
 
     public function addMultipleProducts(string $productName, int $quantity): void;
 
-    public function removeProduct(string $productName): void;
+    public function removeProduct(string $productCode): void;
+
+    public function hasProductWithQuantity(string $productCode, int $quantity): bool;
 
     public function specifyShippingAddress(AddressInterface $address): void;
 
@@ -24,13 +26,13 @@ interface OrderCreateFormElementInterface
 
     public function specifyOrderPrice(string $orderPrice): void;
 
-    public function specifyUnitPrice(string $itemProductName, string $unitPrice): void;
+    public function specifyUnitPrice(string $itemProductCode, string $unitPrice): void;
 
     public function placeOrder(): void;
 
     public function hasOrderPriceValidationMessage(string $message): bool;
 
-    public function hasUnitPriceValidationMessage(string $productName, string $message): bool;
+    public function hasUnitPriceValidationMessage(string $productCode, string $message): bool;
 
     public function getPreFilledBillingAddress(): AddressInterface;
 

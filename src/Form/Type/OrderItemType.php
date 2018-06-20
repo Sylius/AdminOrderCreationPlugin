@@ -12,6 +12,8 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\DataMapperInterface;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class OrderItemType extends AbstractResourceType
@@ -35,7 +37,7 @@ final class OrderItemType extends AbstractResourceType
             ->add('quantity', IntegerType::class, [
                 'attr' => ['min' => 1],
                 'label' => 'sylius.ui.quantity',
-                'data' => 1,
+                'empty_data' => 1,
             ])
             ->add('variant', ResourceAutocompleteChoiceType::class, [
                 'label' => 'sylius.ui.variant',
@@ -48,6 +50,15 @@ final class OrderItemType extends AbstractResourceType
                 //temporary solution
                 'currency' => 'USD',
             ])
+            ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
+                $data = $event->getData();
+                if (empty($data['quantity'])) {
+                    $data['quantity'] = "1";
+                }
+
+                $event->setData($data);
+
+            })
             ->setDataMapper($this->dataMapper)
         ;
     }

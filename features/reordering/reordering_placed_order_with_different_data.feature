@@ -1,4 +1,4 @@
-@reordering @ui
+@reordering @ui @javascript
 Feature: Reordering previously placed order with different data
     In order to reorder an order placed by Customer in the name of this Customer
     As an Administrator
@@ -7,6 +7,8 @@ Feature: Reordering previously placed order with different data
     Background:
         Given the store operates on a single channel in "United States"
         And the store has a product "Stark Coat" priced at "$100.00"
+        And the store has a product "Greyjoy Boat" priced at "$300.00"
+        And the store has a product "Targaryen Shield" priced at "$200.00"
         And the store ships everywhere for free
         And the store has "DHL" shipping method with "$10.00" fee
         And the store allows paying with "Cash on Delivery"
@@ -19,7 +21,6 @@ Feature: Reordering previously placed order with different data
         And the customer chose "Free" shipping method with "Cash on Delivery" payment
         And I am logged in as an administrator
 
-    @javascript
     Scenario: Reordering previously placed order with different addresses
         When I reorder the order "#00000666"
         And I specify this order shipping address as "Los Angeles", "Frost Alley", "90210", "United States" for "Lucifer Morningstar"
@@ -30,7 +31,6 @@ Feature: Reordering previously placed order with different data
         And this order billing address should be "Mazikeen Lilim", "Pacific Coast Hwy", "90806", "Los Angeles", "United States"
         And there should be 2 not paid nor shipped orders for "jon.snow@the-wall.com" in the registry
 
-    @javascript
     Scenario: Reordering previously placed order with different shipping method
         When I reorder the order "#00000666"
         And I select "DHL" shipping method
@@ -39,7 +39,7 @@ Feature: Reordering previously placed order with different data
         And this order shipping method should be "DHL"
         And there should be 2 not paid nor shipped orders for "jon.snow@the-wall.com" in the registry
 
-    @javascript @email
+    @email
     Scenario: Reordering previously placed order with different payment method
         When I reorder the order "#00000666"
         And I select "Paypal" payment method
@@ -48,4 +48,16 @@ Feature: Reordering previously placed order with different data
         And this order payment method should be "Paypal"
         And there should be a payment link displayed next to order's payment
         And there should be a payment link sent to "jon.snow@the-wall.com"
+        And there should be 2 not paid nor shipped orders for "jon.snow@the-wall.com" in the registry
+
+    Scenario: Reordering previously placed order with different products
+        When I reorder the order "#00000666"
+        And I add 3 of "Greyjoy Boat" to this order
+        And I add "Targaryen Shield" to this order
+        And I remove "Stark Coat" from this order
+        And I place this order
+        Then I should be notified that order has been successfully created
+        And the product named "Greyjoy Boat" should be in the items list
+        And the product named "Targaryen Shield" should be in the items list
+        And the product named "Stark Coat" should not be in the items list
         And there should be 2 not paid nor shipped orders for "jon.snow@the-wall.com" in the registry

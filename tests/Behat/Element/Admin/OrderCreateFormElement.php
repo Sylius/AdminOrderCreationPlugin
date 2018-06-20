@@ -47,12 +47,19 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         $item->fillField('Quantity', $quantity);
     }
 
-    public function removeProduct(string $productName): void
+    public function removeProduct(string $productCode): void
     {
-        $item = $this->getItemWithProductSelected($productName);
+        $item = $this->getItemWithProductSelected($productCode);
         $item->focus();
 
         $item->clickLink('Delete');
+    }
+
+    public function hasProductWithQuantity(string $productCode, int $quantity): bool
+    {
+        $item = $this->getItemWithProductSelected($productCode);
+
+        return (int) $item->find('css', '.item-quantity')->getValue() === $quantity;
     }
 
     public function specifyShippingAddress(AddressInterface $address): void
@@ -108,9 +115,9 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         $this->getDocument()->fillField('Order price', $orderPrice);
     }
 
-    public function specifyUnitPrice(string $itemProductName, string $unitPrice): void
+    public function specifyUnitPrice(string $itemProductCode, string $unitPrice): void
     {
-        $item = $this->getItemWithProductSelected($itemProductName);
+        $item = $this->getItemWithProductSelected($itemProductCode);
 
         $item->fillField('Unit price', $unitPrice);
     }
@@ -129,9 +136,9 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         return null !== $customTotalElement->find('css', sprintf('.sylius-validation-error:contains("%s")', $message));
     }
 
-    public function hasUnitPriceValidationMessage(string $productName, string $message): bool
+    public function hasUnitPriceValidationMessage(string $productCode, string $message): bool
     {
-        $item = $this->getItemWithProductSelected($productName);
+        $item = $this->getItemWithProductSelected($productCode);
 
         return null !== $item->find('css', sprintf('.sylius-validation-error:contains("%s")', $message));
     }
@@ -203,18 +210,18 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         return count($this->getDocument()->findAll('css', '#items [data-form-collection="item"]'));
     }
 
-    private function getItemWithProductSelected(string $productName): NodeElement
+    private function getItemWithProductSelected(string $productCode): NodeElement
     {
         /** @var NodeElement $item */
         foreach ($this->getDocument()->findAll('css', '#items [data-form-collection="item"]') as $item) {
             $selectedProduct = $item->find('css', '.sylius-autocomplete .text')->getText();
 
-            if (strpos($selectedProduct, $productName) !== false) {
+            if (strpos($selectedProduct, $productCode) !== false) {
                 return $item;
             }
         }
 
-        throw new \Exception(sprintf('There is no item with product with name "%d" selected', $productName));
+        throw new \Exception(sprintf('There is no item with product with code "%s" selected', $productCode));
     }
 
     private function clickOnTabAndWait(string $tabName): void
