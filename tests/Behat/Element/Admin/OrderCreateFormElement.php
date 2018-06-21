@@ -122,6 +122,13 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         $item->fillField('Unit price', $unitPrice);
     }
 
+    public function specifyQuantity(string $itemProductCode, int $quantity): void
+    {
+        $item = $this->getItemWithProductSelected($itemProductCode);
+
+        $item->fillField('Quantity', $quantity);
+    }
+
     public function placeOrder(): void
     {
         $this->getDocument()->pressButton('Create');
