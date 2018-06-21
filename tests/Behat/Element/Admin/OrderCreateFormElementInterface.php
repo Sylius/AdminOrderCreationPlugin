@@ -28,6 +28,8 @@ interface OrderCreateFormElementInterface
 
     public function specifyUnitPrice(string $itemProductCode, string $unitPrice): void;
 
+    public function specifyQuantity(string $itemProductCode, int $quantity): void;
+
     public function placeOrder(): void;
 
     public function hasOrderPriceValidationMessage(string $message): bool;

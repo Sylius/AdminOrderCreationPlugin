@@ -171,6 +171,14 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
+     * @When I change quantity of item :product to :quantity
+     */
+    public function iChangeQuantityOfItemTo(ProductInterface $product, int $quantity): void
+    {
+        $this->orderCreateFormElement->specifyQuantity($product->getCode(), $quantity);
+    }
+
+    /**
      * @When I place this order
      */
     public function placeThisOrder(): void
