@@ -43,6 +43,12 @@ to
 app/Resources/SyliusAdminBundle/
 ```
 
+Install FOSJsRoutingBundle assets:
+
+```
+bin/console assets:install --symlink web
+```
+
 Clear cache:
 
 ```bash
