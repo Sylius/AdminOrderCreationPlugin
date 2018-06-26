@@ -10,7 +10,7 @@
         </service>
 
         <service id="Sylius\AdminOrderCreationPlugin\Controller\OrderPreviewAction">
-            <argument type="service" id="sylius.factory.order" />
+            <argument type="service" id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory" />
             <argument type="service" id="form.factory" />
             <argument type="service" id="sylius.order_processing.order_processor" />
             <argument type="service" id="twig" />
@@ -44,8 +44,8 @@
             <tag name="form.type" />
         </service>
 
-        <service id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory" decorates="sylius.factory.order" public="false">
-            <argument type="service" id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory.inner" />
+        <service id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory">
+            <argument type="service" id="sylius.factory.order" />
             <argument type="service" id="sylius.factory.customer" />
             <argument type="service" id="sylius.factory.order_item" />
             <argument type="service" id="sylius.factory.shipment" />

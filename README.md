@@ -40,8 +40,15 @@ vendor/sylius/admin-order-creation-plugin/src/Resources/views/SyliusAdminBundle/
 ```
 to
 ```
-app/Resources/SyliusAdminBundle/
+app/Resources/SyliusAdminBundle/views/
 ```
+
+Copy migrations from
+
+```
+vendor/sylius/admin-order-creation-plugin/migrations/
+```
+to your migrations directory and run `bin/console doctrine:migrations:migrate`
 
 Install FOSJsRoutingBundle assets:
 
