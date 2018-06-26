@@ -13,7 +13,7 @@ sylius_admin_order_creation_order_preview:
             form:
                 type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
             factory:
-                method: createForCustomer
+                method: ['expr:service("Sylius\\AdminOrderCreationPlugin\\Factory\\OrderFactory")', 'createForCustomer']
                 arguments: [$customerEmail]
 
 sylius_admin_order_creation_order_create:
@@ -31,7 +31,7 @@ sylius_admin_order_creation_order_create:
             form:
                 type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
             factory:
-                method: createForCustomer
+                method: ['expr:service("Sylius\\AdminOrderCreationPlugin\\Factory\\OrderFactory")', 'createForCustomer']
                 arguments: [$customerEmail]
 
 sylius_admin_order_creation_reorder:
@@ -49,7 +49,7 @@ sylius_admin_order_creation_reorder:
             form:
                 type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
             factory:
-                method: createFromExistingOrder
+                method: ['expr:service("Sylius\\AdminOrderCreationPlugin\\Factory\\OrderFactory")', 'createFromExistingOrder']
                 arguments: ["expr:service('sylius.repository.order').find($id)"]
 
 sylius_admin_order_creation_ajax:
