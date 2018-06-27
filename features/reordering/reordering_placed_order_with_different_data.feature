@@ -1,4 +1,4 @@
-@reordering @ui @javascript
+@admin_reordering @ui @javascript
 Feature: Reordering previously placed order with different data
     In order to reorder an order placed by Customer in the name of this Customer
     As an Administrator

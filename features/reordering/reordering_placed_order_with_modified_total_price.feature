@@ -1,4 +1,4 @@
-@reordering @ui @javascript
+@admin_reordering @ui @javascript
 Feature: Reordering previously placed order with modified total price
     In order to reorder an order placed by Customer with custom order total price in the name of this Customer
     As an Administrator
