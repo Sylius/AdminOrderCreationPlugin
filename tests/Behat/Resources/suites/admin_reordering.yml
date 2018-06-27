@@ -1,6 +1,6 @@
 default:
     suites:
-        ui_reordering:
+        ui_admin_reordering:
             contexts_services:
                 - sylius.behat.context.hook.doctrine_orm
                 - sylius.behat.context.hook.email_spool
@@ -38,4 +38,4 @@ default:
 
                 - Tests\Sylius\AdminOrderCreationPlugin\Behat\Context\Admin\ManagingOrdersContext
             filters:
-                tags: "@reordering && @ui"
+                tags: "@admin_reordering && @ui"
