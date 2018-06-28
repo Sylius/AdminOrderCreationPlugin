@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <defaults public="true" />
+
+        <service id="Sylius\AdminOrderCreationPlugin\ReorderProcessing\CompositeReorderProcessor" public="false" />
+
+        <service id="Sylius\AdminOrderCreationPlugin\ReorderProcessing\ReorderDataProcessor" >
+            <tag name="sylius_admin_order_creation.reorder_processor" priority="40"/>
+        </service>
+
+        <service id="Sylius\AdminOrderCreationPlugin\ReorderProcessing\ReorderShipmentProcessor">
+            <argument type="service" id="sylius.factory.shipment" />
+            <tag name="sylius_admin_order_creation.reorder_processor" priority="30" />
+        </service>
+
+        <service id="Sylius\AdminOrderCreationPlugin\ReorderProcessing\ReorderPaymentProcessor">
+            <argument type="service" id="sylius.factory.payment" />
+            <tag name="sylius_admin_order_creation.reorder_processor" priority="20" />
+        </service>
+
+        <service id="Sylius\AdminOrderCreationPlugin\ReorderProcessing\ReorderItemsProcessor">
+            <argument type="service" id="sylius.factory.order_item" />
+            <argument type="service" id="sylius.order_item_quantity_modifier" />
+            <argument type="service" id="sylius.order_modifier" />
+            <tag name="sylius_admin_order_creation.reorder_processor" priority="10" />
+        </service>
+    </services>
+</container>

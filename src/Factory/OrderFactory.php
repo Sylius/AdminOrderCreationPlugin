@@ -4,39 +4,23 @@ declare(strict_types=1);
 
 namespace Sylius\AdminOrderCreationPlugin\Factory;
 
-use Sylius\AdminOrderCreationPlugin\Entity\OrderItemInterface;
+use Sylius\AdminOrderCreationPlugin\ReorderProcessing\ReorderProcessor;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
-use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Core\Model\PaymentInterface;
-use Sylius\Component\Core\Model\ProductVariantInterface;
-use Sylius\Component\Core\Model\ShipmentInterface;
 use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 use Sylius\Component\Currency\Model\CurrencyInterface;
 use Sylius\Component\Locale\Model\LocaleInterface;
-use Sylius\Component\Order\Modifier\OrderItemQuantityModifierInterface;
-use Sylius\Component\Order\Modifier\OrderModifierInterface;
-use Sylius\Component\Payment\Factory\PaymentFactoryInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class OrderFactory implements OrderFactoryInterface
 {
     /** @var FactoryInterface */
-    private $decoratedFactory;
+    private $baseOrderFactory;
 
     /** @var FactoryInterface */
     private $customerFactory;
-
-    /** @var FactoryInterface */
-    private $orderItemFactory;
-
-    /** @var FactoryInterface */
-    private $shipmentFactory;
-
-    /** @var PaymentFactoryInterface */
-    private $paymentFactory;
 
     /** @var CustomerRepositoryInterface */
     private $customerRepository;
@@ -50,41 +34,31 @@ final class OrderFactory implements OrderFactoryInterface
     /** @var RepositoryInterface */
     private $localeRepository;
 
-    /** @var OrderModifierInterface */
-    private $orderModifier;
-
-    /** @var OrderItemQuantityModifierInterface */
-    private $orderItemQuantityModifier;
+    /** @var ReorderProcessor */
+    private $reorderProcessor;
 
     public function __construct(
-        FactoryInterface $decoratedFactory,
+        FactoryInterface $baseOrderFactory,
         FactoryInterface $customerFactory,
-        FactoryInterface $orderItemFactory,
-        FactoryInterface $shipmentFactory,
-        PaymentFactoryInterface $paymentFactory,
         CustomerRepositoryInterface $customerRepository,
         ChannelRepositoryInterface $channelRepository,
         RepositoryInterface $currencyRepository,
         RepositoryInterface $localeRepository,
-        OrderModifierInterface $orderModifier,
-        OrderItemQuantityModifierInterface $orderItemQuantityModifier
+        ReorderProcessor $reorderProcessor
     ) {
-        $this->decoratedFactory = $decoratedFactory;
+        $this->baseOrderFactory = $baseOrderFactory;
         $this->customerFactory = $customerFactory;
-        $this->orderItemFactory = $orderItemFactory;
-        $this->shipmentFactory = $shipmentFactory;
-        $this->paymentFactory = $paymentFactory;
         $this->customerRepository = $customerRepository;
         $this->channelRepository = $channelRepository;
         $this->currencyRepository = $currencyRepository;
         $this->localeRepository = $localeRepository;
-        $this->orderModifier = $orderModifier;
-        $this->orderItemQuantityModifier = $orderItemQuantityModifier;
+
+        $this->reorderProcessor = $reorderProcessor;
     }
 
     public function createNew(): OrderInterface
     {
-        $order = $this->decoratedFactory->createNew();
+        $order = $this->baseOrderFactory->createNew();
         assert($order instanceof OrderInterface);
 
         return $order;
@@ -94,7 +68,7 @@ final class OrderFactory implements OrderFactoryInterface
     {
         $customer = $this->getCustomerForOrder($customerEmail);
 
-        $order = $this->decoratedFactory->createNew();
+        $order = $this->baseOrderFactory->createNew();
         assert($order instanceof OrderInterface);
 
         $order->setCustomer($customer);
@@ -113,26 +87,10 @@ final class OrderFactory implements OrderFactoryInterface
 
     public function createFromExistingOrder(OrderInterface $order): OrderInterface
     {
-        $reorder = $this->decoratedFactory->createNew();
+        $reorder = $this->createNew();
         assert($reorder instanceof OrderInterface);
 
-        $reorder->setChannel($order->getChannel());
-        $reorder->setCustomer($order->getCustomer());
-        $reorder->setCurrencyCode($order->getCurrencyCode());
-        $reorder->setNotes($order->getNotes());
-        $reorder->setLocaleCode($order->getLocaleCode());
-
-        /** @var AddressInterface $billingAddress */
-        $billingAddress = $order->getBillingAddress();
-
-        /** @var AddressInterface $shippingAddress */
-        $shippingAddress = $order->getShippingAddress();
-        $reorder->setBillingAddress(clone $billingAddress);
-        $reorder->setShippingAddress(clone $shippingAddress);
-
-        $this->copyShipmentToReorder($order, $reorder);
-        $this->copyPaymentToReorder($order, $reorder);
-        $this->copyOrderItemsToReorder($order, $reorder);
+        $this->reorderProcessor->process($order, $reorder);
 
         return $reorder;
     }
@@ -151,75 +109,5 @@ final class OrderFactory implements OrderFactoryInterface
         assert($customer instanceof CustomerInterface);
 
         return $customer;
-    }
-
-    private function copyOrderItemsToReorder(OrderInterface $order, OrderInterface $reorder): void
-    {
-        $orderItems = $order->getItems();
-
-        /** @var OrderItemInterface $orderItem */
-        foreach ($orderItems as $orderItem) {
-            /** @var ProductVariantInterface $productVariant */
-            $productVariant = $orderItem->getVariant();
-            if ($productVariant->isTracked() && !$productVariant->isInStock()) {
-                continue;
-            }
-
-            /** @var OrderItemInterface $newItem */
-            $newItem = $this->orderItemFactory->createNew();
-
-            $newItem->setVariant($orderItem->getVariant());
-            $newItem->setUnitPrice($orderItem->getUnitPrice());
-            $newItem->setProductName($orderItem->getProductName());
-            $newItem->setVariantName($orderItem->getVariantName());
-
-            $this->orderItemQuantityModifier->modify($newItem, $orderItem->getQuantity());
-            $this->orderModifier->addToOrder($reorder, $newItem);
-        }
-    }
-
-    private function copyShipmentToReorder(OrderInterface $order, OrderInterface $reorder): void
-    {
-        if (!$order->hasShipments()) {
-            return;
-        }
-
-        /** @var ShipmentInterface $shipment */
-        foreach ($order->getShipments() as $shipment) {
-            if (ShipmentInterface::STATE_CANCELLED === $shipment->getState()) {
-                continue;
-            }
-
-            /** @var ShipmentInterface $newShipment */
-            $newShipment = $this->shipmentFactory->createNew();
-            $newShipment->setOrder($reorder);
-            $newShipment->setMethod($shipment->getMethod());
-
-            $reorder->addShipment($newShipment);
-        }
-    }
-
-    private function copyPaymentToReorder(OrderInterface $order, OrderInterface $reorder): void
-    {
-        if (!$order->hasPayments()) {
-            return;
-        }
-
-        /** @var PaymentInterface $payment */
-        foreach ($order->getPayments() as $payment) {
-            if (
-                PaymentInterface::STATE_CANCELLED === $payment->getState() ||
-                PaymentInterface::STATE_FAILED === $payment->getState()
-            ) {
-                continue;
-            }
-
-            /** @var PaymentInterface $newPayment */
-            $newPayment = $this->paymentFactory->createNew();
-            $newPayment->setOrder($reorder);
-            $newPayment->setMethod($payment->getMethod());
-
-            $reorder->addPayment($newPayment);
-        }
     }
 }

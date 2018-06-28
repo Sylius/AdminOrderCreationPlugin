@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <imports>
+        <import resource="services/**/*.xml" />
+    </imports>
+
     <services>
         <defaults public="true" />
 
@@ -47,15 +51,11 @@
         <service id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory">
             <argument type="service" id="sylius.factory.order" />
             <argument type="service" id="sylius.factory.customer" />
-            <argument type="service" id="sylius.factory.order_item" />
-            <argument type="service" id="sylius.factory.shipment" />
-            <argument type="service" id="sylius.factory.payment" />
             <argument type="service" id="sylius.repository.customer" />
             <argument type="service" id="sylius.repository.channel" />
             <argument type="service" id="sylius.repository.currency" />
             <argument type="service" id="sylius.repository.locale" />
-            <argument type="service" id="sylius.order_modifier" />
-            <argument type="service" id="sylius.order_item_quantity_modifier"/>
+            <argument type="service" id="Sylius\AdminOrderCreationPlugin\ReorderProcessing\CompositeReorderProcessor"/>
         </service>
 
         <service id="Sylius\AdminOrderCreationPlugin\EventListener\OrderCreationListener">
