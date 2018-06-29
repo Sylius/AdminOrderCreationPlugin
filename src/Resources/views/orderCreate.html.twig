@@ -28,9 +28,17 @@
     <script>
         $(document).ready(function() {
             $('#sylius_admin_order_creation_new_order_shipments [data-form-collection="add"]').on('click', function(e) {
-                let self = $(this);
-                let $form = self.parents('form');
-                $form.addClass('loading');
+                loadAvailableShippingMethods();
+            });
+
+            $('#shipmentsAndPaymentsTab').on('click', function(e) {
+                if ($('#shipmentsAndPayments select').length != 0) {
+                    loadAvailableShippingMethods();
+                }
+            });
+
+            function loadAvailableShippingMethods(form) {
+                form = $('form');
 
                 $.ajax({
                     type: "POST",
@@ -39,22 +47,22 @@
                         { 'customerEmail': '{{ app.request.attributes.get("customerEmail") }}', 'shipmentNumber': '0' },
                         true
                     ),
-                    data: $form.serializeArray(),
+                    data: form.serializeArray(),
                     dataType: "json",
                     accept: "application/json",
                     success: function(data) {
-                        let lastShipment = self.siblings('[data-form-collection="list"]').find('[data-form-collection="item"]:last-child');
-
+                        let lastShipment = $('#sylius_admin_order_creation_new_order_shipments [data-form-collection="list"]').find('[data-form-collection="item"]:last-child');
                         let selectBody = '';
+
                         $.each(data, function(key, value) {
                             selectBody += '<option value="'+key+'">'+value+'</option>';
                         });
-                        
+
                         lastShipment.find('select').html(selectBody);
-                        $form.removeClass('loading');
+                        form.removeClass('loading');
                     }
                 });
-            });
+            }
         });
     </script>
 {% endblock %}
