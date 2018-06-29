@@ -90,6 +90,8 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
             $shipmentsCollection->clickLink('Add');
         }
 
+        $this->waitForFormToLoad();
+
         $shippingMethods = $this->getDocument()->findAll('css', sprintf(
             '#sylius_admin_order_creation_new_order_shipments [data-form-collection="item"]:last-child select option'
         ));
@@ -108,6 +110,9 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         $shipmentsCollection = $this->getDocument()->find('css', '#sylius_admin_order_creation_new_order_shipments');
 
         $shipmentsCollection->clickLink('Add');
+
+        $this->waitForFormToLoad();
+
         $this->getDocument()->waitFor(1, function () use ($shipmentsCollection) {
             return $shipmentsCollection->has('css', '[data-form-collection="item"]');
         });
@@ -283,5 +288,13 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         $address->setPostcode($this->getElement(sprintf('%s_postcode', $type))->getValue());
 
         return $address;
+    }
+
+    private function waitForFormToLoad(): void
+    {
+        $form = $this->getDocument()->find('css', 'form');
+        $this->getDocument()->waitFor(1, function () use ($form) {
+            return $form->hasClass('loading');
+        });
     }
 }

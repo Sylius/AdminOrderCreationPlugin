@@ -23,8 +23,19 @@ Feature: Selecting from eligible shipping methods during order creations
     @ui @javascript
     Scenario: Being able to select only shipping methods eligible for ordering items
         When I create a new order for "jon.snow@the-wall.com"
-        And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
         And I add "Rocket T-shirt" to this order
         And I add "Picasso T-shirt" to this order
+        And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
         Then I should have "Raven Post" shipping method available to select
         Then I should not have "Invisible Post" shipping method available to select
+
+    @ui @javascript
+    Scenario: Being able to select only shipping methods eligible after changing order items
+        When I create a new order for "jon.snow@the-wall.com"
+        And I add "Rocket T-shirt" to this order
+        And I add "Picasso T-shirt" to this order
+        And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
+        And I select "Raven Post" shipping method
+        And I add "Bosch T-shirt" to this order
+        Then I should not have "Raven Post" shipping method available to select
+        Then I should have "Invisible Post" shipping method available to select
