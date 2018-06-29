@@ -20,3 +20,41 @@
         'action': path('sylius_admin_order_creation_order_preview', {'customerEmail': app.request.attributes.get('customerEmail')})
     } %}
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#sylius_admin_order_creation_new_order_shipments [data-form-collection="add"]').on('click', function(e) {
+                let self = $(this);
+                let $form = self.parents('form');
+                $form.addClass('loading');
+
+                $.ajax({
+                    type: "POST",
+                    url: Routing.generate(
+                        'sylius_admin_order_creation_ajax_provide_available_shipping_methods',
+                        { 'customerEmail': '{{ app.request.attributes.get("customerEmail") }}', 'shipmentNumber': '0' },
+                        true
+                    ),
+                    data: $form.serializeArray(),
+                    dataType: "json",
+                    accept: "application/json",
+                    success: function(data) {
+                        let lastShipment = self.siblings('[data-form-collection="list"]').find('[data-form-collection="item"]:last-child');
+
+                        let selectBody = '';
+                        $.each(data, function(key, value) {
+                            selectBody += '<option value="'+key+'">'+value+'</option>';
+                        });
+                        
+                        lastShipment.find('select').html(selectBody);
+                        $form.removeClass('loading');
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
