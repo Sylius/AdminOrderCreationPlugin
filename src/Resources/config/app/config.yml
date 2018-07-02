@@ -36,7 +36,6 @@ sylius_order:
         order:
             classes:
                 model: Sylius\AdminOrderCreationPlugin\Entity\Order
-                controller: Sylius\AdminOrderCreationPlugin\Controller\OrderController
         order_item:
             classes:
                 model: Sylius\AdminOrderCreationPlugin\Entity\OrderItem

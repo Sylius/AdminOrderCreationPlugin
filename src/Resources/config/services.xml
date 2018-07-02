@@ -91,7 +91,7 @@
         </service>
 
         <service id="Sylius\AdminOrderCreationPlugin\Preparator\NewOrderPreparator">
-            <argument type="service" id="sylius.factory.order" />
+            <argument type="service" id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory" />
             <argument type="service" id="form.factory" />
             <argument type="service" id="sylius.order_processing.order_processor" />
         </service>

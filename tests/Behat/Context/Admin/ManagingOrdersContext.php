@@ -32,9 +32,6 @@ final class ManagingOrdersContext implements Context
     /** @var OrderPreviewPageInterface */
     private $orderPreviewPage;
 
-    /** @var OrderPreviewPageInterface */
-    private $orderPreviewPage;
-
     /** @var OrderShowPageInterface */
     private $orderShowPage;
 
@@ -56,7 +53,6 @@ final class ManagingOrdersContext implements Context
     public function __construct(
         OrderIndexPageInterface $orderIndexPage,
         NewOrderCustomerPageInterface $newOrderCustomerPage,
-        OrderCreatePageInterface $orderCreatePage,
         OrderPreviewPageInterface $orderPreviewPage,
         OrderShowPageInterface $orderShowPage,
         ReorderPageInterface $reorderPage,
@@ -67,7 +63,6 @@ final class ManagingOrdersContext implements Context
     ) {
         $this->orderIndexPage = $orderIndexPage;
         $this->newOrderCustomerPage = $newOrderCustomerPage;
-        $this->orderCreatePage = $orderCreatePage;
         $this->orderPreviewPage = $orderPreviewPage;
         $this->orderShowPage = $orderShowPage;
         $this->reorderPage = $reorderPage;
@@ -145,7 +140,7 @@ final class ManagingOrdersContext implements Context
      */
     public function shouldHaveShippingMethodAvailableToSelect(string $shippingMethodName): void
     {
-        Assert::oneOf($shippingMethodName, $this->orderCreatePage->getAvailableShippingMethods());
+        Assert::oneOf($shippingMethodName, $this->orderCreateFormElement->getAvailableShippingMethods());
     }
 
     /**
@@ -153,7 +148,7 @@ final class ManagingOrdersContext implements Context
      */
     public function shouldNotHaveShippingMethodAvailableToSelect(string $shippingMethodName): void
     {
-        foreach ($this->orderCreatePage->getAvailableShippingMethods() as $availableShippingMethod) {
+        foreach ($this->orderCreateFormElement->getAvailableShippingMethods() as $availableShippingMethod) {
             if ($shippingMethodName === $availableShippingMethod) {
                 throw new \Exception(sprintf('Shipping method "%s" should not be available', $shippingMethodName));
             }
@@ -225,15 +220,6 @@ final class ManagingOrdersContext implements Context
     public function placeAndConfirmThisOrder(): void
     {
         $this->orderCreateFormElement->placeOrder();
-        $this->orderPreviewPage->confirm();
-    }
-
-    /**
-     * @When I place and confirm this order
-     */
-    public function placeAndConfirmThisOrder(): void
-    {
-        $this->orderCreatePage->placeOrder();
         $this->orderPreviewPage->confirm();
     }
 
@@ -345,7 +331,6 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
-<<<<<<< HEAD
      * @Then this order shipping method should be :shippingMethodName
      */
     public function thisOrderShippingMethodShouldBe(string $shippingMethodName): void

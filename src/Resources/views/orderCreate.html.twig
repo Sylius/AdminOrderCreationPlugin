@@ -39,6 +39,7 @@
 
             function loadAvailableShippingMethods(form) {
                 form = $('form');
+                form.addClass('loading');
 
                 $.ajax({
                     type: "POST",

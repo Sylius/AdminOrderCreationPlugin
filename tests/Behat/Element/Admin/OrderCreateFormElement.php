@@ -292,9 +292,9 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
 
     private function waitForFormToLoad(): void
     {
-        $form = $this->getDocument()->find('css', 'form');
-        $this->getDocument()->waitFor(1, function () use ($form) {
-            return $form->hasClass('loading');
+        $form = $this->getDocument()->find('css', '[name="sylius_admin_order_creation_new_order"]');
+        $this->getDocument()->waitFor(1000, function () use ($form) {
+            return !$form->hasClass('loading');
         });
     }
 }
