@@ -1,63 +1,58 @@
-# SyliusAdminOrderCreationPlugin
+<p align="center">
+    <a href="https://sylius.com" target="_blank">
+        <img src="https://demo.sylius.com/assets/shop/img/logo.png" />
+    </a>
+</p>
 
-SyliusAdminOrderCreationPlugin allows to create order in Admin panel.
+<h1 align="center">Admin Order Creation Plugin</h1>
+
+<p align="center">This plugin allows to create an order in admin panel.</p>
 
 ## Installation
 
-Require plugin with composer:
+1. Require plugin with composer:
 
-```bash
-composer require sylius/admin-order-creation-plugin
-```
+    ```bash
+    composer require sylius/admin-order-creation-plugin
+    ```
 
-Import configuration:
+2. Import configuration:
 
-```yaml
-imports:
-    - { resource: "@SyliusAdminOrderCreationPlugin/Resources/config/app/config.yml" }
-```
+    ```yaml
+    imports:
+        - { resource: "@SyliusAdminOrderCreationPlugin/Resources/config/app/config.yml" }
+    ```
 
-Import routing:
+3. Import routing:
 
-````yaml
-sylius_admin_order_creation:
-    resource: "@SyliusAdminOrderCreationPlugin/Resources/config/app/routing.yml"
-````
+    ```yaml
+    sylius_admin_order_creation:
+        resource: "@SyliusAdminOrderCreationPlugin/Resources/config/app/routing.yml"
+    ```
 
-Add plugin class to your `AppKernel`:
+4. Add plugin class to your `AppKernel`:
 
-```php
-$bundles = [
-    new \FOS\JsRoutingBundle\FOSJsRoutingBundle(), //used by plugin
-    new \Sylius\AdminOrderCreationPlugin\SyliusAdminOrderCreationPlugin(),
-];
-```
+    ```php
+    $bundles = [
+        new \FOS\JsRoutingBundle\FOSJsRoutingBundle(), //used by plugin
+        new \Sylius\AdminOrderCreationPlugin\SyliusAdminOrderCreationPlugin(),
+    ];
+    ```
 
-Copy templates from
+5. Copy templates from `vendor/sylius/admin-order-creation-plugin/src/Resources/views/SyliusAdminBundle/` 
+   to `app/Resources/SyliusAdminBundle/views/`.
 
-```
-vendor/sylius/admin-order-creation-plugin/src/Resources/views/SyliusAdminBundle/
-```
-to
-```
-app/Resources/SyliusAdminBundle/views/
-```
+6. Copy migrations from `vendor/sylius/admin-order-creation-plugin/migrations/` 
+   to your migrations directory and run `bin/console doctrine:migrations:migrate`.
 
-Copy migrations from
+7. Install `FOSJsRoutingBundle` assets:
 
-```
-vendor/sylius/admin-order-creation-plugin/migrations/
-```
-to your migrations directory and run `bin/console doctrine:migrations:migrate`
+    ```
+    bin/console assets:install --symlink web
+    ```
 
-Install FOSJsRoutingBundle assets:
+8. Clear cache:
 
-```
-bin/console assets:install --symlink web
-```
-
-Clear cache:
-
-```bash
-bin/console cache:clear
-```
+    ```bash
+    bin/console cache:clear
+    ```
