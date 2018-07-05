@@ -1,18 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Sylius\AdminOrderCreationPlugin\EventListener;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Payum\Core\Model\GatewayConfigInterface;
 use Payum\Core\Payum;
-use Payum\Core\Security\GenericTokenFactoryInterface;
 use Payum\Core\Security\TokenInterface;
 use PhpSpec\ObjectBehavior;
 use Sylius\AdminOrderCreationPlugin\Provider\PaymentTokenProviderInterface;
 use Sylius\AdminOrderCreationPlugin\Sender\OrderPaymentLinkSenderInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
-use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
 final class PaymentLinkCreationListenerSpec extends ObjectBehavior

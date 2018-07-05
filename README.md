@@ -49,7 +49,7 @@
 
 7. Install `FOSJsRoutingBundle` assets:
 
-    ```
+    ```bash
     bin/console assets:install --symlink web
     ```
 
@@ -58,3 +58,8 @@
     ```bash
     bin/console cache:clear
     ```
+
+### Known issues
+
+* Js providing eligible shipping methods during order creation works only for the first shipment (for the case of new feature simplicity).
+It will be fixed in one of the future PRs.

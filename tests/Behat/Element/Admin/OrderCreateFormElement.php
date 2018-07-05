@@ -80,13 +80,44 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         );
     }
 
-    public function selectShippingMethod(string $shippingMethodName): void
+    public function getAvailableShippingMethods(): array
     {
         $this->clickOnTabAndWait('Shipments & Payments');
 
         $shipmentsCollection = $this->getDocument()->find('css', '#sylius_admin_order_creation_new_order_shipments');
 
+        if (count($shipmentsCollection->findAll('css', '[data-form-collection="item"]')) === 0) {
+            $shipmentsCollection->clickLink('Add');
+        }
+
+        $this->waitForFormToLoad();
+
+        $shippingMethods = $this->getDocument()->findAll(
+            'css', '#sylius_admin_order_creation_new_order_shipments [data-form-collection="item"]:last-child select option'
+        );
+
+        $shippingMethods = array_map(function(NodeElement $option) : string {
+            return $option->getText();
+        }, $shippingMethods);
+
+        return $shippingMethods;
+    }
+
+    public function moveToShippingAndPaymentsSection(): void
+    {
+        $this->clickOnTabAndWait('Shipments & Payments');
+    }
+
+    public function selectShippingMethod(string $shippingMethodName): void
+    {
+        $this->clickOnTabAndWait('Shipments & Payments');
+
+        $shipmentsCollection = $this->getElement('shipments');
+
         $shipmentsCollection->clickLink('Add');
+
+        $this->waitForFormToLoad();
+
         $this->getDocument()->waitFor(1, function () use ($shipmentsCollection) {
             return $shipmentsCollection->has('css', '[data-form-collection="item"]');
         });
@@ -98,7 +129,7 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
     {
         $this->clickOnTabAndWait('Shipments & Payments');
 
-        $paymentsCollection = $this->getDocument()->find('css', '#sylius_admin_order_creation_new_order_payments');
+        $paymentsCollection = $this->getElement('payments');
 
         $paymentsCollection->clickLink('Add');
         $this->getDocument()->waitFor(1, function () use ($paymentsCollection) {
@@ -170,6 +201,15 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         return $this->getElement('selected_payment_method')->getText();
     }
 
+    public function getShippingMethodsValidationMessage(): string
+    {
+        return $this
+            ->getDocument()
+            ->find('css', '#shipmentsAndPayments .invalid-data-message')
+            ->getText()
+        ;
+    }
+
     protected function getDefinedElements(): array
     {
         return array_merge(parent::getDefinedElements(), [
@@ -177,10 +217,12 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
             'billing_country' => '#sylius_admin_order_creation_new_order_billingAddress_countryCode',
             'billing_first_name' => '#sylius_admin_order_creation_new_order_billingAddress_firstName',
             'billing_last_name' => '#sylius_admin_order_creation_new_order_billingAddress_lastName',
-            'billing_street' => '#sylius_admin_order_creation_new_order_billingAddress_street',
             'billing_postcode' => '#sylius_admin_order_creation_new_order_billingAddress_postcode',
+            'billing_street' => '#sylius_admin_order_creation_new_order_billingAddress_street',
+            'payments' => '#sylius_admin_order_creation_new_order_payments',
             'selected_payment_method' => '#sylius_admin_order_creation_new_order_payments_0_method option[selected="selected"]',
             'selected_shipping_method' => '#sylius_admin_order_creation_new_order_shipments_0_method option[selected="selected"]',
+            'shipments' => '#sylius_admin_order_creation_new_order_shipments',
             'shipping_city' => '#sylius_admin_order_creation_new_order_shippingAddress_city',
             'shipping_country' => '#sylius_admin_order_creation_new_order_shippingAddress_countryCode',
             'shipping_first_name' => '#sylius_admin_order_creation_new_order_shippingAddress_firstName',
@@ -262,5 +304,13 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         $address->setPostcode($this->getElement(sprintf('%s_postcode', $type))->getValue());
 
         return $address;
+    }
+
+    private function waitForFormToLoad(): void
+    {
+        $form = $this->getDocument()->find('css', '[name="sylius_admin_order_creation_new_order"]');
+        $this->getDocument()->waitFor(1000, function () use ($form) {
+            return !$form->hasClass('loading');
+        });
     }
 }

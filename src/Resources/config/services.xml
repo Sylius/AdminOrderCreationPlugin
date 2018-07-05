@@ -20,6 +20,15 @@
             <argument type="service" id="twig" />
         </service>
 
+        <service id="Sylius\AdminOrderCreationPlugin\Controller\ProvideAvailableShippingMethodsAction">
+            <argument type="service" id="Sylius\AdminOrderCreationPlugin\Preparator\NewOrderPreparator" />
+            <argument type="service" id="Sylius\AdminOrderCreationPlugin\Provider\AvailableShippingMethodsListProvider" />
+        </service>
+
+        <service id="Sylius\AdminOrderCreationPlugin\Provider\AvailableShippingMethodsListProvider">
+            <argument type="service" id="sylius.shipping_methods_resolver" />
+        </service>
+
         <service id="Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderCustomerSelectType">
             <tag name="form.type" />
         </service>
@@ -79,6 +88,12 @@
         <service id="Sylius\AdminOrderCreationPlugin\Provider\PaymentTokenProvider">
             <argument type="service" id="payum" />
             <argument type="string">sylius_shop_order_after_pay</argument>
+        </service>
+
+        <service id="Sylius\AdminOrderCreationPlugin\Preparator\NewOrderPreparator">
+            <argument type="service" id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory" />
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="sylius.order_processing.order_processor" />
         </service>
 
         <service

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sylius\AdminOrderCreationPlugin\Entity;
 
 use Sylius\Component\Core\Model\OrderItem as BaseItemOrder;

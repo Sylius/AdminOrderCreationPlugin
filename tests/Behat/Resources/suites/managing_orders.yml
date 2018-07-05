@@ -5,6 +5,8 @@ default:
                 - sylius.behat.context.hook.doctrine_orm
                 - sylius.behat.context.hook.email_spool
 
+                - sylius.behat.context.setup.admin_security
+                - sylius.behat.context.setup.admin_user
                 - sylius.behat.context.setup.channel
                 - sylius.behat.context.setup.currency
                 - sylius.behat.context.setup.customer
@@ -14,14 +16,13 @@ default:
                 - sylius.behat.context.setup.product
                 - sylius.behat.context.setup.product_taxon
                 - sylius.behat.context.setup.promotion
-                - sylius.behat.context.setup.admin_security
-                - sylius.behat.context.setup.shop_security
                 - sylius.behat.context.setup.shipping
+                - sylius.behat.context.setup.shipping_category
+                - sylius.behat.context.setup.shop_security
                 - sylius.behat.context.setup.taxation
                 - sylius.behat.context.setup.taxonomy
-                - sylius.behat.context.setup.zone
-                - sylius.behat.context.setup.admin_user
                 - sylius.behat.context.setup.user
+                - sylius.behat.context.setup.zone
 
                 - sylius.behat.context.transform.address
                 - sylius.behat.context.transform.channel
@@ -34,6 +35,7 @@ default:
                 - sylius.behat.context.transform.product
                 - sylius.behat.context.transform.product_variant
                 - sylius.behat.context.transform.promotion
+                - sylius.behat.context.transform.shipping_category
                 - sylius.behat.context.transform.shipping_method
                 - sylius.behat.context.transform.tax_category
                 - sylius.behat.context.transform.taxon
