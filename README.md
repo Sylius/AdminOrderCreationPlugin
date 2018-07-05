@@ -8,6 +8,8 @@
 
 <p align="center">This plugin allows to create an order in admin panel.</p>
 
+![Screenshot showing the order creation page, Shipments&Payments section](docs/screenshot.png)
+
 ## Installation
 
 1. Require plugin with composer:
