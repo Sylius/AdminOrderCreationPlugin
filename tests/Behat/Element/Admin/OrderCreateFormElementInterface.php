@@ -23,6 +23,8 @@ interface OrderCreateFormElementInterface
     /** @return array|string[] */
     public function getAvailableShippingMethods(): array;
 
+    public function moveToShippingAndPaymentsSection(): void;
+
     public function selectShippingMethod(string $shippingMethodName): void;
 
     public function selectPaymentMethod(string $paymentMethodName): void;
@@ -46,4 +48,6 @@ interface OrderCreateFormElementInterface
     public function getShippingMethodName(): string;
 
     public function getPaymentMethodName(): string;
+
+    public function getShippingMethodsValidationMessage(): string;
 }

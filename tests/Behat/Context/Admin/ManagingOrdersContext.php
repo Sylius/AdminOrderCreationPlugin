@@ -136,23 +136,11 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
-     * @Then I should have :shippingMethodName shipping method available to select
+     * @When I want to select shipping method
      */
-    public function shouldHaveShippingMethodAvailableToSelect(string $shippingMethodName): void
+    public function wantToSelectShippingMethod(): void
     {
-        Assert::oneOf($shippingMethodName, $this->orderCreateFormElement->getAvailableShippingMethods());
-    }
-
-    /**
-     * @Then I should not have :shippingMethodName shipping method available to select
-     */
-    public function shouldNotHaveShippingMethodAvailableToSelect(string $shippingMethodName): void
-    {
-        foreach ($this->orderCreateFormElement->getAvailableShippingMethods() as $availableShippingMethod) {
-            if ($shippingMethodName === $availableShippingMethod) {
-                throw new \Exception(sprintf('Shipping method "%s" should not be available', $shippingMethodName));
-            }
-        }
+        $this->orderCreateFormElement->moveToShippingAndPaymentsSection();
     }
 
     /**
@@ -221,6 +209,37 @@ final class ManagingOrdersContext implements Context
     {
         $this->orderCreateFormElement->placeOrder();
         $this->orderPreviewPage->confirm();
+    }
+
+    /**
+     * @Then I should have :shippingMethodName shipping method available to select
+     */
+    public function shouldHaveShippingMethodAvailableToSelect(string $shippingMethodName): void
+    {
+        Assert::oneOf($shippingMethodName, $this->orderCreateFormElement->getAvailableShippingMethods());
+    }
+
+    /**
+     * @Then I should not have :shippingMethodName shipping method available to select
+     */
+    public function shouldNotHaveShippingMethodAvailableToSelect(string $shippingMethodName): void
+    {
+        foreach ($this->orderCreateFormElement->getAvailableShippingMethods() as $availableShippingMethod) {
+            if ($shippingMethodName === $availableShippingMethod) {
+                throw new \Exception(sprintf('Shipping method "%s" should not be available', $shippingMethodName));
+            }
+        }
+    }
+
+    /**
+     * @Then I should be notified that I need to add some items and shipping address to select from eligible shipping method
+     */
+    public function shouldBeNotifiedAboutShippingMethodsSelectionRequirements(): void
+    {
+        Assert::same(
+            'You need to add some items and shipping address to select from eligible shipping method',
+            $this->orderCreateFormElement->getShippingMethodsValidationMessage()
+        );
     }
 
     /**

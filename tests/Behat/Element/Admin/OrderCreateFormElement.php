@@ -92,15 +92,20 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
 
         $this->waitForFormToLoad();
 
-        $shippingMethods = $this->getDocument()->findAll('css', sprintf(
-            '#sylius_admin_order_creation_new_order_shipments [data-form-collection="item"]:last-child select option'
-        ));
+        $shippingMethods = $this->getDocument()->findAll(
+            'css', '#sylius_admin_order_creation_new_order_shipments [data-form-collection="item"]:last-child select option'
+        );
 
         $shippingMethods = array_map(function(NodeElement $option) : string {
             return $option->getText();
         }, $shippingMethods);
 
         return $shippingMethods;
+    }
+
+    public function moveToShippingAndPaymentsSection(): void
+    {
+        $this->clickOnTabAndWait('Shipments & Payments');
     }
 
     public function selectShippingMethod(string $shippingMethodName): void
@@ -194,6 +199,15 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
     public function getPaymentMethodName(): string
     {
         return $this->getElement('selected_payment_method')->getText();
+    }
+
+    public function getShippingMethodsValidationMessage(): string
+    {
+        return $this
+            ->getDocument()
+            ->find('css', '#shipmentsAndPayments .invalid-data-message')
+            ->getText()
+        ;
     }
 
     protected function getDefinedElements(): array

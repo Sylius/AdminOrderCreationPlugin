@@ -39,3 +39,18 @@ Feature: Selecting from eligible shipping methods during order creations
         And I add "Bosch T-shirt" to this order
         Then I should not have "Raven Post" shipping method available to select
         Then I should have "Invisible Post" shipping method available to select
+
+    @ui @javascript
+    Scenario: Not being able to select shipping method without shipping country selected
+        When I create a new order for "jon.snow@the-wall.com"
+        And I add "Rocket T-shirt" to this order
+        And I add "Picasso T-shirt" to this order
+        And I want to select shipping method
+        Then I should be notified that I need to add some items and shipping address to select from eligible shipping method
+
+    @ui @javascript
+    Scenario: Not being able to select shipping method with no items in the order
+        When I create a new order for "jon.snow@the-wall.com"
+        And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
+        And I want to select shipping method
+        Then I should be notified that I need to add some items and shipping address to select from eligible shipping method

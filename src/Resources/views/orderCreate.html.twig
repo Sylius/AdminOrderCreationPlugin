@@ -28,17 +28,34 @@
     <script>
         $(document).ready(function() {
             $('#sylius_admin_order_creation_new_order_shipments [data-form-collection="add"]').on('click', function(e) {
+                if (!canShippingMethodBeProvided()) {
+                    e.stopPropagation();
+                    return;
+                }
+
                 loadAvailableShippingMethods();
             });
 
             $('#shipmentsAndPaymentsTab').on('click', function(e) {
+                console.log(canShippingMethodBeProvided());
+
+                if (canShippingMethodBeProvided()) {
+                    $('#shipmentsAndPayments').find('.invalid-data-message').hide();
+                } else {
+                    $('#shipmentsAndPayments').find('.invalid-data-message').show();
+                }
+
                 if ($('#shipmentsAndPayments select').length != 0) {
                     loadAvailableShippingMethods();
                 }
             });
 
-            function loadAvailableShippingMethods(form) {
-                form = $('form');
+            function loadAvailableShippingMethods($shipmentNumber) {
+                if (!canShippingMethodBeProvided()) {
+                    return;
+                }
+
+                let form = $('form');
                 form.addClass('loading');
 
                 $.ajax({
@@ -63,6 +80,10 @@
                         form.removeClass('loading');
                     }
                 });
+            }
+
+            function canShippingMethodBeProvided() {
+                return $('#sylius_admin_order_creation_new_order_items [data-form-collection="item"]').length > 0 && $('#sylius_admin_order_creation_new_order_shippingAddress_countryCode').val() !== '';
             }
         });
     </script>

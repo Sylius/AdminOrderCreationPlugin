@@ -21,11 +21,11 @@ final class NewOrderPreparatorSpec extends ObjectBehavior
         OrderFactoryInterface $orderFactory,
         FormFactoryInterface $formFactory,
         OrderProcessorInterface $orderProcessor
-    ) {
+    ): void {
         $this->beConstructedWith($orderFactory, $formFactory, $orderProcessor);
     }
 
-    function it_is_order_preparator()
+    function it_is_order_preparator(): void
     {
         $this->shouldImplement(OrderPreparatorInterface::class);
     }
@@ -38,7 +38,7 @@ final class NewOrderPreparatorSpec extends ObjectBehavior
         OrderInterface $order,
         OrderInterface $orderWithData,
         FormInterface $form
-    ) {
+    ): void {
         $request->attributes = new ParameterBag(['customerEmail' => 'jon.snow@thewall.com']);
 
         $orderFactory->createForCustomer('jon.snow@thewall.com')->willReturn($order);
@@ -52,7 +52,7 @@ final class NewOrderPreparatorSpec extends ObjectBehavior
         $this->prepareFromRequest($request)->shouldReturn($orderWithData);
     }
 
-    function it_throws_exception_if_there_is_no_customer_email_specified_in_request(Request $request)
+    function it_throws_exception_if_there_is_no_customer_email_specified_in_request(Request $request): void
     {
         $request->attributes = new ParameterBag([]);
 

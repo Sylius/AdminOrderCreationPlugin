@@ -23,9 +23,14 @@
             <i class="dropdown icon"></i> {{ 'sylius.ui.shipments'|trans }} &amp; {{ 'sylius.ui.payments'|trans }}
         </div>
         <div id="shipmentsAndPayments" class="content">
-            <div class="ui horizontal segments">
-                <div class="ui segment">{{ form_row(form.shipments) }}</div>
-                <div class="ui segment">{{ form_row(form.payments) }}</div>
+            <div class="ui segments">
+                <div class="ui segment">
+                    <div class="invalid-data-message">{{ 'sylius_admin_order_creation.ui.shipping_methods_selection_requirement'|trans }}</div>
+                    {{ form_row(form.shipments) }}
+                </div>
+                <div class="ui segment">
+                    {{ form_row(form.payments) }}
+                </div>
             </div>
         </div>
 
