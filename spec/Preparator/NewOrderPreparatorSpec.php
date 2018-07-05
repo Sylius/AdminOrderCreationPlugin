@@ -30,7 +30,7 @@ final class NewOrderPreparatorSpec extends ObjectBehavior
         $this->shouldImplement(OrderPreparatorInterface::class);
     }
 
-    function it_prepares_new_order_basing_on_request_data(
+    function it_prepares_new_order_based_on_request_data(
         OrderFactoryInterface $orderFactory,
         FormFactoryInterface $formFactory,
         OrderProcessorInterface $orderProcessor,

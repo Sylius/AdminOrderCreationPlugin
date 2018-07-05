@@ -20,14 +20,10 @@ final class AvailableShippingMethodsListProviderSpec extends ObjectBehavior
 
     function it_provides_supported_shipping_methods_list_for_order_shipment(
         ShippingMethodsResolverInterface $shippingMethodsResolver,
-        OrderInterface $order,
-        Collection $shipmentsCollection,
         ShipmentInterface $shipment,
         ShippingMethodInterface $freeShippingMethod,
         ShippingMethodInterface $dhlShippingMethod
     ) {
-        $order->getShipments()->willReturn($shipmentsCollection);
-        $shipmentsCollection->get(1)->willReturn($shipment);
         $shippingMethodsResolver->getSupportedMethods($shipment)->willReturn([
             $freeShippingMethod,
             $dhlShippingMethod,
@@ -39,6 +35,6 @@ final class AvailableShippingMethodsListProviderSpec extends ObjectBehavior
         $dhlShippingMethod->getCode()->willReturn('DHL');
         $dhlShippingMethod->getName()->willReturn('DHL');
 
-        $this($order, 1)->shouldReturn(['FREE' => 'Free', 'DHL' => 'DHL']);
+        $this($shipment)->shouldReturn(['FREE' => 'Free', 'DHL' => 'DHL']);
     }
 }

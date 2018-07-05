@@ -107,7 +107,7 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
     {
         $this->clickOnTabAndWait('Shipments & Payments');
 
-        $shipmentsCollection = $this->getDocument()->find('css', '#sylius_admin_order_creation_new_order_shipments');
+        $shipmentsCollection = $this->getElement('shipments');
 
         $shipmentsCollection->clickLink('Add');
 
@@ -124,7 +124,7 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
     {
         $this->clickOnTabAndWait('Shipments & Payments');
 
-        $paymentsCollection = $this->getDocument()->find('css', '#sylius_admin_order_creation_new_order_payments');
+        $paymentsCollection = $this->getElement('payments');
 
         $paymentsCollection->clickLink('Add');
         $this->getDocument()->waitFor(1, function () use ($paymentsCollection) {
@@ -203,10 +203,12 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
             'billing_country' => '#sylius_admin_order_creation_new_order_billingAddress_countryCode',
             'billing_first_name' => '#sylius_admin_order_creation_new_order_billingAddress_firstName',
             'billing_last_name' => '#sylius_admin_order_creation_new_order_billingAddress_lastName',
-            'billing_street' => '#sylius_admin_order_creation_new_order_billingAddress_street',
             'billing_postcode' => '#sylius_admin_order_creation_new_order_billingAddress_postcode',
+            'billing_street' => '#sylius_admin_order_creation_new_order_billingAddress_street',
+            'payments' => '#sylius_admin_order_creation_new_order_payments',
             'selected_payment_method' => '#sylius_admin_order_creation_new_order_payments_0_method option[selected="selected"]',
             'selected_shipping_method' => '#sylius_admin_order_creation_new_order_shipments_0_method option[selected="selected"]',
+            'shipments' => '#sylius_admin_order_creation_new_order_shipments',
             'shipping_city' => '#sylius_admin_order_creation_new_order_shippingAddress_city',
             'shipping_country' => '#sylius_admin_order_creation_new_order_shippingAddress_countryCode',
             'shipping_first_name' => '#sylius_admin_order_creation_new_order_shippingAddress_firstName',
