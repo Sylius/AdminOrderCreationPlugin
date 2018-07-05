@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sylius\AdminOrderCreationPlugin\Provider;
 
 use Sylius\AdminOrderCreationPlugin\Entity\OrderInterface;

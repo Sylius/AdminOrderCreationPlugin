@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Sylius\AdminOrderCreationPlugin\Preparator;
 
 use PhpSpec\ObjectBehavior;
@@ -40,7 +42,7 @@ final class NewOrderPreparatorSpec extends ObjectBehavior
         $request->attributes = new ParameterBag(['customerEmail' => 'jon.snow@thewall.com']);
 
         $orderFactory->createForCustomer('jon.snow@thewall.com')->willReturn($order);
-        $formFactory->create(NewOrderType::class, $order)->willReturn($form);;
+        $formFactory->create(NewOrderType::class, $order)->willReturn($form);
 
         $form->handleRequest($request)->willReturn($form);
         $form->getData()->willReturn($orderWithData);

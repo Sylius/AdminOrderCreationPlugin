@@ -22,7 +22,7 @@ final class CompositeReorderProcessor implements ReorderProcessor
         $this->reorderProcessors->insert($orderProcessor, $priority);
     }
 
-    function process(OrderInterface $order, OrderInterface $reorder): void
+    public function process(OrderInterface $order, OrderInterface $reorder): void
     {
         foreach ($this->reorderProcessors as $reorderProcessor) {
             $reorderProcessor->process($order, $reorder);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Sylius\AdminOrderCreationPlugin\Provider;
 
 use Doctrine\Common\Collections\Collection;
@@ -28,8 +30,8 @@ final class AvailableShippingMethodsListProviderSpec extends ObjectBehavior
         $shipmentsCollection->get(1)->willReturn($shipment);
         $shippingMethodsResolver->getSupportedMethods($shipment)->willReturn([
             $freeShippingMethod,
-            $dhlShippingMethod
-        ]);;
+            $dhlShippingMethod,
+        ]);
 
         $freeShippingMethod->getCode()->willReturn('FREE');
         $freeShippingMethod->getName()->willReturn('Free');
