@@ -139,18 +139,18 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         $paymentsCollection->selectFieldOption('Payment Method', $paymentMethodName);
     }
 
-    public function specifyOrderPrice(string $orderPrice): void
+    public function lowerOrderPriceBy(string $discount): void
     {
-        $this->clickOnTabAndWait('Custom total');
+        $this->clickOnTabAndWait('Order discount');
 
-        $this->getDocument()->fillField('Order price', $orderPrice);
+        $this->getDocument()->fillField('Discount', $discount);
     }
 
-    public function specifyUnitPrice(string $itemProductCode, string $unitPrice): void
+    public function lowerItemWithProductPriceBy(string $productCode, string $discount): void
     {
-        $item = $this->getItemWithProductSelected($itemProductCode);
+        $item = $this->getItemWithProductSelected($productCode);
 
-        $item->fillField('Unit price', $unitPrice);
+        $item->fillField('Discount', $discount);
     }
 
     public function specifyQuantity(string $itemProductCode, int $quantity): void
@@ -165,16 +165,16 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         $this->getDocument()->pressButton('Create');
     }
 
-    public function hasOrderPriceValidationMessage(string $message): bool
+    public function hasOrderDiscountValidationMessage(string $message): bool
     {
-        $this->clickOnTabAndWait('Custom total');
+        $this->clickOnTabAndWait('Order discount');
 
-        $customTotalElement = $this->getDocument()->find('css', '.field:contains("Order price")');
+        $orderDiscountElement = $this->getDocument()->find('css', '.field:contains("Discount")');
 
-        return null !== $customTotalElement->find('css', sprintf('.sylius-validation-error:contains("%s")', $message));
+        return null !== $orderDiscountElement->find('css', sprintf('.sylius-validation-error:contains("%s")', $message));
     }
 
-    public function hasUnitPriceValidationMessage(string $productCode, string $message): bool
+    public function hasItemDiscountValidationMessage(string $productCode, string $message): bool
     {
         $item = $this->getItemWithProductSelected($productCode);
 

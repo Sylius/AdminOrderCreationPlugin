@@ -19,7 +19,7 @@ Feature: Modifying order total
         And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
         And I select "Free" shipping method
         And I select "Cash on Delivery" payment method
-        And I specify order price as "$123.45"
+        And I lower order price by "$10.00"
         And I place and confirm this order
         Then I should be notified that order has been successfully created
         And the order's total should be "$123.45"
@@ -31,6 +31,6 @@ Feature: Modifying order total
         And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
         And I select "Free" shipping method
         And I select "Cash on Delivery" payment method
-        And I specify order price as "-$200"
+        And I lower order price by "-$10.00"
         And I place and confirm this order
-        Then I should be notified that order price cannot be below 0
+        Then I should be notified that order discount cannot be below 0

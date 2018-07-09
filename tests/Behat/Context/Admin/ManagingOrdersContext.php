@@ -160,21 +160,21 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
-     * @When I specify order price as :price
+     * @When I lower order price by :price
      */
-    public function specifyOrderPriceAs(string $price): void
+    public function lowerOrderPriceBy(string $discount): void
     {
-        $this->orderCreateFormElement->specifyOrderPrice(str_replace(['$', '€', '£'], '', $price));
+        $this->orderCreateFormElement->lowerOrderPriceBy(str_replace(['$', '€', '£'], '', $discount));
     }
 
     /**
-     * @When I specify item with :product price as :price
+     * @When I lower item with :product price by :discount
      */
-    public function specifyItemWithProductUnitPriceAs(ProductInterface $product, string $price): void
+    public function lowerItemWithProductPriceBy(ProductInterface $product, string $discount): void
     {
-        $this->orderCreateFormElement->specifyUnitPrice(
+        $this->orderCreateFormElement->lowerItemWithProductPriceBy(
             $product->getCode(),
-            str_replace(['$', '€', '£'], '', $price)
+            str_replace(['$', '€', '£'], '', $discount)
         );
     }
 
@@ -254,20 +254,20 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
-     * @Then I should be notified that order price cannot be below 0
+     * @Then I should be notified that order discount cannot be below 0
      */
-    public function shouldBeNotifiedThatOrderPriceCannotBeBelow0(): void
+    public function shouldBeNotifiedThatOrderDiscountCannotBeBelow0(): void
     {
-        Assert::true($this->orderCreateFormElement->hasOrderPriceValidationMessage('Order price cannot be below 0'));
+        Assert::true($this->orderCreateFormElement->hasOrderDiscountValidationMessage('Discount cannot be below 0'));
     }
 
     /**
-     * @Then I should be notified that item with :product price cannot be below 0
+     * @Then I should be notified that item with :product discount cannot be below 0
      */
-    public function shouldBeNotifiedThatItemWithProductPriceCannotBeBelow0(ProductInterface $product): void
+    public function shouldBeNotifiedThatItemWithProductDiscountCannotBeBelow0(ProductInterface $product): void
     {
         Assert::true(
-            $this->orderCreateFormElement->hasUnitPriceValidationMessage($product->getCode(), 'Price cannot be below 0')
+            $this->orderCreateFormElement->hasItemDiscountValidationMessage($product->getCode(), 'Discount cannot be below 0')
         );
     }
 

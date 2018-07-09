@@ -29,17 +29,17 @@ interface OrderCreateFormElementInterface
 
     public function selectPaymentMethod(string $paymentMethodName): void;
 
-    public function specifyOrderPrice(string $orderPrice): void;
+    public function lowerOrderPriceBy(string $discount): void;
 
-    public function specifyUnitPrice(string $itemProductCode, string $unitPrice): void;
+    public function lowerItemWithProductPriceBy(string $productCode, string $discount): void;
 
     public function specifyQuantity(string $itemProductCode, int $quantity): void;
 
     public function placeOrder(): void;
 
-    public function hasOrderPriceValidationMessage(string $message): bool;
+    public function hasOrderDiscountValidationMessage(string $message): bool;
 
-    public function hasUnitPriceValidationMessage(string $productCode, string $message): bool;
+    public function hasItemDiscountValidationMessage(string $productCode, string $message): bool;
 
     public function getPreFilledBillingAddress(): AddressInterface;
 
