@@ -31,15 +31,6 @@ sylius_mailer:
             subject: 'sylius_admin_order_creation.email.order_created.subject'
             template: 'SyliusAdminOrderCreationPlugin:Emails:orderCreated.html.twig'
 
-sylius_order:
-    resources:
-        order:
-            classes:
-                model: Sylius\AdminOrderCreationPlugin\Entity\Order
-        order_item:
-            classes:
-                model: Sylius\AdminOrderCreationPlugin\Entity\OrderItem
-
 sylius_customer:
     resources:
         customer:

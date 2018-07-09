@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Context\Admin;
 
 use Behat\Behat\Context\Context;
-use Sylius\AdminOrderCreationPlugin\Entity\OrderInterface;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Behat\NotificationType;
 use Sylius\Behat\Service\NotificationCheckerInterface;
 use Sylius\Component\Addressing\Comparator\AddressComparatorInterface;

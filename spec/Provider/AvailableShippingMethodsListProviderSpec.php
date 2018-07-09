@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace spec\Sylius\AdminOrderCreationPlugin\Provider;
 
-use Doctrine\Common\Collections\Collection;
 use PhpSpec\ObjectBehavior;
-use Sylius\AdminOrderCreationPlugin\Entity\OrderInterface;
 use Sylius\Component\Core\Model\ShipmentInterface;
 use Sylius\Component\Core\Model\ShippingMethodInterface;
 use Sylius\Component\Shipping\Resolver\ShippingMethodsResolverInterface;

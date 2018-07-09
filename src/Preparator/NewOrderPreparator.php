@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Sylius\AdminOrderCreationPlugin\Preparator;
 
-use Sylius\AdminOrderCreationPlugin\Entity\OrderInterface;
 use Sylius\AdminOrderCreationPlugin\Factory\OrderFactoryInterface;
 use Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Order\Processor\OrderProcessorInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;

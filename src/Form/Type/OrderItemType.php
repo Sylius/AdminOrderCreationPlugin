@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Sylius\AdminOrderCreationPlugin\Form\Type;
 
-use Sylius\Bundle\MoneyBundle\Form\Type\MoneyType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Sylius\Bundle\ResourceBundle\Form\Type\ResourceAutocompleteChoiceType;
 use Symfony\Component\Form\DataMapperInterface;
@@ -41,11 +40,6 @@ final class OrderItemType extends AbstractResourceType
                 'choice_name' => 'descriptor',
                 'choice_value' => 'code',
                 'resource' => 'sylius.product_variant',
-            ])
-            ->add('customUnitPrice', MoneyType::class, [
-                'label' => 'sylius.ui.unit_price',
-                //temporary solution
-                'currency' => 'USD',
             ])
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
                 $data = $event->getData();
