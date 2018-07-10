@@ -87,6 +87,19 @@
             </div>
         </div>
     </div>
+    <div class="ui stackable grid" id="order-discount">
+        <div class="twelve wide column">
+            <div class="ui segment">
+                <form name="sylius_refund_order_discount">
+                    Order discount:
+                    <div class="ui labeled input">
+                        <div class="ui label">$</div>
+                        <input type="text" id="sylius_refund_order_discount_amount" name="sylius_refund_order_discount_amount">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="ui stackable grid">
         <div class="eight wide column">
             <div class="ui segment" id="payment-state">
@@ -122,4 +135,5 @@
         'method': 'POST'
     }) }}
     <button type="submit" form="{{ form.vars.name }}" class="ui button green">{{ 'sylius_admin_order_creation.ui.confirm'|trans }}</button>
+    <button type="submit" form="sylius_refund_order_discount" class="ui button">{{ 'sylius.ui.update'|trans }}</button>
 {% endblock %}
