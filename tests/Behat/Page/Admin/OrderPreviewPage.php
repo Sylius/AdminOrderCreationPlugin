@@ -38,6 +38,19 @@ final class OrderPreviewPage extends SymfonyPage implements OrderPreviewPageInte
         return null !== $this->getDocument()->findButton('Confirm');
     }
 
+    public function lowerOrderPriceBy(string $discount): void
+    {
+        $this->getDocument()->fillField('Order discount', $discount);
+        $this->getDocument()->pressButton('Update');
+    }
+
+    public function lowerItemWithProductPriceBy(string $productCode, string $discount): void
+    {
+        $item = $this->getDocument()->find('css', sprintf('#items tr:contains("%s")', $productCode));
+        $item->fillField('Item discount', $discount);
+        $this->getDocument()->pressButton('Update');
+    }
+
     public function confirm(): void
     {
         $confirmButton = $this->getDocument()->findButton('Confirm');

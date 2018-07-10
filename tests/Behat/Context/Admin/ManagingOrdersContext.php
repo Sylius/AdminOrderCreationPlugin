@@ -164,7 +164,7 @@ final class ManagingOrdersContext implements Context
      */
     public function lowerOrderPriceBy(string $discount): void
     {
-        $this->orderCreateFormElement->lowerOrderPriceBy(str_replace(['$', '€', '£'], '', $discount));
+        $this->orderPreviewPage->lowerOrderPriceBy(str_replace(['$', '€', '£'], '', $discount));
     }
 
     /**
@@ -172,7 +172,7 @@ final class ManagingOrdersContext implements Context
      */
     public function lowerItemWithProductPriceBy(ProductInterface $product, string $discount): void
     {
-        $this->orderCreateFormElement->lowerItemWithProductPriceBy(
+        $this->orderPreviewPage->lowerItemWithProductPriceBy(
             $product->getCode(),
             str_replace(['$', '€', '£'], '', $discount)
         );
@@ -187,19 +187,27 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
-     * @When I place this order
-     */
-    public function placeThisOrder(): void
-    {
-        $this->orderCreateFormElement->placeOrder();
-    }
-
-    /**
      * @When I reorder the order :order
      */
     public function iReorderTheOrder(OrderInterface $order): void
     {
         $this->reorderPage->open(['id' => $order->getId()]);
+    }
+
+    /**
+     * @When I confirm this order
+     */
+    public function confirmThisOrder(): void
+    {
+        $this->orderPreviewPage->confirm();
+    }
+
+    /**
+     * @When I place this order
+     */
+    public function placeThisOrder(): void
+    {
+        $this->orderCreateFormElement->placeOrder();
     }
 
     /**

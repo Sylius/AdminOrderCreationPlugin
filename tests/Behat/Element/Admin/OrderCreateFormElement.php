@@ -139,20 +139,6 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         $paymentsCollection->selectFieldOption('Payment Method', $paymentMethodName);
     }
 
-    public function lowerOrderPriceBy(string $discount): void
-    {
-        $this->clickOnTabAndWait('Order discount');
-
-        $this->getDocument()->fillField('Discount', $discount);
-    }
-
-    public function lowerItemWithProductPriceBy(string $productCode, string $discount): void
-    {
-        $item = $this->getItemWithProductSelected($productCode);
-
-        $item->fillField('Discount', $discount);
-    }
-
     public function specifyQuantity(string $itemProductCode, int $quantity): void
     {
         $item = $this->getItemWithProductSelected($itemProductCode);

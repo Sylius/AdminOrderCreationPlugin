@@ -29,10 +29,6 @@ interface OrderCreateFormElementInterface
 
     public function selectPaymentMethod(string $paymentMethodName): void;
 
-    public function lowerOrderPriceBy(string $discount): void;
-
-    public function lowerItemWithProductPriceBy(string $productCode, string $discount): void;
-
     public function specifyQuantity(string $itemProductCode, int $quantity): void;
 
     public function placeOrder(): void;
