@@ -1,4 +1,4 @@
-@admin_reordering @ui @javascript
+@admin_reordering @ui @javascript @todo
 Feature: Reordering previously placed order with modified unit price
     In order to reorder an order placed by Customer with custom unit price in the name of this Customer
     As an Administrator

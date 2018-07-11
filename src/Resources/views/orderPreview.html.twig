@@ -150,6 +150,13 @@
             $('body').on('DOMNodeRemoved', '#sylius_admin_order_creation_new_order_adjustments [data-form-collection="item"]', function() {
                 $('#sylius_admin_order_creation_new_order_adjustments [data-form-collection="add"]').show();
             });
+
+            $('body').on('DOMNodeInserted', '.item-discount [data-form-collection="item"]', function() {
+                $(this).parent().parent().find('[data-form-collection="add"]').hide();
+            });
+            $('body').on('DOMNodeRemoved', '.item-discount [data-form-collection="item"]', function() {
+                $(this).parent().parent().find('[data-form-collection="add"]').show();
+            });
         });
     </script>
 {% endblock %}

@@ -6,7 +6,6 @@ namespace spec\Sylius\AdminOrderCreationPlugin\EventListener;
 
 use PhpSpec\ObjectBehavior;
 use SM\Factory\FactoryInterface;
-use Sylius\AdminOrderCreationPlugin\Adder\OrderDiscountAdjustmentAdderInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\OrderCheckoutTransitions;
 use Sylius\Component\Order\Processor\OrderProcessorInterface;

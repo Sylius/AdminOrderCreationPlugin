@@ -12,8 +12,8 @@
     </tr>
     </thead>
     <tbody>
-    {% for item in order.items %}
-        {% include '@SyliusAdminOrderCreationPlugin/Order/Show/_item.html.twig' with {'form': form.children[loop.index0]} %}
+    {% for item_form in form.children %}
+        {% include '@SyliusAdminOrderCreationPlugin/Order/Show/_item.html.twig' with {'form': item_form, 'item': order.items.get(loop.index0)} %}
     {% endfor %}
     </tbody>
     <tfoot>

@@ -24,11 +24,10 @@ final class AdjustmentType extends AbstractResourceType
             'currency' => $options['currency'],
             'constraints' => [
                 new Range(['min' => 0, 'minMessage' => 'sylius_admin_order_creation.order_discount', 'groups' => ['sylius']]),
-            ]
+            ],
         ]);
 
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event): void {
-            /** @var AdjustmentInterface $adjustment */
             $adjustment = $event->getData();
 
             if ($adjustment === null) {
