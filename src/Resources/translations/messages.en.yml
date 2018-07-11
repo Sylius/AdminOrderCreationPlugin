@@ -10,6 +10,7 @@ sylius_admin_order_creation:
         add_discount: 'Add discount'
         confirm: 'Confirm'
         create_new: 'Create new'
+        item_discount: 'Item discount'
         new_customer_email: 'New customer email'
         order_discount: 'Order discount'
         order_preview: 'Order preview'

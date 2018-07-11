@@ -266,7 +266,7 @@ final class ManagingOrdersContext implements Context
      */
     public function shouldBeNotifiedThatOrderDiscountCannotBeBelow0(): void
     {
-        Assert::true($this->orderCreateFormElement->hasOrderDiscountValidationMessage('Discount cannot be below 0'));
+        Assert::true($this->orderPreviewPage->hasOrderDiscountValidationMessage('Discount cannot be below 0'));
     }
 
     /**
@@ -275,7 +275,7 @@ final class ManagingOrdersContext implements Context
     public function shouldBeNotifiedThatItemWithProductDiscountCannotBeBelow0(ProductInterface $product): void
     {
         Assert::true(
-            $this->orderCreateFormElement->hasItemDiscountValidationMessage($product->getCode(), 'Discount cannot be below 0')
+            $this->orderPreviewPage->hasItemDiscountValidationMessage($product->getCode(), 'Discount cannot be below 0')
         );
     }
 

@@ -1,0 +1,22 @@
+<table class="ui celled compact small table fixed">
+    <thead>
+    <tr>
+        <th class="six wide sylius-table-column-item">{{ 'sylius.ui.order_item_product'|trans }}</th>
+        <th class="center aligned sylius-table-column-unit_price">{{ 'sylius.ui.unit_price'|trans }}</th>
+        <th class="center aligned sylius-table-column-discounted_unit_price">{{ 'sylius.ui.discounted_unit_price'|trans }}</th>
+        <th class="center aligned sylius-table-column-quantity">{{ 'sylius.ui.quantity'|trans }}</th>
+        <th class="center aligned sylius-table-column-subtotal">{{ 'sylius.ui.subtotal'|trans }}</th>
+        <th class="center aligned sylius-table-column-discount">{{ 'sylius.ui.discount'|trans }}</th>
+        <th class="center aligned sylius-table-column-tax">{{ 'sylius.ui.tax'|trans }}</th>
+        <th class="center aligned sylius-table-column-total">{{ 'sylius.ui.total'|trans }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in order.items %}
+        {% include '@SyliusAdminOrderCreationPlugin/Order/Show/_item.html.twig' with {'form': form.children[loop.index0]} %}
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    {% include '@SyliusAdmin/Order/Show/Summary/_totals.html.twig' %}
+    </tfoot>
+</table>

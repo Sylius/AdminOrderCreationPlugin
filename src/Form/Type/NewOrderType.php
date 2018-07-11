@@ -17,13 +17,6 @@ final class NewOrderType extends AbstractResourceType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('items', CollectionType::class, [
-                'label' => 'sylius.ui.items',
-                'entry_type' => OrderItemType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'by_reference' => false,
-            ])
             ->add('promotionCoupon', PromotionCouponToCodeType::class, [
                 'by_reference' => false,
                 'label' => 'sylius.form.cart.coupon',
@@ -53,6 +46,16 @@ final class NewOrderType extends AbstractResourceType
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
                 $event
                     ->getForm()
+                    ->add('items', CollectionType::class, [
+                        'label' => 'sylius.ui.items',
+                        'entry_type' => OrderItemType::class,
+                        'entry_options' => [
+                            'currency' => $event->getData()->getCurrencyCode(),
+                        ],
+                        'allow_add' => true,
+                        'allow_delete' => true,
+                        'by_reference' => false,
+                    ])
                     ->add('adjustments', CollectionType::class, [
                         'label' => false,
                         'entry_type' => AdjustmentType::class,

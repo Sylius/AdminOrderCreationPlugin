@@ -38,6 +38,26 @@ final class OrderPreviewPage extends SymfonyPage implements OrderPreviewPageInte
         return null !== $this->getDocument()->findButton('Confirm');
     }
 
+    public function hasOrderDiscountValidationMessage(string $message): bool
+    {
+        $orderDiscountValidationMessage = $this
+            ->getDocument()
+            ->find('css', '#sylius_admin_order_creation_new_order_adjustments .sylius-validation-error')
+        ;
+
+        return
+            $orderDiscountValidationMessage !== null &&
+            $orderDiscountValidationMessage->getText() === $message
+        ;
+    }
+
+    public function hasItemDiscountValidationMessage(string $productCode, string $message): bool
+    {
+        $item = $this->getDocument()->find('css', sprintf('table tr:contains("%s") + tr', $productCode));
+
+        return null !== $item->find('css', sprintf('.sylius-validation-error:contains("%s")', $message));
+    }
+
     public function lowerOrderPriceBy(string $discount): void
     {
         $discountCollection = $this->getDocument()->find('css', '#sylius_admin_order_creation_new_order_adjustments');
@@ -52,10 +72,10 @@ final class OrderPreviewPage extends SymfonyPage implements OrderPreviewPageInte
 
     public function lowerItemWithProductPriceBy(string $productCode, string $discount): void
     {
-        $item = $this->getDocument()->find('css', sprintf('table tr:contains("%s")', $productCode));
+        $item = $this->getDocument()->find('css', sprintf('table tr:contains("%s") + tr', $productCode));
         $item->clickLink('Add discount');
 
-        $discountCollection = $item->find('css', '#sylius_admin_order_creation_new_order_adjustments');
+        $discountCollection = $item->find('css', '[data-form-type="collection"]');
 
         $this->getDocument()->waitFor(1, function () use ($discountCollection) {
             return $discountCollection->has('css', '[data-form-collection="item"]');

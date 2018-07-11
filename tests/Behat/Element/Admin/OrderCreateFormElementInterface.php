@@ -33,10 +33,6 @@ interface OrderCreateFormElementInterface
 
     public function placeOrder(): void;
 
-    public function hasOrderDiscountValidationMessage(string $message): bool;
-
-    public function hasItemDiscountValidationMessage(string $productCode, string $message): bool;
-
     public function getPreFilledBillingAddress(): AddressInterface;
 
     public function getPreFilledShippingAddress(): AddressInterface;
