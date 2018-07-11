@@ -203,6 +203,14 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
+     * @When I go back to the order creation
+     */
+    public function goBackToTheOrderCreation(): void
+    {
+        $this->orderPreviewPage->goBack();
+    }
+
+    /**
      * @When I place this order
      */
     public function placeThisOrder(): void
@@ -467,8 +475,9 @@ final class ManagingOrdersContext implements Context
 
     /**
      * @Then :quantity :product products should be added
+     * @Then the :product product should be added
      */
-    public function productsShouldBeAdded(int $quantity, ProductInterface $product): void
+    public function productsShouldBeAdded(int $quantity = 1, ProductInterface $product): void
     {
         Assert::true($this->orderCreateFormElement->hasProductWithQuantity($product->getCode(), $quantity));
     }
