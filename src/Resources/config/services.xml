@@ -56,6 +56,10 @@
             <argument>%sylius.form.type.payment.validation_groups%</argument>
             <tag name="form.type" />
         </service>
+        <service id="Sylius\AdminOrderCreationPlugin\Form\Type\AdjustmentType">
+            <argument>%sylius.model.adjustment.class%</argument>
+            <tag name="form.type" />
+        </service>
 
         <service id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory">
             <argument type="service" id="sylius.factory.order" />

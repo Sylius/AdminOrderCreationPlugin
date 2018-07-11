@@ -30,6 +30,7 @@ final class OrderCreationListener
         $order = $event->getSubject();
         Assert::isInstanceOf($order, OrderInterface::class);
 
+        $order->recalculateAdjustmentsTotal();
         $this->orderProcessor->process($order);
     }
 

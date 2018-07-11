@@ -7,9 +7,11 @@ sylius_admin_order_creation:
         order:
             order_price: 'Order price'
     ui:
+        add_discount: 'Add discount'
         confirm: 'Confirm'
         create_new: 'Create new'
         new_customer_email: 'New customer email'
+        order_discount: 'Order discount'
         order_preview: 'Order preview'
         reorder: 'Reorder'
         shipping_methods_selection_requirement: 'You need to add some items and shipping address to select from eligible shipping method'

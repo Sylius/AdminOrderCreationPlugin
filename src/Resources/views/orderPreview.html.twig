@@ -90,13 +90,20 @@
     <div class="ui stackable grid" id="order-discount">
         <div class="twelve wide column">
             <div class="ui segment">
-                <form name="sylius_refund_order_discount">
-                    Order discount:
-                    <div class="ui labeled input">
-                        <div class="ui label">$</div>
-                        <input type="text" id="sylius_refund_order_discount_amount" name="sylius_refund_order_discount_amount">
-                    </div>
-                </form>
+                    {{ form_start(form, {
+                        'attr': {'action': path('sylius_admin_order_creation_order_create', {'customerEmail': app.request.attributes.get('customerEmail')}),'novalidate': 'novalidate', 'id': form.vars.id },
+                        'method': 'POST'
+                    }) }}
+                        <div style="display: none;">
+                            {{ form_row(form.items, {'attr': {'style': 'display: none;'}}) }}
+                            {{ form_row(form.promotionCoupon, {'attr': {'style': 'display: none;'}}) }}
+                            {{ form_row(form.shippingAddress, {'attr': {'style': 'display: none;'}}) }}
+                            {{ form_row(form.billingAddress, {'attr': {'style': 'display: none;'}}) }}
+                            {{ form_row(form.payments, {'attr': {'style': 'display: none;'}}) }}
+                            {{ form_row(form.shipments, {'attr': {'style': 'display: none;'}}) }}
+                        </div>
+                        {{ form_row(form.adjustments) }}
+                    {{ form_end(form) }}
             </div>
         </div>
     </div>
@@ -128,12 +135,5 @@
     </div>
 
     <div class="ui divider"></div>
-
-    {{ form(form, {
-        'action': path('sylius_admin_order_creation_order_create', {'customerEmail': app.request.attributes.get('customerEmail')}),
-        'attr': {'style': 'display: none;', 'novalidate': 'novalidate', 'id': form.vars.id },
-        'method': 'POST'
-    }) }}
     <button type="submit" form="{{ form.vars.name }}" class="ui button green">{{ 'sylius_admin_order_creation.ui.confirm'|trans }}</button>
-    <button type="submit" form="sylius_refund_order_discount" class="ui button">{{ 'sylius.ui.update'|trans }}</button>
 {% endblock %}

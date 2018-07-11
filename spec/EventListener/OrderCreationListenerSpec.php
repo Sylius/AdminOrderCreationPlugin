@@ -6,6 +6,7 @@ namespace spec\Sylius\AdminOrderCreationPlugin\EventListener;
 
 use PhpSpec\ObjectBehavior;
 use SM\Factory\FactoryInterface;
+use Sylius\AdminOrderCreationPlugin\Adder\OrderDiscountAdjustmentAdderInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\OrderCheckoutTransitions;
 use Sylius\Component\Order\Processor\OrderProcessorInterface;
@@ -14,8 +15,10 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 
 final class OrderCreationListenerSpec extends ObjectBehavior
 {
-    function let(OrderProcessorInterface $orderProcessor, FactoryInterface $stateMachineFactory)
-    {
+    function let(
+        OrderProcessorInterface $orderProcessor,
+        FactoryInterface $stateMachineFactory
+    ) {
         $this->beConstructedWith($orderProcessor, $stateMachineFactory);
     }
 
@@ -26,6 +29,7 @@ final class OrderCreationListenerSpec extends ObjectBehavior
     ) {
         $event->getSubject()->willReturn($order);
 
+        $order->recalculateAdjustmentsTotal()->shouldBeCalled();
         $orderProcessor->process($order)->shouldBeCalled();
 
         $this->processOrderBeforeCreation($event);

@@ -40,8 +40,14 @@ final class OrderPreviewPage extends SymfonyPage implements OrderPreviewPageInte
 
     public function lowerOrderPriceBy(string $discount): void
     {
+        $this->getDocument()->clickLink('Add discount');
+
+        $discountCollection = $this->getDocument()->find('css', '#sylius_admin_order_creation_new_order_adjustments');
+        $this->getDocument()->waitFor(1, function () use ($discountCollection) {
+            return $discountCollection->has('css', '[data-form-collection="item"]');
+        });
+
         $this->getDocument()->fillField('Order discount', $discount);
-        $this->getDocument()->pressButton('Update');
     }
 
     public function lowerItemWithProductPriceBy(string $productCode, string $discount): void

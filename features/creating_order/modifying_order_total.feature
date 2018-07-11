@@ -23,7 +23,7 @@ Feature: Modifying order total
         And I lower order price by "$10.00"
         And I confirm this order
         Then I should be notified that order has been successfully created
-        And the order's total should be "$123.45"
+        And the order's total should be "$490.00"
 
     @ui @javascript
     Scenario: Not being able to place order with price below 0
@@ -33,5 +33,5 @@ Feature: Modifying order total
         And I select "Free" shipping method
         And I select "Cash on Delivery" payment method
         And I lower order price by "-$10.00"
-        And I place and confirm this order
+        And I confirm this order
         Then I should be notified that order discount cannot be below 0
