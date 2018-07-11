@@ -10,6 +10,7 @@ use Sylius\Component\Core\Model\AdjustmentInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Validator\Constraints\Range;
 
 final class AdjustmentType extends AbstractResourceType
 {
@@ -20,6 +21,9 @@ final class AdjustmentType extends AbstractResourceType
         $builder->add('amount', MoneyType::class, [
             'label' => 'sylius_admin_order_creation.ui.order_discount',
             'currency' => 'USD',
+            'constraints' => [
+                new Range(['min' => 0, 'minMessage' => 'sylius_admin_order_creation.order_discount', 'groups' => ['sylius']]),
+            ]
         ]);
 
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event): void {

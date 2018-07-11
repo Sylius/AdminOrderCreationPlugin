@@ -153,11 +153,15 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
 
     public function hasOrderDiscountValidationMessage(string $message): bool
     {
-        $this->clickOnTabAndWait('Order discount');
+        $orderDiscountValidationMessage = $this
+            ->getDocument()
+            ->find('css', '#sylius_admin_order_creation_new_order_adjustments .sylius-validation-error')
+        ;
 
-        $orderDiscountElement = $this->getDocument()->find('css', '.field:contains("Discount")');
-
-        return null !== $orderDiscountElement->find('css', sprintf('.sylius-validation-error:contains("%s")', $message));
+        return
+            $orderDiscountValidationMessage !== null &&
+            $orderDiscountValidationMessage->getText() === $message
+        ;
     }
 
     public function hasItemDiscountValidationMessage(string $productCode, string $message): bool
