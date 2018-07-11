@@ -139,20 +139,6 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         $paymentsCollection->selectFieldOption('Payment Method', $paymentMethodName);
     }
 
-    public function specifyOrderPrice(string $orderPrice): void
-    {
-        $this->clickOnTabAndWait('Custom total');
-
-        $this->getDocument()->fillField('Order price', $orderPrice);
-    }
-
-    public function specifyUnitPrice(string $itemProductCode, string $unitPrice): void
-    {
-        $item = $this->getItemWithProductSelected($itemProductCode);
-
-        $item->fillField('Unit price', $unitPrice);
-    }
-
     public function specifyQuantity(string $itemProductCode, int $quantity): void
     {
         $item = $this->getItemWithProductSelected($itemProductCode);
@@ -163,22 +149,6 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
     public function placeOrder(): void
     {
         $this->getDocument()->pressButton('Create');
-    }
-
-    public function hasOrderPriceValidationMessage(string $message): bool
-    {
-        $this->clickOnTabAndWait('Custom total');
-
-        $customTotalElement = $this->getDocument()->find('css', '.field:contains("Order price")');
-
-        return null !== $customTotalElement->find('css', sprintf('.sylius-validation-error:contains("%s")', $message));
-    }
-
-    public function hasUnitPriceValidationMessage(string $productCode, string $message): bool
-    {
-        $item = $this->getItemWithProductSelected($productCode);
-
-        return null !== $item->find('css', sprintf('.sylius-validation-error:contains("%s")', $message));
     }
 
     public function getPreFilledBillingAddress(): AddressInterface

@@ -1,7 +1,2 @@
 sylius_admin_order_creation:
-    order:
-        custom_total:
-            min: 'Order price cannot be below 0'
-    order_item:
-        custom_unit_price:
-            min: 'Price cannot be below 0'
+    order_discount: 'Discount cannot be below 0'

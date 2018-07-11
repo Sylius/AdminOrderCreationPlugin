@@ -42,8 +42,8 @@
         </service>
         <service id="Sylius\AdminOrderCreationPlugin\Form\Type\OrderItemType">
             <argument>%sylius.model.order_item.class%</argument>
-            <argument>%sylius.form.type.order_item.validation_groups%</argument>
             <argument type="service" id="sylius.form.data_mapper.order_item_quantity" />
+            <argument>%sylius.form.type.order_item.validation_groups%</argument>
             <tag name="form.type" />
         </service>
         <service id="Sylius\AdminOrderCreationPlugin\Form\Type\ShipmentType">
@@ -54,6 +54,10 @@
         <service id="Sylius\AdminOrderCreationPlugin\Form\Type\PaymentType">
             <argument>%sylius.model.payment.class%</argument>
             <argument>%sylius.form.type.payment.validation_groups%</argument>
+            <tag name="form.type" />
+        </service>
+        <service id="Sylius\AdminOrderCreationPlugin\Form\Type\AdjustmentType">
+            <argument>%sylius.model.adjustment.class%</argument>
             <tag name="form.type" />
         </service>
 
@@ -94,14 +98,6 @@
             <argument type="service" id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory" />
             <argument type="service" id="form.factory" />
             <argument type="service" id="sylius.order_processing.order_processor" />
-        </service>
-
-        <service
-            id="sylius.order_processing.order_prices_recalculator"
-            class="Sylius\AdminOrderCreationPlugin\Recalculator\OrderPricesRecalculator"
-        >
-            <argument type="service" id="sylius.calculator.product_variant_price" />
-            <tag name="sylius.order_processor" priority="40"/>
         </service>
     </services>
 </container>

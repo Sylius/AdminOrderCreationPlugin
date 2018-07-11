@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Sylius\AdminOrderCreationPlugin\Form\Type;
 
 use Sylius\Bundle\AddressingBundle\Form\Type\AddressType;
-use Sylius\Bundle\MoneyBundle\Form\Type\MoneyType;
 use Sylius\Bundle\PromotionBundle\Form\Type\PromotionCouponToCodeType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -18,13 +17,6 @@ final class NewOrderType extends AbstractResourceType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('items', CollectionType::class, [
-                'label' => 'sylius.ui.items',
-                'entry_type' => OrderItemType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'by_reference' => false,
-            ])
             ->add('promotionCoupon', PromotionCouponToCodeType::class, [
                 'by_reference' => false,
                 'label' => 'sylius.form.cart.coupon',
@@ -54,9 +46,27 @@ final class NewOrderType extends AbstractResourceType
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
                 $event
                     ->getForm()
-                    ->add('customTotal', MoneyType::class, [
-                        'label' => 'sylius_admin_order_creation.form.order.order_price',
-                        'currency' => $event->getData()->getCurrencyCode(),
+                    ->add('items', CollectionType::class, [
+                        'label' => 'sylius.ui.items',
+                        'entry_type' => OrderItemType::class,
+                        'entry_options' => [
+                            'currency' => $event->getData()->getCurrencyCode(),
+                        ],
+                        'allow_add' => true,
+                        'allow_delete' => true,
+                        'by_reference' => false,
+                    ])
+                    ->add('adjustments', CollectionType::class, [
+                        'label' => false,
+                        'entry_type' => AdjustmentType::class,
+                        'entry_options' => [
+                            'label' => 'sylius_admin_order_creation.ui.order_discount',
+                            'currency' => $event->getData()->getCurrencyCode(),
+                        ],
+                        'allow_add' => true,
+                        'allow_delete' => true,
+                        'by_reference' => false,
+                        'button_add_label' => 'sylius_admin_order_creation.ui.add_discount',
                     ])
                 ;
             })

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Sylius\AdminOrderCreationPlugin\Provider;
 
-use Sylius\AdminOrderCreationPlugin\Entity\OrderInterface;
 use Sylius\Component\Core\Model\ShipmentInterface;
 use Sylius\Component\Shipping\Resolver\ShippingMethodsResolverInterface;
 

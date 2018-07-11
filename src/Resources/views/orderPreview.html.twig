@@ -9,6 +9,10 @@
 {% block content %}
     {% set order = form.vars.data %}
 
+    {{ form_start(form, {
+        'attr': {'action': path('sylius_admin_order_creation_order_create_from_preview', {'customerEmail': app.request.attributes.get('customerEmail')}),'novalidate': 'novalidate', 'id': form.vars.id },
+        'method': 'POST'
+    }) }}
     <div class="ui stackable two column grid">
         <div class="ten wide column">
             <h1 class="ui header">
@@ -39,7 +43,7 @@
     <div class="ui stackable grid">
         <div class="twelve wide column">
             <div class="ui segment">
-                {% include '@SyliusAdmin/Order/Show/_summary.html.twig' %}
+                {% include '@SyliusAdminOrderCreationPlugin/Order/Show/_summary.html.twig' with {'form': form.items} %}
             </div>
         </div>
         <div class="four wide column">
@@ -87,6 +91,20 @@
             </div>
         </div>
     </div>
+    <div class="ui stackable grid" id="order-discount">
+        <div class="twelve wide column">
+            <div class="ui segment">
+                <div style="display: none;">
+                    {{ form_row(form.promotionCoupon) }}
+                    {{ form_row(form.shippingAddress) }}
+                    {{ form_row(form.billingAddress) }}
+                    {{ form_row(form.payments) }}
+                    {{ form_row(form.shipments) }}
+                </div>
+                {{ form_row(form.adjustments) }}
+            </div>
+        </div>
+    </div>
     <div class="ui stackable grid">
         <div class="eight wide column">
             <div class="ui segment" id="payment-state">
@@ -113,13 +131,32 @@
             </div>
         </div>
     </div>
+    <div style="display: none">
+    {{ form_rest(form) }}
+    </div>
+    {{ form_end(form) }}
 
     <div class="ui divider"></div>
-
-    {{ form(form, {
-        'action': path('sylius_admin_order_creation_order_create', {'customerEmail': app.request.attributes.get('customerEmail')}),
-        'attr': {'style': 'display: none;', 'novalidate': 'novalidate', 'id': form.vars.id },
-        'method': 'POST'
-    }) }}
     <button type="submit" form="{{ form.vars.name }}" class="ui button green">{{ 'sylius_admin_order_creation.ui.confirm'|trans }}</button>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('body').on('DOMNodeInserted', '#sylius_admin_order_creation_new_order_adjustments [data-form-collection="item"]', function() {
+                $('#sylius_admin_order_creation_new_order_adjustments [data-form-collection="add"]').hide();
+            });
+            $('body').on('DOMNodeRemoved', '#sylius_admin_order_creation_new_order_adjustments [data-form-collection="item"]', function() {
+                $('#sylius_admin_order_creation_new_order_adjustments [data-form-collection="add"]').show();
+            });
+
+            $('body').on('DOMNodeInserted', '.item-discount [data-form-collection="item"]', function() {
+                $(this).parent().parent().find('[data-form-collection="add"]').hide();
+            });
+            $('body').on('DOMNodeRemoved', '.item-discount [data-form-collection="item"]', function() {
+                $(this).parent().parent().find('[data-form-collection="add"]').show();
+            });
+        });
+    </script>
 {% endblock %}

@@ -14,8 +14,10 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 
 final class OrderCreationListenerSpec extends ObjectBehavior
 {
-    function let(OrderProcessorInterface $orderProcessor, FactoryInterface $stateMachineFactory)
-    {
+    function let(
+        OrderProcessorInterface $orderProcessor,
+        FactoryInterface $stateMachineFactory
+    ) {
         $this->beConstructedWith($orderProcessor, $stateMachineFactory);
     }
 
@@ -26,6 +28,7 @@ final class OrderCreationListenerSpec extends ObjectBehavior
     ) {
         $event->getSubject()->willReturn($order);
 
+        $order->recalculateAdjustmentsTotal()->shouldBeCalled();
         $orderProcessor->process($order)->shouldBeCalled();
 
         $this->processOrderBeforeCreation($event);
