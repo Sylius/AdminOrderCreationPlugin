@@ -137,3 +137,17 @@
     <div class="ui divider"></div>
     <button type="submit" form="{{ form.vars.name }}" class="ui button green">{{ 'sylius_admin_order_creation.ui.confirm'|trans }}</button>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('body').on('DOMNodeInserted', '#sylius_admin_order_creation_new_order_adjustments [data-form-collection="item"]', function() {
+                $('#sylius_admin_order_creation_new_order_adjustments [data-form-collection="add"]').hide();
+            });
+            $('body').on('DOMNodeRemoved', '#sylius_admin_order_creation_new_order_adjustments [data-form-collection="item"]', function() {
+                $('#sylius_admin_order_creation_new_order_adjustments [data-form-collection="add"]').show();
+            });
+        });
+    </script>
+{% endblock %}
