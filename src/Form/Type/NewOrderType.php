@@ -50,14 +50,23 @@ final class NewOrderType extends AbstractResourceType
                 'by_reference' => false,
                 'required' => false,
             ])
-            ->add('adjustments', CollectionType::class, [
-                'label' => false,
-                'entry_type' => AdjustmentType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'by_reference' => false,
-                'button_add_label' => 'sylius_admin_order_creation.ui.add_discount',
-            ])
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
+                $event
+                    ->getForm()
+                    ->add('adjustments', CollectionType::class, [
+                        'label' => false,
+                        'entry_type' => AdjustmentType::class,
+                        'entry_options' => [
+                            'label' => 'sylius_admin_order_creation.ui.order_discount',
+                            'currency' => $event->getData()->getCurrencyCode(),
+                        ],
+                        'allow_add' => true,
+                        'allow_delete' => true,
+                        'by_reference' => false,
+                        'button_add_label' => 'sylius_admin_order_creation.ui.add_discount',
+                    ])
+                ;
+            })
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
                 $orderData = $event->getData();
 

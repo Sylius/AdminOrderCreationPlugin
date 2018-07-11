@@ -10,6 +10,7 @@ use Sylius\Component\Core\Model\AdjustmentInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Range;
 
 final class AdjustmentType extends AbstractResourceType
@@ -19,8 +20,8 @@ final class AdjustmentType extends AbstractResourceType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('amount', MoneyType::class, [
-            'label' => 'sylius_admin_order_creation.ui.order_discount',
-            'currency' => 'USD',
+            'label' => $options['label'],
+            'currency' => $options['currency'],
             'constraints' => [
                 new Range(['min' => 0, 'minMessage' => 'sylius_admin_order_creation.order_discount', 'groups' => ['sylius']]),
             ]
@@ -40,6 +41,14 @@ final class AdjustmentType extends AbstractResourceType
 
             $event->setData($adjustment);
         });
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+
+        $resolver->setRequired('label');
+        $resolver->setRequired('currency');
     }
 
     public function getBlockPrefix(): string
