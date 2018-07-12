@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Admin;
 
+use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Session;
 use Sylius\Component\Core\Model\Address;
@@ -163,11 +164,15 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
 
     public function getShippingMethodName(): string
     {
+        $this->clickOnTabAndWait('Shipments & Payments');
+
         return $this->getElement('selected_shipping_method')->getText();
     }
 
     public function getPaymentMethodName(): string
     {
+        $this->clickOnTabAndWait('Shipments & Payments');
+
         return $this->getElement('selected_payment_method')->getText();
     }
 
@@ -245,6 +250,10 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
 
     private function clickOnTabAndWait(string $tabName): void
     {
+        if (!$this->getDriver() instanceof Selenium2Driver) {
+            return;
+        }
+
         $tab = $this->getDocument()->find('css', sprintf('.title:contains("%s")', $tabName));
 
         if ($tab->hasClass('active')) {

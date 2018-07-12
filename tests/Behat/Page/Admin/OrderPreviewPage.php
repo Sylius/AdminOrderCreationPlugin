@@ -91,4 +91,12 @@ final class OrderPreviewPage extends SymfonyPage implements OrderPreviewPageInte
         $confirmButton->focus();
         $confirmButton->press();
     }
+
+    public function goBack(): void
+    {
+        $backButton = $this->getDocument()->findButton('Back');
+
+        $backButton->focus();
+        $backButton->press();
+    }
 }

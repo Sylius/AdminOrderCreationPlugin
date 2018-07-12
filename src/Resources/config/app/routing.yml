@@ -52,6 +52,14 @@ sylius_admin_order_creation_order_create_from_preview:
                 method: ['expr:service("Sylius\\AdminOrderCreationPlugin\\Factory\\OrderFactory")', 'createForCustomer']
                 arguments: [$customerEmail]
 
+sylius_admin_order_creation_order_create_back:
+    path: /admin/orders/edit/{customerEmail}
+    methods: [POST]
+    options:
+        expose: true
+    defaults:
+        _controller: Sylius\AdminOrderCreationPlugin\Controller\OrderCreateAction
+
 sylius_admin_order_creation_reorder:
     path: /admin/orders/{id}/reorder
     methods: [GET, POST]

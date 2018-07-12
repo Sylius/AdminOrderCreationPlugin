@@ -35,7 +35,7 @@
         </div>
     </div>
 
-    {% include '@SyliusUi/Form/Buttons/_create.html.twig' with {'paths': {'cancel': path(configuration.getRouteName('index'), configuration.vars.route.parameters|default({}))}} %}
+    {% include '@SyliusUi/Form/Buttons/_create.html.twig' with {'paths': {'cancel': path('sylius_admin_order_index')}} %}
 
     {{ form_row(form._token) }}
     {{ form_end(form, {'render_rest': false}) }}

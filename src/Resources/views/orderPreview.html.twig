@@ -2,7 +2,7 @@
 
 {% import '@SyliusUi/Macro/flags.html.twig' as flags %}
 
-{% block title %}Order preview{% endblock %}
+{% block title %}{{ 'sylius_admin_order_creation.ui.order_preview'|trans }}{% endblock %}
 
 {% form_theme form '@SyliusAdminOrderCreationPlugin/orderItemCollectionTheme.html.twig' %}
 
@@ -10,7 +10,7 @@
     {% set order = form.vars.data %}
 
     {{ form_start(form, {
-        'attr': {'action': path('sylius_admin_order_creation_order_create_from_preview', {'customerEmail': app.request.attributes.get('customerEmail')}),'novalidate': 'novalidate', 'id': form.vars.id },
+        'attr': {'novalidate': 'novalidate', 'id': form.vars.id },
         'method': 'POST'
     }) }}
     <div class="ui stackable two column grid">
@@ -137,7 +137,15 @@
     {{ form_end(form) }}
 
     <div class="ui divider"></div>
-    <button type="submit" form="{{ form.vars.name }}" class="ui button green">{{ 'sylius_admin_order_creation.ui.confirm'|trans }}</button>
+
+    <div class="ui buttons">
+        <button type="submit" form="{{ form.vars.name }}" formaction="{{ path('sylius_admin_order_creation_order_create_back', {'customerEmail': app.request.attributes.get('customerEmail')}) }}" class="ui button">
+            {{ 'sylius.ui.back'|trans }}
+        </button>
+        <button type="submit" form="{{ form.vars.name }}" formaction="{{ path('sylius_admin_order_creation_order_create_from_preview', {'customerEmail': app.request.attributes.get('customerEmail')}) }}" class="ui button positive">
+            {{ 'sylius_admin_order_creation.ui.confirm'|trans }}
+        </button>
+    </div>
 {% endblock %}
 
 {% block javascripts %}

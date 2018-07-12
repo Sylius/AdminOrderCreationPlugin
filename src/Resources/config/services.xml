@@ -20,6 +20,12 @@
             <argument type="service" id="twig" />
         </service>
 
+        <service id="Sylius\AdminOrderCreationPlugin\Controller\OrderCreateAction">
+            <argument type="service" id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory" />
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="twig" />
+        </service>
+
         <service id="Sylius\AdminOrderCreationPlugin\Controller\ProvideAvailableShippingMethodsAction">
             <argument type="service" id="Sylius\AdminOrderCreationPlugin\Preparator\NewOrderPreparator" />
             <argument type="service" id="Sylius\AdminOrderCreationPlugin\Provider\AvailableShippingMethodsListProvider" />

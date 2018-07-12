@@ -1,19 +1,17 @@
 {% extends 'SyliusAdminBundle::layout.html.twig' %}
 
-{% set header = configuration.vars.header|default(metadata.applicationName~'.ui.new_'~metadata.name) %}
-
-{% block title %}{{ header|trans }} {{ parent() }}{% endblock %}
+{% block title %}{{ 'sylius.ui.new_order'|trans }} {{ parent() }}{% endblock %}
 
 {% form_theme form '@SyliusAdminOrderCreationPlugin/orderItemCollectionTheme.html.twig' %}
 
 {% block content %}
     <div class="ui stackable two column grid">
         <div class="column">
-            {% include configuration.vars.templates.header_title|default('@SyliusAdmin/Crud/Create/_headerTitle.html.twig') %}
-            {% include configuration.vars.templates.breadcrumb|default('@SyliusAdmin/Crud/Create/_breadcrumb.html.twig') %}
-        </div>
-        <div class="middle aligned column">
-            {% include configuration.vars.templates.toolbar|default('@SyliusAdmin/Crud/_toolbar.html.twig') ignore missing %}
+            <h1 class="ui header">
+                <i class="circular plus icon"></i>
+                <div class="content">{{ 'sylius.ui.new_order'|trans }}</div>
+            </h1>
+            {% include '@SyliusAdminOrderCreationPlugin/Order/Create/_breadcrumb.html.twig' %}
         </div>
     </div>
     {% include '@SyliusAdminOrderCreationPlugin/Order/_form.html.twig' with {
