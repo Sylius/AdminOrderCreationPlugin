@@ -262,7 +262,7 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
 
         $tab->click();
 
-        $this->getDocument()->waitFor(1, function () use ($tabName) {
+        $this->getDocument()->waitFor(5, function () use ($tabName) {
             return $this
                 ->getDocument()
                 ->find('css', sprintf('.title:contains("%s") + .content', $tabName))
