@@ -18,6 +18,7 @@
         <div class="ui segment">
             <form action="{{ path('sylius_admin_order_payment_complete', {'orderId': order.id, 'id': payment.id}) }}" method="post" novalidate>
                 <input type="hidden" name="_method" value="PUT">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token(payment.id) }}" />
                 <button type="submit" class="ui icon labeled tiny blue fluid loadable button"><i class="check icon"></i> {{ 'sylius.ui.complete'|trans }}</button>
             </form>
         </div>
@@ -33,6 +34,7 @@
         <div class="ui segment">
             <form action="{{ path('sylius_admin_order_payment_refund', {'orderId': order.id, 'id': payment.id}) }}" method="post" novalidate>
                 <input type="hidden" name="_method" value="PUT">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token(payment.id) }}" />
                 <button type="submit" class="ui icon labeled tiny yellow fluid loadable button"><i class="reply all icon"></i> {{ 'sylius.ui.refund'|trans }}</button>
             </form>
         </div>
