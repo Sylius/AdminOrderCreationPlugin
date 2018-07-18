@@ -1,0 +1,18 @@
+sylius_admin_order_creation:
+    email:
+        order_created:
+            subject: "Для вас был создан новый заказ"
+            body: "Новый заказ был создан для Вас администратором. Вы можете просмотреть его в истории заказов. Оплатить заказ можно по ссылке {{ link }}"
+    form:
+        order:
+            order_price: 'Стоимость заказа'
+    ui:
+        add_discount: 'Добавить скидку'
+        confirm: 'Подтвердить'
+        create_new: 'Создать новый'
+        item_discount: 'Скидка на товар'
+        new_customer_email: 'Email нового пользователя'
+        order_discount: 'Скидка на заказ'
+        order_preview: 'Предпросмотр заказа'
+        reorder: 'Перезаказать'
+        shipping_methods_selection_requirement: 'Необходимо добавить товары и адрес доставки для выбора доступного способа доставки'
