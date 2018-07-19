@@ -1,0 +1,2 @@
+sylius_admin_order_creation:
+    order_discount: 'Скидка не может быть меньше 0'
