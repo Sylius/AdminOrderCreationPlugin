@@ -27,6 +27,7 @@ final class NewOrderType extends AbstractResourceType
             ])
             ->add('billingAddress', AddressType::class, [
                 'label' => 'sylius.ui.billing_address',
+                'required' => false,
             ])
             ->add('payments', CollectionType::class, [
                 'entry_type' => PaymentType::class,
