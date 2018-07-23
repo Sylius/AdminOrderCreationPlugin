@@ -21,7 +21,7 @@ Feature: Applying promotions during reordering previously placed order
 
     Scenario: Applying promotion during reordering previously placed order
         When I reorder the order "#00000666"
-        And I place this order
+        And I place and confirm this order
         Then I should be notified that order has been successfully created
         And the order's total should be "$250.00"
         And the order's promotion total should be "-$50.00"
@@ -30,7 +30,7 @@ Feature: Applying promotions during reordering previously placed order
     Scenario: Not applying promotion during reordering previously placed order
         When I reorder the order "#00000666"
         And I change quantity of item "Stark Coat" to 2
-        And I place this order
+        And I place and confirm this order
         Then I should be notified that order has been successfully created
         And the order's total should be "$200.00"
         And the order's promotion total should be "$0.00"
@@ -38,7 +38,7 @@ Feature: Applying promotions during reordering previously placed order
     Scenario: Not applying expired promotion during reordering previously placed order
         Given this promotion has already expired
         When I reorder the order "#00000666"
-        And I place this order
+        And I place and confirm this order
         Then I should be notified that order has been successfully created
         And the order's total should be "$300.00"
         And the order's promotion total should be "$0.00"

@@ -45,7 +45,7 @@ Feature: Reordering previously placed order
 
     Scenario: Reordering previously placed order with the same addresses
         When I reorder the order "#00000666"
-        And I place this order
+        And I place and confirm this order
         Then I should be notified that order has been successfully created
         And this order shipping address should be "Jon Snow", "Frost Alley", "90210", "Ankh-Morpork", "United States"
         And this order billing address should be "Ned Stark", "Elm Street", "444", "Rivendell", "United States"
@@ -53,21 +53,21 @@ Feature: Reordering previously placed order
 
     Scenario: Reordering previously placed order with the same shipping method
         When I reorder the order "#00000666"
-        And I place this order
+        And I place and confirm this order
         Then I should be notified that order has been successfully created
         And this order shipping method should be "DHL"
         And there should be 2 not paid nor shipped orders for "jon.snow@the-wall.com" in the registry
 
     Scenario: Reordering previously placed order with the same payment method
         When I reorder the order "#00000666"
-        And I place this order
+        And I place and confirm this order
         Then I should be notified that order has been successfully created
         And this order payment method should be "Bank Transfer"
         And there should be 2 not paid nor shipped orders for "jon.snow@the-wall.com" in the registry
 
     Scenario: Reordering previously placed order with the same products
         When I reorder the order "#00000666"
-        And I place this order
+        And I place and confirm this order
         Then I should be notified that order has been successfully created
         And this order payment method should be "Bank Transfer"
         And the product named "Stark Coat" should be in the items list

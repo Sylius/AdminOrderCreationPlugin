@@ -25,7 +25,7 @@ Feature: Reordering previously placed order with different data
         When I reorder the order "#00000666"
         And I specify this order shipping address as "Los Angeles", "Frost Alley", "90210", "United States" for "Lucifer Morningstar"
         And I specify this order billing address as "Los Angeles", "Pacific Coast Hwy", "90806", "United States" for "Mazikeen Lilim"
-        And I place this order
+        And I place and confirm this order
         Then I should be notified that order has been successfully created
         And this order shipping address should be "Lucifer Morningstar", "Frost Alley", "90210", "Los Angeles", "United States"
         And this order billing address should be "Mazikeen Lilim", "Pacific Coast Hwy", "90806", "Los Angeles", "United States"
@@ -34,7 +34,7 @@ Feature: Reordering previously placed order with different data
     Scenario: Reordering previously placed order with different shipping method
         When I reorder the order "#00000666"
         And I select "DHL" shipping method
-        And I place this order
+        And I place and confirm this order
         Then I should be notified that order has been successfully created
         And this order shipping method should be "DHL"
         And there should be 2 not paid nor shipped orders for "jon.snow@the-wall.com" in the registry
@@ -43,7 +43,7 @@ Feature: Reordering previously placed order with different data
     Scenario: Reordering previously placed order with different payment method
         When I reorder the order "#00000666"
         And I select "Paypal" payment method
-        And I place this order
+        And I place and confirm this order
         Then I should be notified that order has been successfully created
         And this order payment method should be "Paypal"
         And there should be a payment link displayed next to order's payment
@@ -55,7 +55,7 @@ Feature: Reordering previously placed order with different data
         And I add 3 of "Greyjoy Boat" to this order
         And I add "Targaryen Shield" to this order
         And I remove "Stark Coat" from this order
-        And I place this order
+        And I place and confirm this order
         Then I should be notified that order has been successfully created
         And the product named "Greyjoy Boat" should be in the items list
         And the product named "Targaryen Shield" should be in the items list
