@@ -17,11 +17,10 @@ Feature: Previewing order before creation during reordering
         And the customer chose "Free" shipping method with "Cash on Delivery" payment
         And I am logged in as an administrator
 
-    @todo
     Scenario: Seeing order preview during reordering
         When I reorder the order "#00000666"
         And I place this order
-        Then I should see preview of the order with total "$100.00"
+        Then I should see preview of the order with total "$200.00"
         And this order should contain "Stark Coat" product
         And its shipping total should be "$0.00"
         And it should have one "Cash on Delivery" payment

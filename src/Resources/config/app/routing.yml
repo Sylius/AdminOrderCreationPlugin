@@ -6,7 +6,7 @@ sylius_admin_order_creation_select_order_customer:
 
 sylius_admin_order_creation_order_preview:
     path: /admin/orders/new/{customerEmail}/preview
-    methods: [GET, POST]
+    methods: [POST]
     defaults:
         _controller: Sylius\AdminOrderCreationPlugin\Controller\OrderPreviewAction
         _sylius:
@@ -18,7 +18,7 @@ sylius_admin_order_creation_order_preview:
 
 sylius_admin_order_creation_order_create:
     path: /admin/orders/new/{customerEmail}
-    methods: [GET, POST]
+    methods: [GET]
     options:
         expose: true
     defaults:
@@ -36,7 +36,7 @@ sylius_admin_order_creation_order_create:
 
 sylius_admin_order_creation_order_create_from_preview:
     path: /admin/orders/new/{customerEmail}/create-from-preview
-    methods: [GET, POST]
+    methods: [POST]
     options:
         expose: true
     defaults:
@@ -62,7 +62,7 @@ sylius_admin_order_creation_order_create_back:
 
 sylius_admin_order_creation_reorder:
     path: /admin/orders/{id}/reorder
-    methods: [GET, POST]
+    methods: [GET]
     options:
         expose: true
     defaults:
@@ -71,7 +71,7 @@ sylius_admin_order_creation_reorder:
             event: admin_create
             section: admin
             permission: true
-            template: SyliusAdminOrderCreationPlugin::orderReorder.html.twig
+            template: SyliusAdminOrderCreationPlugin::orderCreate.html.twig
             form:
                 type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
             factory:

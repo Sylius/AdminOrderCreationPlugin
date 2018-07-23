@@ -4,6 +4,12 @@
 
 {% form_theme form '@SyliusAdminOrderCreationPlugin/orderItemCollectionTheme.html.twig' %}
 
+{% if order is defined %}
+    {% set customer_email = order.customer.email %}
+{% else %}
+    {% set customer_email = app.request.attributes.get('customerEmail') %}
+{% endif %}
+
 {% block content %}
     <div class="ui stackable two column grid">
         <div class="column">
@@ -15,7 +21,7 @@
         </div>
     </div>
     {% include '@SyliusAdminOrderCreationPlugin/Order/_form.html.twig' with {
-        'action': path('sylius_admin_order_creation_order_preview', {'customerEmail': app.request.attributes.get('customerEmail')})
+        'action': path('sylius_admin_order_creation_order_preview', {'customerEmail': customer_email})
     } %}
 {% endblock %}
 
@@ -48,6 +54,10 @@
                 }
             });
 
+            $('[data-form-collection="item"] .sylius-autocomplete.dropdown').each(function() {
+                $(this).dropdown('set text', $(this).find('input[type="hidden"]').val());
+            });
+
             function loadAvailableShippingMethods($shipmentNumber) {
                 if (!canShippingMethodBeProvided()) {
                     return;
@@ -60,7 +70,7 @@
                     type: "POST",
                     url: Routing.generate(
                         'sylius_admin_order_creation_ajax_provide_available_shipping_methods',
-                        { 'customerEmail': '{{ app.request.attributes.get("customerEmail") }}', 'shipmentNumber': '0' },
+                        { 'customerEmail': '{{ customer_email }}', 'shipmentNumber': '0' },
                         true
                     ),
                     data: form.serializeArray(),
