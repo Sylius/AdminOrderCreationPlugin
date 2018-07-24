@@ -12,7 +12,6 @@ Feature: Going back from the order preview
         And there is a customer account "jon.snow@the-wall.com"
         And I am logged in as an administrator
 
-    @todo
     Scenario: Having filled data after going back from the order preview
         When I create a new order for "jon.snow@the-wall.com"
         And I add "Stark Coat" to this order
