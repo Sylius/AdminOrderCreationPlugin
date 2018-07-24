@@ -28,7 +28,7 @@ Feature: Modifying unit price
         And the order's total should be "$425.00"
 
     @ui @javascript
-    Scenario: Not being able to set order item unit price below 0
+    Scenario: Not being able to set order item unit discount below 0
         When I create a new order for "jon.snow@the-wall.com"
         And I add 5 of "Stark Coat" to this order
         And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"

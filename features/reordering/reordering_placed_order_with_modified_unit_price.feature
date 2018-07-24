@@ -1,4 +1,4 @@
-@admin_reordering @ui @javascript @todo
+@admin_reordering @ui @javascript
 Feature: Reordering previously placed order with modified unit price
     In order to reorder an order placed by Customer with custom unit price in the name of this Customer
     As an Administrator
@@ -19,13 +19,15 @@ Feature: Reordering previously placed order with modified unit price
 
     Scenario: Reordering previously placed order with modified unit price
         When I reorder the order "#00000666"
-        And I specify item with "Stark Coat" price as "$50.00"
-        And I place and confirm this order
+        And I place this order
+        And I lower item with "Stark Coat" price by "$15.00"
+        And I confirm this order
         Then I should be notified that order has been successfully created
-        And the order's total should be "$50.00"
+        And the order's total should be "$85.00"
 
-    Scenario: Trying to reorder previously placed order with modified unit price below 0
+    Scenario: Trying to reorder previously placed order with discount below 0
         When I reorder the order "#00000666"
-        And I specify item with "Stark Coat" price as "-$50.00"
-        And I place and confirm this order
-        Then I should be notified that item with "Stark Coat" price cannot be below 0
+        And I place this order
+        And I lower item with "Stark Coat" price by "-$15.00"
+        And I confirm this order
+        Then I should be notified that item with "Stark Coat" discount cannot be below 0
