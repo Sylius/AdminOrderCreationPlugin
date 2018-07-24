@@ -20,12 +20,12 @@ Feature: Reordering previously placed order with modified unit price
     Scenario: Reordering previously placed order with modified unit price
         When I reorder the order "#00000666"
         And I specify item with "Stark Coat" price as "$50.00"
-        And I place this order
+        And I place and confirm this order
         Then I should be notified that order has been successfully created
         And the order's total should be "$50.00"
 
     Scenario: Trying to reorder previously placed order with modified unit price below 0
         When I reorder the order "#00000666"
         And I specify item with "Stark Coat" price as "-$50.00"
-        And I place this order
+        And I place and confirm this order
         Then I should be notified that item with "Stark Coat" price cannot be below 0

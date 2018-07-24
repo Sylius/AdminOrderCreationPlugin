@@ -111,33 +111,22 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
 
     public function selectShippingMethod(string $shippingMethodName): void
     {
-        $this->clickOnTabAndWait('Shipments & Payments');
+        $this->selectMethod('shipments', 'Shipping Method', $shippingMethodName, true);
+    }
 
-        $shipmentsCollection = $this->getElement('shipments');
-
-        $shipmentsCollection->clickLink('Add');
-
-        $this->waitForFormToLoad();
-
-        $this->getDocument()->waitFor(1, function () use ($shipmentsCollection) {
-            return $shipmentsCollection->has('css', '[data-form-collection="item"]');
-        });
-
-        $shipmentsCollection->selectFieldOption('Shipping Method', $shippingMethodName);
+    public function changeShippingMethod(string $shippingMethodName): void
+    {
+        $this->selectMethod('shipments', 'Shipping Method', $shippingMethodName, false);
     }
 
     public function selectPaymentMethod(string $paymentMethodName): void
     {
-        $this->clickOnTabAndWait('Shipments & Payments');
+        $this->selectMethod('payments', 'Payment Method', $paymentMethodName, true);
+    }
 
-        $paymentsCollection = $this->getElement('payments');
-
-        $paymentsCollection->clickLink('Add');
-        $this->getDocument()->waitFor(1, function () use ($paymentsCollection) {
-            return $paymentsCollection->has('css', '[data-form-collection="item"]');
-        });
-
-        $paymentsCollection->selectFieldOption('Payment Method', $paymentMethodName);
+    public function changePaymentMethod(string $paymentMethodName): void
+    {
+        $this->selectMethod('payments', 'Payment Method', $paymentMethodName, false);
     }
 
     public function specifyQuantity(string $itemProductCode, int $quantity): void
@@ -215,6 +204,25 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         $addressForm->fillField('Country', $address->getCountryCode());
         $addressForm->fillField('City', $address->getCity());
         $addressForm->fillField('Postcode', $address->getPostcode());
+    }
+
+    private function selectMethod(string $type, string $field, string $name, bool $addNew): void
+    {
+        $this->clickOnTabAndWait('Shipments & Payments');
+        $this->waitForFormToLoad();
+
+        $collection = $this->getElement($type);
+
+        if ($addNew) {
+            $collection->clickLink('Add');
+            $this->waitForFormToLoad();
+        }
+
+        $this->getDocument()->waitFor(1, function () use ($collection) {
+            return $collection->has('css', '[data-form-collection="item"]');
+        });
+
+        $collection->selectFieldOption($field, $name);
     }
 
     private function addItemAndWaitForIt(): NodeElement

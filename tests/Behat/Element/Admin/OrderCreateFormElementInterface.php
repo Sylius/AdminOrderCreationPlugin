@@ -27,7 +27,11 @@ interface OrderCreateFormElementInterface
 
     public function selectShippingMethod(string $shippingMethodName): void;
 
+    public function changeShippingMethod(string $shippingMethodName): void;
+
     public function selectPaymentMethod(string $paymentMethodName): void;
+
+    public function changePaymentMethod(string $paymentMethodName): void;
 
     public function specifyQuantity(string $itemProductCode, int $quantity): void;
 
