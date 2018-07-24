@@ -152,11 +152,27 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
+     * @When I change shipping method to :shippingMethodName
+     */
+    public function changeShippingMethod(string $shippingMethodName): void
+    {
+        $this->orderCreateFormElement->changeShippingMethod($shippingMethodName);
+    }
+
+    /**
      * @When I select :paymentMethodName payment method
      */
     public function selectPaymentMethod(string $paymentMethodName): void
     {
         $this->orderCreateFormElement->selectPaymentMethod($paymentMethodName);
+    }
+
+    /**
+     * @When I change payment method to :paymentMethodName
+     */
+    public function changePaymentMethod(string $paymentMethodName): void
+    {
+        $this->orderCreateFormElement->changePaymentMethod($paymentMethodName);
     }
 
     /**

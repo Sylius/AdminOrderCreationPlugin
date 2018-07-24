@@ -33,7 +33,7 @@ Feature: Reordering previously placed order with different data
 
     Scenario: Reordering previously placed order with different shipping method
         When I reorder the order "#00000666"
-        And I select "DHL" shipping method
+        And I change shipping method to "DHL"
         And I place and confirm this order
         Then I should be notified that order has been successfully created
         And this order shipping method should be "DHL"
@@ -42,7 +42,7 @@ Feature: Reordering previously placed order with different data
     @email
     Scenario: Reordering previously placed order with different payment method
         When I reorder the order "#00000666"
-        And I select "Paypal" payment method
+        And I change payment method to "Paypal"
         And I place and confirm this order
         Then I should be notified that order has been successfully created
         And this order payment method should be "Paypal"
