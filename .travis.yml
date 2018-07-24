@@ -76,6 +76,9 @@ before_script:
     # Run Selenium
     - java -Dwebdriver.chrome.driver=$SYLIUS_CACHE_DIR/chromedriver -jar $SYLIUS_CACHE_DIR/selenium.jar > /dev/null 2>&1 &
 
+    # Copy templates overwritten from Sylius
+    - cp -R src/Resources/views/SyliusAdminBundle/* tests/Application/app/Resources/SyliusAdminBundle/views/
+
     # Run webserver
     - (cd tests/Application && bin/console server:run 127.0.0.1:8080 -d web --env=test --quiet > /dev/null 2>&1 &)
 
