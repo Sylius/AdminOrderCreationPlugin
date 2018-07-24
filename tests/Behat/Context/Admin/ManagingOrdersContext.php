@@ -11,7 +11,9 @@ use Sylius\Behat\Service\NotificationCheckerInterface;
 use Sylius\Component\Addressing\Comparator\AddressComparatorInterface;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
+use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Core\Model\ShippingMethodInterface;
 use Sylius\Component\Core\Test\Services\EmailCheckerInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Admin\OrderCreateFormElementInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\NewOrderCustomerPageInterface;
@@ -460,24 +462,24 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
-     * @Then the :shippingMethodName shipping method should be selected
+     * @Then the :shippingMethod shipping method should be selected
      */
-    public function theShippingMethodShouldBeSelected(string $shippingMethodName): void
+    public function theShippingMethodShouldBeSelected(ShippingMethodInterface $shippingMethod): void
     {
         Assert::same(
-            $this->orderCreateFormElement->getShippingMethodName(),
-            $shippingMethodName
+            $this->orderCreateFormElement->getShippingMethodCode(),
+            $shippingMethod->getCode()
         );
     }
 
     /**
-     * @Then the :paymentMethodName payment method should be selected
+     * @Then the :paymentMethod payment method should be selected
      */
-    public function thePaymentMethodShouldBeSelected(string $paymentMethodName): void
+    public function thePaymentMethodShouldBeSelected(PaymentMethodInterface $paymentMethod): void
     {
         Assert::same(
-            $this->orderCreateFormElement->getPaymentMethodName(),
-            $paymentMethodName
+            $this->orderCreateFormElement->getPaymentMethodCode(),
+            $paymentMethod->getCode()
         );
     }
 

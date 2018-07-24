@@ -6,7 +6,6 @@ namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Admin;
 
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\NodeElement;
-use Behat\Mink\Exception\ElementNotFoundException;
 use Behat\Mink\Session;
 use Sylius\Component\Core\Model\Address;
 use Sylius\Component\Core\Model\AddressInterface;
@@ -152,28 +151,18 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         return $this->getPreFilledAddress(self::TYPE_SHIPPING);
     }
 
-    public function getShippingMethodName(): string
+    public function getShippingMethodCode(): string
     {
         $this->clickOnTabAndWait('Shipments & Payments');
 
-        try {
-            return $this->getElement('selected_shipping_method')->getText();
-        } catch (\Exception $exception) {
-        }
-
-        return $this->getElement('shipping_method')->getText();
+        return $this->getElement('shipping_method')->getValue();
     }
 
-    public function getPaymentMethodName(): string
+    public function getPaymentMethodCode(): string
     {
         $this->clickOnTabAndWait('Shipments & Payments');
 
-        try {
-            return $this->getElement('selected_payment_method')->getText();
-        } catch (\Exception $exception) {
-        }
-
-        return $this->getElement('payment_method')->getText();
+        return $this->getElement('payment_method')->getValue();
     }
 
     public function getShippingMethodsValidationMessage(): string
@@ -196,8 +185,6 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
             'billing_street' => '#sylius_admin_order_creation_new_order_billingAddress_street',
             'payment_method' => '#sylius_admin_order_creation_new_order_payments_0_method',
             'payments' => '#sylius_admin_order_creation_new_order_payments',
-            'selected_payment_method' => '#sylius_admin_order_creation_new_order_payments_0_method option[selected="selected"]',
-            'selected_shipping_method' => '#sylius_admin_order_creation_new_order_shipments_0_method option[selected="selected"]',
             'shipping_method' => '#sylius_admin_order_creation_new_order_shipments_0_method',
             'shipments' => '#sylius_admin_order_creation_new_order_shipments',
             'shipping_city' => '#sylius_admin_order_creation_new_order_shippingAddress_city',
