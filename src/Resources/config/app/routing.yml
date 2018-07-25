@@ -27,7 +27,7 @@ sylius_admin_order_creation_order_create:
             event: admin_create
             section: admin
             permission: true
-            template: SyliusAdminOrderCreationPlugin::orderCreate.html.twig
+            template: '@SyliusAdminOrderCreationPlugin/Order/create.html.twig'
             form:
                 type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
             factory:
@@ -45,7 +45,7 @@ sylius_admin_order_creation_order_create_from_preview:
             event: admin_create
             section: admin
             permission: true
-            template: SyliusAdminOrderCreationPlugin::orderPreview.html.twig
+            template: '@SyliusAdminOrderCreationPlugin/Order/preview.html.twig'
             form:
                 type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
             factory:
@@ -71,7 +71,7 @@ sylius_admin_order_creation_reorder:
             event: admin_create
             section: admin
             permission: true
-            template: SyliusAdminOrderCreationPlugin::orderCreate.html.twig
+            template: '@SyliusAdminOrderCreationPlugin/Order/create.html.twig'
             form:
                 type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
             factory:
