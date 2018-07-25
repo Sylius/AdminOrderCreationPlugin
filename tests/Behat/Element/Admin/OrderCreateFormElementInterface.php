@@ -41,9 +41,9 @@ interface OrderCreateFormElementInterface
 
     public function getPreFilledShippingAddress(): AddressInterface;
 
-    public function getShippingMethodName(): string;
+    public function getShippingMethodCode(): string;
 
-    public function getPaymentMethodName(): string;
+    public function getPaymentMethodCode(): string;
 
     public function getShippingMethodsValidationMessage(): string;
 }
