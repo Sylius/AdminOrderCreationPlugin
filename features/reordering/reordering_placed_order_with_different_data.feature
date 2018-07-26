@@ -31,23 +31,16 @@ Feature: Reordering previously placed order with different data
         And this order billing address should be "Mazikeen Lilim", "Pacific Coast Hwy", "90806", "Los Angeles", "United States"
         And there should be 2 not paid nor shipped orders for "jon.snow@the-wall.com" in the registry
 
-    Scenario: Reordering previously placed order with different shipping method
+    @email
+    Scenario: Reordering previously placed order with different methods
         When I reorder the order "#00000666"
         And I change shipping method to "DHL"
-        And I place and confirm this order
-        Then I should be notified that order has been successfully created
-        And this order shipping method should be "DHL"
-        And there should be 2 not paid nor shipped orders for "jon.snow@the-wall.com" in the registry
-
-    @email
-    Scenario: Reordering previously placed order with different payment method
-        When I reorder the order "#00000666"
         And I change payment method to "Paypal"
         And I place and confirm this order
         Then I should be notified that order has been successfully created
+        And this order shipping method should be "DHL"
         And this order payment method should be "Paypal"
         And there should be a payment link displayed next to order's payment
-        And there should be a payment link sent to "jon.snow@the-wall.com"
         And there should be 2 not paid nor shipped orders for "jon.snow@the-wall.com" in the registry
 
     Scenario: Reordering previously placed order with different products

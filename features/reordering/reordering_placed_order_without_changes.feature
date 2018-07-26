@@ -20,55 +20,13 @@ Feature: Reordering previously placed order
         And the customer chose "DHL" shipping method with "Bank Transfer" payment
         And I am logged in as an administrator
 
-    Scenario: Having billing address section filled with address information taken from previously placed order
-        When I reorder the order "#00000666"
-        Then the address "Ned Stark", "Elm Street", "444", "Rivendell", "United States" should be filled as billing address
-
-    Scenario: Having shipping address section filled with address information taken from previously placed order
-        When I reorder the order "#00000666"
-        Then the address "Jon Snow", "Frost Alley", "90210", "Ankh-Morpork", "United States" should be specified as shipping address
-
-    @javascript
-    Scenario: Having shipping method taken from previously placed order
-        When I reorder the order "#00000666"
-        Then the "DHL" shipping method should be selected
-
-    @javascript
-    Scenario: Having payment method taken from previously placed order
-        When I reorder the order "#00000666"
-        Then the "Bank Transfer" payment method should be selected
-
-    @javascript
-    Scenario: Having products taken from previously placed order
-        When I reorder the order "#00000666"
-        Then 2 "Stark Coat" products should be added
-
-    Scenario: Reordering previously placed order with the same addresses
+    Scenario: Reordering previously placed order with the same data
         When I reorder the order "#00000666"
         And I place and confirm this order
         Then I should be notified that order has been successfully created
         And this order shipping address should be "Jon Snow", "Frost Alley", "90210", "Ankh-Morpork", "United States"
         And this order billing address should be "Ned Stark", "Elm Street", "444", "Rivendell", "United States"
-        And there should be 2 not paid nor shipped orders for "jon.snow@the-wall.com" in the registry
-
-    Scenario: Reordering previously placed order with the same shipping method
-        When I reorder the order "#00000666"
-        And I place and confirm this order
-        Then I should be notified that order has been successfully created
         And this order shipping method should be "DHL"
-        And there should be 2 not paid nor shipped orders for "jon.snow@the-wall.com" in the registry
-
-    Scenario: Reordering previously placed order with the same payment method
-        When I reorder the order "#00000666"
-        And I place and confirm this order
-        Then I should be notified that order has been successfully created
-        And this order payment method should be "Bank Transfer"
-        And there should be 2 not paid nor shipped orders for "jon.snow@the-wall.com" in the registry
-
-    Scenario: Reordering previously placed order with the same products
-        When I reorder the order "#00000666"
-        And I place and confirm this order
-        Then I should be notified that order has been successfully created
         And this order payment method should be "Bank Transfer"
         And the product named "Stark Coat" should be in the items list
         And there should be 2 not paid nor shipped orders for "jon.snow@the-wall.com" in the registry

@@ -14,8 +14,6 @@ interface OrderCreateFormElementInterface
 
     public function removeProduct(string $productCode): void;
 
-    public function hasProductWithQuantity(string $productCode, int $quantity): bool;
-
     public function specifyShippingAddress(AddressInterface $address): void;
 
     public function specifyBillingAddress(AddressInterface $address): void;
@@ -36,14 +34,6 @@ interface OrderCreateFormElementInterface
     public function specifyQuantity(string $itemProductCode, int $quantity): void;
 
     public function placeOrder(): void;
-
-    public function getPreFilledBillingAddress(): AddressInterface;
-
-    public function getPreFilledShippingAddress(): AddressInterface;
-
-    public function getShippingMethodCode(): string;
-
-    public function getPaymentMethodCode(): string;
 
     public function getShippingMethodsValidationMessage(): string;
 }

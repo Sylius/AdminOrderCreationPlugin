@@ -56,13 +56,6 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         $item->clickLink('Delete');
     }
 
-    public function hasProductWithQuantity(string $productCode, int $quantity): bool
-    {
-        $item = $this->getItemWithProductSelected($productCode);
-
-        return (int) $item->find('css', '.item-quantity')->getValue() === $quantity;
-    }
-
     public function specifyShippingAddress(AddressInterface $address): void
     {
         $this->clickOnTabAndWait('Shipping address & Billing address');
@@ -141,30 +134,6 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         $this->getDocument()->pressButton('Create');
     }
 
-    public function getPreFilledBillingAddress(): AddressInterface
-    {
-        return $this->getPreFilledAddress(self::TYPE_BILLING);
-    }
-
-    public function getPreFilledShippingAddress(): AddressInterface
-    {
-        return $this->getPreFilledAddress(self::TYPE_SHIPPING);
-    }
-
-    public function getShippingMethodCode(): string
-    {
-        $this->clickOnTabAndWait('Shipments & Payments');
-
-        return $this->getElement('shipping_method')->getValue();
-    }
-
-    public function getPaymentMethodCode(): string
-    {
-        $this->clickOnTabAndWait('Shipments & Payments');
-
-        return $this->getElement('payment_method')->getValue();
-    }
-
     public function getShippingMethodsValidationMessage(): string
     {
         return $this
@@ -183,9 +152,7 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
             'billing_last_name' => '#sylius_admin_order_creation_new_order_billingAddress_lastName',
             'billing_postcode' => '#sylius_admin_order_creation_new_order_billingAddress_postcode',
             'billing_street' => '#sylius_admin_order_creation_new_order_billingAddress_street',
-            'payment_method' => '#sylius_admin_order_creation_new_order_payments_0_method',
             'payments' => '#sylius_admin_order_creation_new_order_payments',
-            'shipping_method' => '#sylius_admin_order_creation_new_order_shipments_0_method',
             'shipments' => '#sylius_admin_order_creation_new_order_shipments',
             'shipping_city' => '#sylius_admin_order_creation_new_order_shippingAddress_city',
             'shipping_country' => '#sylius_admin_order_creation_new_order_shippingAddress_countryCode',
@@ -277,20 +244,6 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
                 ->hasClass('active')
             ;
         });
-    }
-
-    private function getPreFilledAddress(string $type): AddressInterface
-    {
-        $address = new Address();
-
-        $address->setFirstName($this->getElement(sprintf('%s_first_name', $type))->getValue());
-        $address->setLastName($this->getElement(sprintf('%s_last_name', $type))->getValue());
-        $address->setStreet($this->getElement(sprintf('%s_street', $type))->getValue());
-        $address->setCountryCode($this->getElement(sprintf('%s_country', $type))->getValue());
-        $address->setCity($this->getElement(sprintf('%s_city', $type))->getValue());
-        $address->setPostcode($this->getElement(sprintf('%s_postcode', $type))->getValue());
-
-        return $address;
     }
 
     private function waitForFormToLoad(): void

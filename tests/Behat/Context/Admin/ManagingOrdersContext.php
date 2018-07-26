@@ -400,28 +400,6 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
-     * @Then /^the (address "[^"]+", "[^"]+", "[^"]+", "[^"]+", "[^"]+") should be filled as billing address$/
-     */
-    public function theAddressShouldBeSpecifiedAsBillingAddress(AddressInterface $address): void
-    {
-        Assert::true($this->addressComparator->equal(
-            $address,
-            $this->orderCreateFormElement->getPreFilledBillingAddress()
-        ));
-    }
-
-    /**
-     * @Then /^the (address "[^"]+", "[^"]+", "[^"]+", "[^"]+", "[^"]+") should be specified as shipping address$/
-     */
-    public function theAddressShouldBeSpecifiedAsShippingAddress(AddressInterface $address): void
-    {
-        Assert::true($this->addressComparator->equal(
-            $address,
-            $this->orderCreateFormElement->getPreFilledShippingAddress()
-        ));
-    }
-
-    /**
      * @Then I should see preview of the order with total :total
      */
     public function shouldSeePreviewOfTheOrderWithTotal(string $total): void
@@ -462,41 +440,10 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
-     * @Then the :shippingMethod shipping method should be selected
-     */
-    public function theShippingMethodShouldBeSelected(ShippingMethodInterface $shippingMethod): void
-    {
-        Assert::same(
-            $this->orderCreateFormElement->getShippingMethodCode(),
-            $shippingMethod->getCode()
-        );
-    }
-
-    /**
-     * @Then the :paymentMethod payment method should be selected
-     */
-    public function thePaymentMethodShouldBeSelected(PaymentMethodInterface $paymentMethod): void
-    {
-        Assert::same(
-            $this->orderCreateFormElement->getPaymentMethodCode(),
-            $paymentMethod->getCode()
-        );
-    }
-
-    /**
      * @Then the product named :productName should not be in the items list
      */
     public function theProductShouldNotBeInTheItemsList(string $productName): void
     {
         Assert::false($this->orderShowPage->isProductInTheList($productName));
-    }
-
-    /**
-     * @Then :quantity :product products should be added
-     * @Then the :product product should be added
-     */
-    public function productsShouldBeAdded(int $quantity = 1, ProductInterface $product): void
-    {
-        Assert::true($this->orderCreateFormElement->hasProductWithQuantity($product->getCode(), $quantity));
     }
 }
