@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace spec\Sylius\AdminOrderCreationPlugin\EventListener;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Payum\Core\Model\GatewayConfigInterface;
 use Payum\Core\Payum;
 use Payum\Core\Security\TokenInterface;
 use PhpSpec\ObjectBehavior;
@@ -12,6 +13,7 @@ use Sylius\AdminOrderCreationPlugin\Provider\PaymentTokenProviderInterface;
 use Sylius\AdminOrderCreationPlugin\Sender\OrderPaymentLinkSenderInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
+use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
 final class PaymentLinkCreationListenerSpec extends ObjectBehavior
@@ -31,10 +33,16 @@ final class PaymentLinkCreationListenerSpec extends ObjectBehavior
         TokenInterface $token,
         GenericEvent $event,
         OrderInterface $order,
-        PaymentInterface $payment
+        PaymentInterface $payment,
+        PaymentMethodInterface $paymentMethod,
+        GatewayConfigInterface $gatewayConfig
     ) {
         $event->getSubject()->willReturn($order);
         $order->getLastPayment(PaymentInterface::STATE_NEW)->willReturn($payment);
+
+        $payment->getMethod()->willReturn($paymentMethod);
+        $paymentMethod->getGatewayConfig()->willReturn($gatewayConfig);
+        $gatewayConfig->getGatewayName()->willReturn('paypal_express_checkout');
 
         $paymentTokenProvider->getPaymentToken($payment)->willReturn($token);
         $token->getAfterUrl()->willReturn('http://url-to-pay.com');
@@ -61,6 +69,26 @@ final class PaymentLinkCreationListenerSpec extends ObjectBehavior
     {
         $event->getSubject()->willReturn($order);
         $order->getLastPayment(PaymentInterface::STATE_NEW)->willReturn(null);
+
+        $payum->getTokenFactory()->shouldNotBeCalled();
+
+        $this->setPaymentLink($event);
+    }
+
+    function it_does_nothing_if_order_payment_gateway_is_offline(
+        Payum $payum,
+        GenericEvent $event,
+        OrderInterface $order,
+        PaymentInterface $payment,
+        PaymentMethodInterface $paymentMethod,
+        GatewayConfigInterface $gatewayConfig
+    ) {
+        $event->getSubject()->willReturn($order);
+        $order->getLastPayment(PaymentInterface::STATE_NEW)->willReturn($payment);
+
+        $payment->getMethod()->willReturn($paymentMethod);
+        $paymentMethod->getGatewayConfig()->willReturn($gatewayConfig);
+        $gatewayConfig->getGatewayName()->willReturn('offline');
 
         $payum->getTokenFactory()->shouldNotBeCalled();
 

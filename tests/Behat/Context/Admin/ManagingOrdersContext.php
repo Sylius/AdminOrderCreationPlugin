@@ -314,6 +314,14 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
+     * @Then there should be no payment link displayed next to order's payment
+     */
+    public function thereShouldBeNoPaymentLinkDisplayedNextToOrderPayment(): void
+    {
+        Assert::false($this->orderShowPage->hasPaymentLink());
+    }
+
+    /**
      * @Then there should be a payment link sent to :email
      */
     public function thereShouldBePaymentLinkSentTo(string $email): void
@@ -322,6 +330,20 @@ final class ManagingOrdersContext implements Context
             'New order has been created for you in Admin panel. Check it out in your orders history. To pay for this order, click',
             $email
         ));
+    }
+
+    /**
+     * @Then there should be no payment link sent to :email
+     */
+    public function thereShouldBeNoPaymentLinkSentTo(string $email): void
+    {
+        try {
+            $this->emailChecker->countMessagesTo($email);
+        } catch (\InvalidArgumentException $exception) {
+            return;
+        }
+
+        throw new \Exception('There should be no messages exception thrown');
     }
 
     /**
