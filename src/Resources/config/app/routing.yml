@@ -33,6 +33,8 @@ sylius_admin_order_creation_order_create:
             factory:
                 method: ['expr:service("Sylius\\AdminOrderCreationPlugin\\Factory\\OrderFactory")', 'createForCustomer']
                 arguments: [$customerEmail]
+    requirements:
+        customerEmail: .+
 
 sylius_admin_order_creation_order_create_from_preview:
     path: /admin/orders/new/{customerEmail}/create-from-preview

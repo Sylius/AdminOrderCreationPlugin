@@ -1,4 +1,4 @@
-@managing_orders
+@managing_orders @ui @javascript
 Feature: Creating simple order
     In order to place an order in the name of a Customer
     As an Administrator
@@ -13,7 +13,6 @@ Feature: Creating simple order
         And there is a customer account "jon.snow@the-wall.com"
         And I am logged in as an administrator
 
-    @ui @javascript
     Scenario: Creating a simple order for an existing customer
         When I create a new order for "jon.snow@the-wall.com"
         And I add "Stark Coat" to this order
@@ -24,7 +23,6 @@ Feature: Creating simple order
         Then I should be notified that order has been successfully created
         And there should be one not paid nor shipped order for "jon.snow@the-wall.com" in the registry
 
-    @ui @javascript
     Scenario: Creating a simple order for a new customer
         When I create a new order for a new customer with email "ned.stark@the-wall.com"
         And I add "Stark Coat" to this order
@@ -34,3 +32,11 @@ Feature: Creating simple order
         And I place and confirm this order
         Then I should be notified that order has been successfully created
         And there should be one not paid nor shipped order for "ned.stark@the-wall.com" in the registry
+
+    Scenario: Trying to create an order for an existing customer without selecting them
+        When I try to create a new order for an existing customer without selecting them
+        Then I should be notified that customer email cannot be empty
+
+    Scenario: Trying to create an order for a new customer without email
+        When I try to create a new order for a new customer without email
+        Then I should be notified that customer email cannot be empty

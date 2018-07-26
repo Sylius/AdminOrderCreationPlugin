@@ -11,9 +11,7 @@ use Sylius\Behat\Service\NotificationCheckerInterface;
 use Sylius\Component\Addressing\Comparator\AddressComparatorInterface;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
-use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Sylius\Component\Core\Model\ProductInterface;
-use Sylius\Component\Core\Model\ShippingMethodInterface;
 use Sylius\Component\Core\Test\Services\EmailCheckerInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Admin\OrderCreateFormElementInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\NewOrderCustomerPageInterface;
@@ -95,6 +93,28 @@ final class ManagingOrdersContext implements Context
         $this->orderIndexPage->createOrder();
 
         $this->newOrderCustomerPage->createCustomer($email);
+    }
+
+    /**
+     * @When I try to create a new order for an existing customer without selecting them
+     */
+    public function tryToCreateNewOrderForExistingCustomerWithoutSelectingThem(): void
+    {
+        $this->orderIndexPage->open();
+        $this->orderIndexPage->createOrder();
+
+        $this->newOrderCustomerPage->next();
+    }
+
+    /**
+     * @When I try to create a new order for a new customer without email
+     */
+    public function tryToCreateNewOrderForNewCustomerWithoutEmail(): void
+    {
+        $this->orderIndexPage->open();
+        $this->orderIndexPage->createOrder();
+
+        $this->newOrderCustomerPage->createCustomer('');
     }
 
     /**
@@ -445,5 +465,13 @@ final class ManagingOrdersContext implements Context
     public function theProductShouldNotBeInTheItemsList(string $productName): void
     {
         Assert::false($this->orderShowPage->isProductInTheList($productName));
+    }
+
+    /**
+     * @Then I should be notified that customer email cannot be empty
+     */
+    public function shouldBeNotifiedThatCustomerEmailCannotBeEmpty(): void
+    {
+        Assert::true($this->newOrderCustomerPage->hasCustomerEmailValidationMessage('Customer email cannot be empty'));
     }
 }

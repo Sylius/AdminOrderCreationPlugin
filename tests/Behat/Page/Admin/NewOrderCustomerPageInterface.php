@@ -11,4 +11,6 @@ interface NewOrderCustomerPageInterface
     public function next(): void;
 
     public function createCustomer(string $email): void;
+
+    public function hasCustomerEmailValidationMessage(string $message): bool;
 }
