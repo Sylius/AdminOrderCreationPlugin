@@ -45,4 +45,11 @@ final class NewOrderCustomerPage extends SymfonyPage implements NewOrderCustomer
         $this->getDocument()->fillField('New customer email', $email);
         $this->getDocument()->pressButton('Create new');
     }
+
+    public function hasCustomerEmailValidationMessage(string $message): bool
+    {
+        $validationMessage = $this->getDocument()->find('css', 'form .sylius-validation-error');
+
+        return $validationMessage !== null && $validationMessage->getText() === $message;
+    }
 }

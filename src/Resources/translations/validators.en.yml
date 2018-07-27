@@ -1,2 +1,3 @@
 sylius_admin_order_creation:
     order_discount: 'Discount cannot be below 0'
+    customer_email: 'Customer email cannot be empty'

@@ -1,6 +1,6 @@
 {% extends '@SyliusAdmin/layout.html.twig' %}
 
-{% form_theme selectCustomerForm '@SyliusAdminOrderCreationPlugin/orderSelectCustomerTheme.html.twig' %}
+{% form_theme selectCustomerForm '@SyliusAdminOrderCreationPlugin/Order/selectCustomerTheme.html.twig' %}
 {% form_theme createCustomerForm '@SyliusAdmin/Form/theme.html.twig' %}
 
 {% block content %}
@@ -35,13 +35,23 @@
                 e.preventDefault();
 
                 let form = $(this).parents('form');
-                form.attr('action', Routing.generate(
-                    'sylius_admin_order_creation_order_create',
-                    { 'customerEmail': form.find('[name*="[customer]"]').val() },
-                    true
-                ));
+                let customerEmail = form.find('[name*="[customer]"]').val();
 
-                form.submit();
+                if (customerEmail) {
+                    form.attr('action', Routing.generate(
+                        'sylius_admin_order_creation_order_create',
+                        { 'customerEmail': form.find('[name*="[customer]"]').val() },
+                        true
+                    ));
+
+                    form.submit();
+
+                    return;
+                }
+
+                if (form.find('.sylius-validation-error').length === 0) {
+                    $(form).append('<div class="ui red pointing label sylius-validation-error">{{ 'sylius_admin_order_creation.ui.customer_email'|trans }}</div>');
+                }
             });
         });
     </script>

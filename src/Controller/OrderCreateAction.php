@@ -39,7 +39,7 @@ final class OrderCreateAction
         $form = $this->formFactory->create(NewOrderType::class, $order);
         $form->handleRequest($request);
 
-        return new Response($this->twig->render('@SyliusAdminOrderCreationPlugin/orderCreate.html.twig', [
+        return new Response($this->twig->render('@SyliusAdminOrderCreationPlugin/Order/create.html.twig', [
             'form' => $form->createView(),
         ]));
     }

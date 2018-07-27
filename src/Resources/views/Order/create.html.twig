@@ -2,7 +2,7 @@
 
 {% block title %}{{ 'sylius.ui.new_order'|trans }} {{ parent() }}{% endblock %}
 
-{% form_theme form '@SyliusAdminOrderCreationPlugin/orderItemCollectionTheme.html.twig' %}
+{% form_theme form '@SyliusAdminOrderCreationPlugin/Order/itemCollectionTheme.html.twig' %}
 
 {% if order is defined %}
     {% set customer_email = order.customer.email %}
@@ -20,7 +20,7 @@
             {% include '@SyliusAdminOrderCreationPlugin/Order/Create/_breadcrumb.html.twig' %}
         </div>
     </div>
-    {% include '@SyliusAdminOrderCreationPlugin/Order/_form.html.twig' with {
+    {% include '@SyliusAdminOrderCreationPlugin/Order/Create/_form.html.twig' with {
         'action': path('sylius_admin_order_creation_order_preview', {'customerEmail': customer_email})
     } %}
 {% endblock %}

@@ -4,7 +4,7 @@
 
 {% block title %}{{ 'sylius_admin_order_creation.ui.order_preview'|trans }}{% endblock %}
 
-{% form_theme form '@SyliusAdminOrderCreationPlugin/orderItemCollectionTheme.html.twig' %}
+{% form_theme form '@SyliusAdminOrderCreationPlugin/Order/itemCollectionTheme.html.twig' %}
 
 {% block content %}
     {% set order = form.vars.data %}

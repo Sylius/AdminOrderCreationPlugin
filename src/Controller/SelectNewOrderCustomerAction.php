@@ -30,7 +30,7 @@ final class SelectNewOrderCustomerAction
         $selectCustomerForm = $this->formFactory->create(NewOrderCustomerSelectType::class);
         $createCustomerForm = $this->formFactory->create(NewOrderCustomerCreateType::class);
 
-        return new Response($this->twig->render('@SyliusAdminOrderCreationPlugin/orderSelectCustomer.html.twig', [
+        return new Response($this->twig->render('@SyliusAdminOrderCreationPlugin/Order/selectCustomer.html.twig', [
             'selectCustomerForm' => $selectCustomerForm->createView(),
             'createCustomerForm' => $createCustomerForm->createView(),
         ]));
