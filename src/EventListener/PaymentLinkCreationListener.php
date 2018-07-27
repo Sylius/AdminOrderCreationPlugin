@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Sylius\AdminOrderCreationPlugin\EventListener;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Payum\Core\Model\GatewayConfigInterface;
 use Sylius\AdminOrderCreationPlugin\Provider\PaymentTokenProviderInterface;
 use Sylius\AdminOrderCreationPlugin\Sender\OrderPaymentLinkSenderInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
+use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Webmozart\Assert\Assert;
 
@@ -41,6 +43,15 @@ final class PaymentLinkCreationListener
 
         $payment = $order->getLastPayment(PaymentInterface::STATE_NEW);
         if (null === $payment) {
+            return;
+        }
+
+        /** @var PaymentMethodInterface $paymentMethod */
+        $paymentMethod = $payment->getMethod();
+        /** @var GatewayConfigInterface $gatewayConfig */
+        $gatewayConfig = $paymentMethod->getGatewayConfig();
+
+        if ('offline' === $gatewayConfig->getGatewayName()) {
             return;
         }
 
