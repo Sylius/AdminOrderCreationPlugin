@@ -4,9 +4,9 @@
     "description": "Sylius Plugin for order creation in Admin panel",
     "license": "MIT",
     "require": {
-        "php": "^7.1",
+        "php": "^7.2",
 
-        "sylius/sylius": "^1.2",
+        "sylius/sylius": "~1.3.0",
         "friendsofsymfony/jsrouting-bundle": "^2.2"
     },
     "require-dev": {
@@ -27,6 +27,7 @@
         "se/selenium-server-standalone": "^2.52",
         "sylius-labs/coding-standard": "^2.0"
     },
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
@@ -44,6 +45,5 @@
     },
     "config": {
         "bin-dir": "bin"
-    },
-    "minimum-stability": "RC"
+    }
 }
