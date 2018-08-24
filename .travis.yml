@@ -26,6 +26,9 @@ before_install:
     - echo "memory_limit=4096M" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
     - mkdir -p "${SYLIUS_CACHE_DIR}"
 
+    - mv .env.test.dist .env.test
+    - set -a && source .env.test && set +a
+
 install:
     - composer require symfony/symfony:${SYMFONY_VERSION} --no-interaction --no-update --no-scripts --update-with-all-dependencies --prefer-dist
     - composer install --no-interaction --prefer-dist
