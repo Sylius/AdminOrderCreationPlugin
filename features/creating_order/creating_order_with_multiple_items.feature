@@ -15,7 +15,7 @@ Feature: Creating order with multiple items
         And there is a customer account "jon.snow@the-wall.com"
         And I am logged in as an administrator
 
-    @ui @javascript
+    @ui @javascript @to_be_fixed
     Scenario: Creating an expanded order
         When I create a new order for "jon.snow@the-wall.com"
         And I add 3 of "Stark Coat" to this order
