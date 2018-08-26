@@ -3,6 +3,20 @@
     "type": "sylius-plugin",
     "description": "Sylius Plugin for order creation in Admin panel",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Mateusz Zalewski",
+            "homepage": "http://mpzalewski.com.pl"
+        },
+        {
+            "name": "Grzegorz Sadowski",
+            "email": "sadowskigp@gmail.com"
+        },
+        {
+            "name": "Sylius Team",
+            "email": "team@sylius.com"
+        }
+    ],
     "require": {
         "php": "^7.2",
 
