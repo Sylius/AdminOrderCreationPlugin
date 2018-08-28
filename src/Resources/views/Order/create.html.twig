@@ -69,10 +69,10 @@
                 form.addClass('loading');
 
                 $.ajax({
-                    type: "POST",
+                    type: "GET",
                     url: Routing.generate(
                         'sylius_admin_order_creation_ajax_provide_available_shipping_methods',
-                        { 'customerEmail': '{{ customer_email }}', 'shipmentNumber': '0' },
+                        { 'customerEmail': '{{ customer_email }}', 'channel': '{{ channel_code }}', 'shipmentNumber': '0' },
                         true
                     ),
                     data: form.serializeArray(),

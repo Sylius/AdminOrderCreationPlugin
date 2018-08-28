@@ -65,7 +65,7 @@ final class OrderFactorySpec extends ObjectBehavior
     ): void {
         $baseOrderFactory->createNew()->willReturn($order);
         $customerRepository->findOneBy(['email' => 'customer@example.com'])->willReturn($customer);
-        $channelRepository->findOneBy(['enabled' => true])->willReturn($channel);
+        $channelRepository->findOneByCode('WEB-US')->willReturn($channel);
 
         $currencyRepository->findOneBy([])->willReturn($currency);
         $currency->getCode()->willReturn('USD');
@@ -78,7 +78,7 @@ final class OrderFactorySpec extends ObjectBehavior
         $order->setCurrencyCode('USD')->shouldBeCalled();
         $order->setLocaleCode('en_US')->shouldBeCalled();
 
-        $this->createForCustomerAndChannel('customer@example.com')->shouldReturn($order);
+        $this->createForCustomerAndChannel('customer@example.com', 'WEB-US')->shouldReturn($order);
     }
 
     function it_creates_order_for_new_customer_with_default_channel_locale_and_currency(
@@ -100,7 +100,7 @@ final class OrderFactorySpec extends ObjectBehavior
         $customerFactory->createNew()->willReturn($customer);
         $customer->setEmail('customer@example.com')->shouldBeCalled();
 
-        $channelRepository->findOneBy(['enabled' => true])->willReturn($channel);
+        $channelRepository->findOneByCode('WEB-US')->willReturn($channel);
 
         $currencyRepository->findOneBy([])->willReturn($currency);
         $currency->getCode()->willReturn('USD');
@@ -113,7 +113,7 @@ final class OrderFactorySpec extends ObjectBehavior
         $order->setCurrencyCode('USD')->shouldBeCalled();
         $order->setLocaleCode('en_US')->shouldBeCalled();
 
-        $this->createForCustomerAndChannel('customer@example.com')->shouldReturn($order);
+        $this->createForCustomerAndChannel('customer@example.com', 'WEB-US')->shouldReturn($order);
     }
 
     function it_creates_reorder_from_an_existing_order(

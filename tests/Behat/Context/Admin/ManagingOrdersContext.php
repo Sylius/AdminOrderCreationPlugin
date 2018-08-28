@@ -73,12 +73,14 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
-     * @When I create a new order for :customer
+     * @When I create a new order for :customer and channel :channelName
      */
-    public function createNewOrderFor(CustomerInterface $customer): void
+    public function createNewOrderFor(CustomerInterface $customer, string $channelName): void
     {
         $this->orderIndexPage->open();
         $this->orderIndexPage->createOrder();
+
+        $this->newOrderCustomerPage->selectChannel($channelName);
 
         $this->newOrderCustomerPage->selectCustomer($customer->getEmail());
         $this->newOrderCustomerPage->next();
@@ -368,9 +370,9 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
-     * @Then there should be one not paid nor shipped order for :customer in the registry
+     * @Then there should be one not paid nor shipped order with channel code :channelCode for :customer in the registry
      */
-    public function thereShouldBeOneOrderForInTheRegistry(CustomerInterface $customer): void
+    public function thereShouldBeOneOrderForInTheRegistry(string $channelCode, CustomerInterface $customer): void
     {
         $this->orderIndexPage->open();
 
@@ -379,6 +381,7 @@ final class ManagingOrdersContext implements Context
             'state' => 'New',
             'paymentState' => 'Awaiting payment',
             'shippingState' => 'Ready',
+            'channel' => $channelCode
         ]));
     }
 

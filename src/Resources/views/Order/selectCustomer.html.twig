@@ -4,10 +4,10 @@
 {% form_theme createCustomerForm '@SyliusAdmin/Form/theme.html.twig' %}
 
 {% block content %}
-    <div class="ui basic center aligned segment">
-        {{ form_start(selectCustomerForm, {'method': 'GET'})}}
-        {{ form_row(selectCustomerForm.customer) }} <br /><br />
-        {{ form_row(selectCustomerForm.channel, {'attr': {'class': 'ui fluid selection dropdown'}}) }} <br /><br />
+    <div class="ui center aligned basic segment">
+    {{ form_start(selectCustomerForm, {'method': 'GET'})}}
+    {{ form_row(selectCustomerForm.customer) }} <br /><br />
+        {{ form_row(selectCustomerForm.channel, {'attr': {'class': 'ui fluid selection dropdown'}, 'label_attr': {'class': 'ui horizontal divider', 'style': 'font-weight: bold'}}) }} <br /><br />
         <button class="ui blue submit button">{{ 'sylius.ui.next'|trans }}</button>
         {{ form_end(selectCustomerForm) }} <br />
         <div class="ui horizontal divider">
@@ -17,7 +17,7 @@
         <div class="ui input fluid ">
             {{ form_widget(createCustomerForm.customer, {'attr': {'placeholder': 'sylius_admin_order_creation.ui.new_customer_email'|trans}}) }}
         </div> <br /><br />
-        {{ form_row(createCustomerForm.channel, {'attr': {'class': 'ui fluid selection dropdown'}}) }} <br /><br />
+        {{ form_row(createCustomerForm.channel, {'attr': {'class': 'ui fluid selection dropdown'}, 'label_attr': {'class': 'ui horizontal divider', 'style': 'font-weight: bold'}}) }} <br /><br />
         <button class="ui green right labeled icon button">
             <i class="plus icon"></i> {{ 'sylius_admin_order_creation.ui.create_new'|trans }}
         </button> <br /><br />

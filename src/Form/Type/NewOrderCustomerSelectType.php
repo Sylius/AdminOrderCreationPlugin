@@ -18,7 +18,6 @@ final class NewOrderCustomerSelectType extends AbstractType
                 'required' => true,
             ])
             ->add('channel', ChannelChoiceType::class, [
-                'label' => false,
                 'required' => true,
             ])
         ;
