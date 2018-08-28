@@ -78,7 +78,7 @@ final class OrderFactorySpec extends ObjectBehavior
         $order->setCurrencyCode('USD')->shouldBeCalled();
         $order->setLocaleCode('en_US')->shouldBeCalled();
 
-        $this->createForCustomer('customer@example.com')->shouldReturn($order);
+        $this->createForCustomerAndChannel('customer@example.com')->shouldReturn($order);
     }
 
     function it_creates_order_for_new_customer_with_default_channel_locale_and_currency(
@@ -113,7 +113,7 @@ final class OrderFactorySpec extends ObjectBehavior
         $order->setCurrencyCode('USD')->shouldBeCalled();
         $order->setLocaleCode('en_US')->shouldBeCalled();
 
-        $this->createForCustomer('customer@example.com')->shouldReturn($order);
+        $this->createForCustomerAndChannel('customer@example.com')->shouldReturn($order);
     }
 
     function it_creates_reorder_from_an_existing_order(

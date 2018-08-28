@@ -85,13 +85,14 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
-     * @When I create a new order for a new customer with email :email
+     * @When I create a new order for a new customer with email :email and channel :channelName
      */
-    public function createNewOrderForNewCustomerWithEmail(string $email): void
+    public function createNewOrderForNewCustomerWithEmailAndChannel(string $email, string $channelName): void
     {
         $this->orderIndexPage->open();
         $this->orderIndexPage->createOrder();
 
+        $this->newOrderCustomerPage->selectChannel($channelName);
         $this->newOrderCustomerPage->createCustomer($email);
     }
 

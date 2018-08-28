@@ -12,5 +12,7 @@ interface NewOrderCustomerPageInterface
 
     public function createCustomer(string $email): void;
 
+    public function selectChannel(string $channelName): void;
+
     public function hasCustomerEmailValidationMessage(string $message): bool;
 }

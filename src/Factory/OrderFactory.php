@@ -64,7 +64,7 @@ final class OrderFactory implements OrderFactoryInterface
         return $order;
     }
 
-    public function createForCustomer(string $customerEmail): OrderInterface
+    public function createForCustomerAndChannel(string $customerEmail, string $channel): OrderInterface
     {
         $customer = $this->getCustomerForOrder($customerEmail);
 
@@ -72,7 +72,7 @@ final class OrderFactory implements OrderFactoryInterface
         assert($order instanceof OrderInterface);
 
         $order->setCustomer($customer);
-        $order->setChannel($this->channelRepository->findOneBy(['enabled' => true]));
+        $order->setChannel($this->channelRepository->findOneByCode($channel));
 
         $currency = $this->currencyRepository->findOneBy([]);
         assert($currency instanceof CurrencyInterface);

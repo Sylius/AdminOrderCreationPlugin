@@ -34,7 +34,10 @@ final class OrderCreateAction
 
     public function __invoke(Request $request): Response
     {
-        $order = $this->orderFactory->createForCustomer($request->attributes->get('customerEmail'));
+        $customerEmail = $request->attributes->get('customerEmail');
+        $channelCode = $request->attributes->get('channel');
+
+        $order = $this->orderFactory->createForCustomerAndChannel($customerEmail, $channelCode);
 
         $form = $this->formFactory->create(NewOrderType::class, $order);
         $form->handleRequest($request);

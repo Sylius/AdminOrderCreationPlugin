@@ -10,6 +10,8 @@
     {% set customer_email = app.request.attributes.get('customerEmail') %}
 {% endif %}
 
+{% set channel_code = app.request.attributes.get('channel') %}
+
 {% block content %}
     <div class="ui stackable two column grid">
         <div class="column">
@@ -21,7 +23,7 @@
         </div>
     </div>
     {% include '@SyliusAdminOrderCreationPlugin/Order/Create/_form.html.twig' with {
-        'action': path('sylius_admin_order_creation_order_preview', {'customerEmail': customer_email})
+        'action': path('sylius_admin_order_creation_order_preview', {'customerEmail': customer_email, 'channel': channel_code})
     } %}
 {% endblock %}
 

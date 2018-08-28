@@ -46,6 +46,11 @@ final class NewOrderCustomerPage extends SymfonyPage implements NewOrderCustomer
         $this->getDocument()->pressButton('Create new');
     }
 
+    public function selectChannel(string $channelName): void
+    {
+        $this->getDocument()->selectFieldOption('Channel', $channelName);
+    }
+
     public function hasCustomerEmailValidationMessage(string $message): bool
     {
         $validationMessage = $this->getDocument()->find('css', 'form .sylius-validation-error');
