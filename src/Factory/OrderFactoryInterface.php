@@ -9,7 +9,7 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 
 interface OrderFactoryInterface extends FactoryInterface
 {
-    public function createForCustomerAndChannel(string $customerEmail, string $channelCodeCode): OrderInterface;
+    public function createForCustomerAndChannel(string $customerEmail, string $channelCode): OrderInterface;
 
     public function createFromExistingOrder(OrderInterface $order): OrderInterface;
 }

@@ -6,11 +6,11 @@
 
 {% if order is defined %}
     {% set customer_email = order.customer.email %}
+    {% set channel_code = order.channel.code %}
 {% else %}
     {% set customer_email = app.request.attributes.get('customerEmail') %}
+    {% set channel_code = app.request.attributes.get('channelCode') %}
 {% endif %}
-
-{% set channel_code = app.request.attributes.get('channelCode') %}
 
 {% block content %}
     <div class="ui stackable two column grid">

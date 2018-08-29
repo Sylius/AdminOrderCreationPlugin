@@ -41,7 +41,7 @@ final class NewOrderPreparatorSpec extends ObjectBehavior
     ): void {
         $request->attributes = new ParameterBag([
             'customerEmail' => 'jon.snow@thewall.com',
-            'channel' => 'WEB-US'
+            'channelCode' => 'WEB-US'
         ]);
 
         $orderFactory->createForCustomerAndChannel('jon.snow@thewall.com', 'WEB-US')->willReturn($order);
