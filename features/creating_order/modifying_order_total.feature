@@ -14,7 +14,7 @@ Feature: Modifying order total
 
     @ui @javascript
     Scenario: Modify order total
-        When I create a new order for "jon.snow@the-wall.com"
+        When I create a new order for "jon.snow@the-wall.com" and channel "United States"
         And I add 5 of "Stark Coat" to this order
         And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
         And I select "Free" shipping method
@@ -27,7 +27,7 @@ Feature: Modifying order total
 
     @ui @javascript
     Scenario: Not being able to place order with discount below 0
-        When I create a new order for "jon.snow@the-wall.com"
+        When I create a new order for "jon.snow@the-wall.com" and channel "United States"
         And I add 5 of "Stark Coat" to this order
         And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
         And I select "Free" shipping method

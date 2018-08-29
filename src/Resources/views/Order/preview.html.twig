@@ -139,10 +139,10 @@
     <div class="ui divider"></div>
 
     <div class="ui buttons">
-        <button type="submit" form="{{ form.vars.name }}" formaction="{{ path('sylius_admin_order_creation_order_create_back', {'customerEmail': app.request.attributes.get('customerEmail'), 'channel': app.request.attributes.get('channel')}) }}" class="ui button">
+        <button type="submit" form="{{ form.vars.name }}" formaction="{{ path('sylius_admin_order_creation_order_create_back', {'customerEmail': app.request.attributes.get('customerEmail'), 'channelCode': app.request.attributes.get('channelCode')}) }}" class="ui button">
             {{ 'sylius.ui.back'|trans }}
         </button>
-        <button type="submit" form="{{ form.vars.name }}" formaction="{{ path('sylius_admin_order_creation_order_create_from_preview', {'customerEmail': app.request.attributes.get('customerEmail'), 'channel': app.request.attributes.get('channel')}) }}" class="ui button positive">
+        <button type="submit" form="{{ form.vars.name }}" formaction="{{ path('sylius_admin_order_creation_order_create_from_preview', {'customerEmail': app.request.attributes.get('customerEmail'), 'channelCode': app.request.attributes.get('channelCode')}) }}" class="ui button positive">
             {{ 'sylius_admin_order_creation.ui.confirm'|trans }}
         </button>
     </div>

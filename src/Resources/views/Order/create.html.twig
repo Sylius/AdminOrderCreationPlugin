@@ -10,7 +10,7 @@
     {% set customer_email = app.request.attributes.get('customerEmail') %}
 {% endif %}
 
-{% set channel_code = app.request.attributes.get('channel') %}
+{% set channel_code = app.request.attributes.get('channelCode') %}
 
 {% block content %}
     <div class="ui stackable two column grid">
@@ -23,7 +23,7 @@
         </div>
     </div>
     {% include '@SyliusAdminOrderCreationPlugin/Order/Create/_form.html.twig' with {
-        'action': path('sylius_admin_order_creation_order_preview', {'customerEmail': customer_email, 'channel': channel_code})
+        'action': path('sylius_admin_order_creation_order_preview', {'customerEmail': customer_email, 'channelCode': channel_code})
     } %}
 {% endblock %}
 
@@ -72,7 +72,7 @@
                     type: "GET",
                     url: Routing.generate(
                         'sylius_admin_order_creation_ajax_provide_available_shipping_methods',
-                        { 'customerEmail': '{{ customer_email }}', 'channel': '{{ channel_code }}', 'shipmentNumber': '0' },
+                        { 'customerEmail': '{{ customer_email }}', 'channelCode': '{{ channel_code }}', 'shipmentNumber': '0' },
                         true
                     ),
                     data: form.serializeArray(),

@@ -41,9 +41,9 @@
         "phpunit/phpunit": "^6.5",
         "se/selenium-server-standalone": "^2.52",
         "sylius-labs/coding-standard": "^2.0",
-        "symfony/web-server-bundle": "^4.1",
-        "symfony/debug-bundle": "^4.1",
-        "symfony/web-profiler-bundle": "^4.1"
+        "symfony/web-server-bundle": "^3.4|^4.1",
+        "symfony/debug-bundle": "^3.4|^4.1",
+        "symfony/web-profiler-bundle": "^3.4|^4.1"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

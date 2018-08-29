@@ -13,7 +13,7 @@ Feature: Placing order after going back from the order preview
         And I am logged in as an administrator
 
     Scenario: Placing order after going back from the order preview
-        When I create a new order for "jon.snow@the-wall.com"
+        When I create a new order for "jon.snow@the-wall.com" and channel "United States"
         And I add "Stark Coat" to this order
         And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
         And I select "Free" shipping method

@@ -15,7 +15,7 @@ Feature: Creating order with different billing address
 
     @ui @javascript
     Scenario: Creating an order with both addresses specified
-        When I create a new order for "jon.snow@the-wall.com"
+        When I create a new order for "jon.snow@the-wall.com" and channel "United States"
         And I add "Stark Coat" to this order
         And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
         And I specify this order billing address as "Rivendell", "Elm Street", "444", "United States" for "Ned Stark"
@@ -25,4 +25,4 @@ Feature: Creating order with different billing address
         Then I should be notified that order has been successfully created
         And this order shipping address should be "Jon Snow", "Frost Alley", "90210", "Ankh-Morpork", "United States"
         And this order billing address should be "Ned Stark", "Elm Street", "444", "Rivendell", "United States"
-        And there should be one not paid nor shipped order for "jon.snow@the-wall.com" in the registry
+        And there should be one not paid nor shipped order with channel code 'WEB-US' for "jon.snow@the-wall.com" in the registry

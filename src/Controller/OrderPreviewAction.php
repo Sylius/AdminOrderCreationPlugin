@@ -41,7 +41,7 @@ final class OrderPreviewAction
     public function __invoke(Request $request): Response
     {
         $customerEmail = $request->attributes->get('customerEmail');
-        $channelCode = $request->attributes->get('channel');
+        $channelCode = $request->attributes->get('channelCode');
 
         $order = $this->orderFactory->createForCustomerAndChannel($customerEmail, $channelCode);
 

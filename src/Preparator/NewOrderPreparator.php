@@ -38,10 +38,10 @@ final class NewOrderPreparator implements OrderPreparatorInterface
         Assert::true($request->attributes->has('customerEmail'));
         $customerEmail = $request->attributes->get('customerEmail');
 
-        Assert::true($request->attributes->has('channel'));
-        $channel = $request->attributes->get('channel');
+        Assert::true($request->attributes->has('channelCode'));
+        $channelCode = $request->attributes->get('channelCode');
 
-        $order = $this->orderFactory->createForCustomerAndChannel($customerEmail, $channel);
+        $order = $this->orderFactory->createForCustomerAndChannel($customerEmail, $channelCode);
         $form = $this->formFactory->create(NewOrderType::class, $order);
 
         /** @var OrderInterface $order */

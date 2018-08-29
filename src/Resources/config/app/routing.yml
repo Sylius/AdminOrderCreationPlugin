@@ -5,7 +5,7 @@ sylius_admin_order_creation_select_order_customer:
         _controller: Sylius\AdminOrderCreationPlugin\Controller\SelectNewOrderCustomerAction
 
 sylius_admin_order_creation_order_preview:
-    path: /admin/orders/new/{customerEmail}/{channel}/preview
+    path: /admin/orders/new/{customerEmail}/{channelCode}/preview
     methods: [POST]
     defaults:
         _controller: Sylius\AdminOrderCreationPlugin\Controller\OrderPreviewAction
@@ -14,10 +14,10 @@ sylius_admin_order_creation_order_preview:
                 type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
             factory:
                 method: ['expr:service("Sylius\\AdminOrderCreationPlugin\\Factory\\OrderFactory")', 'createForCustomerAndChannel']
-                arguments: [$customerEmail, $channel]
+                arguments: [$customerEmail, $channelCode]
 
 sylius_admin_order_creation_order_create:
-    path: /admin/orders/new/{customerEmail}/{channel}
+    path: /admin/orders/new/{customerEmail}/{channelCode}
     methods: [GET]
     options:
         expose: true
@@ -32,12 +32,12 @@ sylius_admin_order_creation_order_create:
                 type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
             factory:
                 method: ['expr:service("Sylius\\AdminOrderCreationPlugin\\Factory\\OrderFactory")', 'createForCustomerAndChannel']
-                arguments: [$customerEmail, $channel]
+                arguments: [$customerEmail, $channelCode]
     requirements:
         customerEmail: .+
 
 sylius_admin_order_creation_order_create_from_preview:
-    path: /admin/orders/new/{customerEmail}/{channel}/create-from-preview
+    path: /admin/orders/new/{customerEmail}/{channelCode}/create-from-preview
     methods: [POST]
     options:
         expose: true
@@ -52,10 +52,10 @@ sylius_admin_order_creation_order_create_from_preview:
                 type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
             factory:
                 method: ['expr:service("Sylius\\AdminOrderCreationPlugin\\Factory\\OrderFactory")', 'createForCustomerAndChannel']
-                arguments: [$customerEmail, $channel]
+                arguments: [$customerEmail, $channelCode]
 
 sylius_admin_order_creation_order_create_back:
-    path: /admin/orders/edit/{customerEmail}/{channel}
+    path: /admin/orders/edit/{customerEmail}/{channelCode}
     methods: [POST]
     options:
         expose: true
