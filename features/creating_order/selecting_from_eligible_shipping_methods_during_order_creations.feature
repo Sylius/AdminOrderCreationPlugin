@@ -22,7 +22,7 @@ Feature: Selecting from eligible shipping methods during order creations
 
     @ui @javascript
     Scenario: Being able to select only shipping methods eligible for ordering items
-        When I create a new order for "jon.snow@the-wall.com"
+        When I create a new order for "jon.snow@the-wall.com" and channel "United States"
         And I add "Rocket T-shirt" to this order
         And I add "Picasso T-shirt" to this order
         And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
@@ -31,7 +31,7 @@ Feature: Selecting from eligible shipping methods during order creations
 
     @ui @javascript
     Scenario: Being able to select only shipping methods eligible after changing order items
-        When I create a new order for "jon.snow@the-wall.com"
+        When I create a new order for "jon.snow@the-wall.com" and channel "United States"
         And I add "Rocket T-shirt" to this order
         And I add "Picasso T-shirt" to this order
         And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
@@ -42,7 +42,7 @@ Feature: Selecting from eligible shipping methods during order creations
 
     @ui @javascript
     Scenario: Not being able to select shipping method without shipping country selected
-        When I create a new order for "jon.snow@the-wall.com"
+        When I create a new order for "jon.snow@the-wall.com" and channel "United States"
         And I add "Rocket T-shirt" to this order
         And I add "Picasso T-shirt" to this order
         And I want to select shipping method
@@ -50,7 +50,7 @@ Feature: Selecting from eligible shipping methods during order creations
 
     @ui @javascript
     Scenario: Not being able to select shipping method with no items in the order
-        When I create a new order for "jon.snow@the-wall.com"
+        When I create a new order for "jon.snow@the-wall.com" and channel "United States"
         And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
         And I want to select shipping method
         Then I should be notified that I need to add some items and shipping address to select from eligible shipping method

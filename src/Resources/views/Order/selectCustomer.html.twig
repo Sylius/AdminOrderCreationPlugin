@@ -6,19 +6,23 @@
 {% block content %}
     <div class="ui center aligned basic segment">
         {{ form_start(selectCustomerForm, {'method': 'GET'})}}
-        {{ form_row(selectCustomerForm.customer) }}
+        {{ form_row(selectCustomerForm.customer) }} <br /><br />
+        {{ form_row(selectCustomerForm.channel, {'attr': {'class': 'ui fluid selection dropdown'}}) }} <br /><br />
         <button class="ui blue submit button">{{ 'sylius.ui.next'|trans }}</button>
         {{ form_end(selectCustomerForm) }}
-        <div class="ui horizontal divider">
+    </div>
+    <div class="ui horizontal divider">
             {{ 'sylius.ui.or'|trans }}
-        </div>
+    </div>
+    <div class="ui center aligned basic segment">
         {{ form_start(createCustomerForm, {'method': 'GET'})}}
-        <div class="ui left icon action input">
+        <div class="ui input fluid ">
             {{ form_widget(createCustomerForm.customer, {'attr': {'placeholder': 'sylius_admin_order_creation.ui.new_customer_email'|trans}}) }}
-            <button class="ui green right labeled icon button">
-                <i class="plus icon"></i> {{ 'sylius_admin_order_creation.ui.create_new'|trans }}
-            </button>
-        </div>
+        </div> <br /><br />
+        {{ form_row(createCustomerForm.channel, {'attr': {'class': 'ui fluid selection dropdown'}}) }} <br /><br />
+        <button class="ui green right labeled icon button">
+            <i class="plus icon"></i> {{ 'sylius_admin_order_creation.ui.create_new'|trans }}
+        </button> <br /><br />
         {{ form_end(createCustomerForm) }}
     </div>
 {% endblock %}
@@ -40,7 +44,10 @@
                 if (customerEmail) {
                     form.attr('action', Routing.generate(
                         'sylius_admin_order_creation_order_create',
-                        { 'customerEmail': form.find('[name*="[customer]"]').val() },
+                        {
+                            'customerEmail': form.find('[name*="[customer]"]').val(),
+                            'channelCode': form.find('[name*="[channel]"]').val()
+                        },
                         true
                     ));
 

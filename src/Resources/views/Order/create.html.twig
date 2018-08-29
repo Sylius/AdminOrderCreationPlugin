@@ -6,8 +6,10 @@
 
 {% if order is defined %}
     {% set customer_email = order.customer.email %}
+    {% set channel_code = order.channel.code %}
 {% else %}
     {% set customer_email = app.request.attributes.get('customerEmail') %}
+    {% set channel_code = app.request.attributes.get('channelCode') %}
 {% endif %}
 
 {% block content %}
@@ -21,7 +23,7 @@
         </div>
     </div>
     {% include '@SyliusAdminOrderCreationPlugin/Order/Create/_form.html.twig' with {
-        'action': path('sylius_admin_order_creation_order_preview', {'customerEmail': customer_email})
+        'action': path('sylius_admin_order_creation_order_preview', {'customerEmail': customer_email, 'channelCode': channel_code})
     } %}
 {% endblock %}
 
@@ -67,10 +69,10 @@
                 form.addClass('loading');
 
                 $.ajax({
-                    type: "POST",
+                    type: "GET",
                     url: Routing.generate(
                         'sylius_admin_order_creation_ajax_provide_available_shipping_methods',
-                        { 'customerEmail': '{{ customer_email }}', 'shipmentNumber': '0' },
+                        { 'customerEmail': '{{ customer_email }}', 'channelCode': '{{ channel_code }}', 'shipmentNumber': '0' },
                         true
                     ),
                     data: form.serializeArray(),

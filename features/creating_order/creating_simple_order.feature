@@ -14,24 +14,24 @@ Feature: Creating simple order
         And I am logged in as an administrator
 
     Scenario: Creating a simple order for an existing customer
-        When I create a new order for "jon.snow@the-wall.com"
+        When I create a new order for "jon.snow@the-wall.com" and channel "United States"
         And I add "Stark Coat" to this order
         And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
         And I select "Free" shipping method
         And I select "Cash on Delivery" payment method
         And I place and confirm this order
         Then I should be notified that order has been successfully created
-        And there should be one not paid nor shipped order for "jon.snow@the-wall.com" in the registry
+        And there should be one not paid nor shipped order with channel code 'WEB-US' for "jon.snow@the-wall.com" in the registry
 
     Scenario: Creating a simple order for a new customer
-        When I create a new order for a new customer with email "ned.stark@the-wall.com"
+        When I create a new order for a new customer with email "ned.stark@the-wall.com" and channel "United States"
         And I add "Stark Coat" to this order
         And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
         And I select "Free" shipping method
         And I select "Cash on Delivery" payment method
         And I place and confirm this order
         Then I should be notified that order has been successfully created
-        And there should be one not paid nor shipped order for "ned.stark@the-wall.com" in the registry
+        And there should be one not paid nor shipped order with channel code 'WEB-US' for "ned.stark@the-wall.com" in the registry
 
     Scenario: Trying to create an order for an existing customer without selecting them
         When I try to create a new order for an existing customer without selecting them
