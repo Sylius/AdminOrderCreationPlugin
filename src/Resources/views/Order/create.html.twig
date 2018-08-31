@@ -93,7 +93,10 @@
             }
 
             function canShippingMethodBeProvided() {
-                return $('#sylius_admin_order_creation_new_order_items [data-form-collection="item"]').length > 0 && $('#sylius_admin_order_creation_new_order_shippingAddress_countryCode').val() !== '';
+                return $('#sylius_admin_order_creation_new_order_items [data-form-collection="item"]').length > 0 &&
+                    $('#sylius_admin_order_creation_new_order_shippingAddress_countryCode').val() !== '' &&
+                    $('#sylius_admin_order_creation_new_order_localeCode').val() !== ''
+                ;
             }
         });
     </script>

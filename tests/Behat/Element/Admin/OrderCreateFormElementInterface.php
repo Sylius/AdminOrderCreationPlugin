@@ -18,6 +18,8 @@ interface OrderCreateFormElementInterface
 
     public function specifyBillingAddress(AddressInterface $address): void;
 
+    public function selectLocale(string $localeName): void;
+
     /** @return array|string[] */
     public function getAvailableShippingMethods(): array;
 

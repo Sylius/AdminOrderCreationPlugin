@@ -8,13 +8,17 @@ use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductVariantRepository as BaseProduc
 
 final class ProductVariantRepository extends BaseProductVariantRepository implements ProductVariantRepositoryInterface
 {
-    public function findByPhrase(string $phrase, string $locale): array
+    public function findByPhraseAndChannelPricing(string $phrase, string $channel, string $locale): array
     {
         $expr = $this->getEntityManager()->getExpressionBuilder();
 
         return $this->createQueryBuilder('o')
             ->innerJoin('o.translations', 'translation', 'WITH', 'translation.locale = :locale')
+            ->innerJoin('o.product', 'p')
+            ->innerJoin('p.channels', 'c')
+            ->andWhere('c.code = :channel')
             ->andWhere($expr->orX('translation.name LIKE :phrase', 'o.code LIKE :phrase'))
+            ->setParameter('channel', $channel)
             ->setParameter('phrase', '%' . $phrase . '%')
             ->setParameter('locale', $locale)
             ->getQuery()

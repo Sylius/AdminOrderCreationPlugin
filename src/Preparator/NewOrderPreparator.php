@@ -10,7 +10,6 @@ use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Order\Processor\OrderProcessorInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Webmozart\Assert\Assert;
 
 final class NewOrderPreparator implements OrderPreparatorInterface
 {
@@ -35,10 +34,7 @@ final class NewOrderPreparator implements OrderPreparatorInterface
 
     public function prepareFromRequest(Request $request): OrderInterface
     {
-        Assert::true($request->attributes->has('customerEmail'));
         $customerEmail = $request->attributes->get('customerEmail');
-
-        Assert::true($request->attributes->has('channelCode'));
         $channelCode = $request->attributes->get('channelCode');
 
         $order = $this->orderFactory->createForCustomerAndChannel($customerEmail, $channelCode);

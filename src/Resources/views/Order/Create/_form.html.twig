@@ -19,6 +19,15 @@
             </div>
         </div>
 
+        <div id="localeTab" class="title">
+            <i class="dropdown icon"></i> {{ 'sylius.ui.locale'|trans }}
+        </div>
+        <div id="locale" class="content">
+            <div class="ui segment">
+                {{ form_row(form.localeCode) }}
+            </div>
+        </div>
+
         <div id="shipmentsAndPaymentsTab" class="title">
             <i class="dropdown icon"></i> {{ 'sylius.ui.shipments'|trans }} &amp; {{ 'sylius.ui.payments'|trans }}
         </div>
