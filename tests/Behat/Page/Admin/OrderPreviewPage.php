@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin;
 
 use Behat\Mink\Driver\Selenium2Driver;
+use Behat\Mink\Element\NodeElement;
 use Sylius\Behat\Page\SymfonyPage;
 
 final class OrderPreviewPage extends SymfonyPage implements OrderPreviewPageInterface
@@ -57,6 +58,14 @@ final class OrderPreviewPage extends SymfonyPage implements OrderPreviewPageInte
         $item = $this->getDocument()->find('css', sprintf('table tr:contains("%s") + tr', $productCode));
 
         return null !== $item->find('css', sprintf('.sylius-validation-error:contains("%s")', $message));
+    }
+
+    public function hasLocale(string $localeName): bool
+    {
+        /** @var NodeElement $localeElement */
+        $localeElement = $this->getDocument()->find('css', '#sylius-order-locale-code');
+
+        return strpos($localeElement->getText(), $localeName) !== false;
     }
 
     public function lowerOrderPriceBy(string $discount): void

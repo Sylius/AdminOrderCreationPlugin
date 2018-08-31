@@ -69,6 +69,12 @@ final class NewOrderType extends AbstractResourceType
                         'by_reference' => false,
                         'button_add_label' => 'sylius_admin_order_creation.ui.add_discount',
                     ])
+                    ->add('localeCode', LocaleCodeChoiceType::class, [
+                        'label' => false,
+                        'placeholder' => 'sylius.ui.locale',
+                        'choices' => $event->getData()->getChannel()->getLocales(),
+                        'empty_data' => $event->getData()->getLocaleCode(),
+                    ])
                 ;
             })
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {

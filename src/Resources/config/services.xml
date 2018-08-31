@@ -66,6 +66,10 @@
             <argument>%sylius.model.adjustment.class%</argument>
             <tag name="form.type" />
         </service>
+        <service id="Sylius\AdminOrderCreationPlugin\Form\Type\LocaleCodeChoiceType">
+            <argument type="service" id="sylius.repository.locale" />
+            <tag name="form.type" />
+        </service>
 
         <service id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory">
             <argument type="service" id="sylius.factory.order" />

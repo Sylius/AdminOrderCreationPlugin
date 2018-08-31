@@ -22,8 +22,8 @@ sylius_admin_order_creation_ajax_customer_by_email:
                 method: findBy
                 arguments: [email: $email]
 
-sylius_admin_order_creation_ajax_product_variants_by_phrase:
-    path: /product-variant-search
+sylius_admin_order_creation_ajax_product_variants_by_phrase_and_channel:
+    path: /product-variant-search/{channelCode}
     methods: [GET]
     defaults:
         _controller: sylius.controller.product_variant:indexAction
@@ -31,9 +31,10 @@ sylius_admin_order_creation_ajax_product_variants_by_phrase:
         _sylius:
             permission: true
             repository:
-                method: findByPhrase
+                method: findByPhraseAndChannelCode
                 arguments:
                     phrase: $phrase
+                    channelCode: $channelCode
                     locale: expr:service('sylius.context.locale').getLocaleCode()
 
 sylius_admin_order_creation_ajax_product_variant_by_codes:

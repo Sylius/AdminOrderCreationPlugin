@@ -161,6 +161,14 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
+     * @When I select :localeName locale
+     */
+    public function selectLocale(string $localeName): void
+    {
+        $this->orderCreateFormElement->selectLocale($localeName);
+    }
+
+    /**
      * @When I want to select shipping method
      */
     public function wantToSelectShippingMethod(): void
@@ -478,6 +486,14 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
+     * @Then it should have :localeName locale
+     */
+    public function orderShouldHaveLocale(string $localeName): void
+    {
+        Assert::true($this->orderPreviewPage->hasLocale($localeName));
+    }
+
+    /**
      * @Then I should be able to confirm order creation
      */
     public function shouldBeAbleToConfirmOrderCreation(): void
@@ -499,5 +515,13 @@ final class ManagingOrdersContext implements Context
     public function shouldBeNotifiedThatCustomerEmailCannotBeEmpty(): void
     {
         Assert::true($this->newOrderCustomerPage->hasCustomerEmailValidationMessage('Customer email cannot be empty'));
+    }
+
+    /**
+     * @Then there should be no product available
+     */
+    public function thereShouldBeNoProductAvailable(): void
+    {
+        Assert::false($this->orderCreateFormElement->areProductsVisible());
     }
 }
