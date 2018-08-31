@@ -6,9 +6,9 @@ Feature: Being unable to create order when item prices are not defined for chann
 
     Background:
         Given the store operates on a channel named "Web-US" in "USD" currency
-        And the store operates on a channel named "Web-GB" in "USD" currency
-        And the store operates on a channel named "Web-FR" in "USD" currency
-        And the store has a product "Stark Coat" priced at "$100" available in channel "Web-US" and channel "Web-GB"
+        And the store operates on a channel named "Web-EC" in "USD" currency
+        And the store operates on a channel named "Web-PW" in "USD" currency
+        And the store has a product "Stark Coat" priced at "$100" available in channel "Web-US" and channel "Web-EC"
         And the store ships everywhere for free
         And the store allows paying with "Cash on Delivery"
         And there is a customer account "jon.snow@the-wall.com"
@@ -16,5 +16,5 @@ Feature: Being unable to create order when item prices are not defined for chann
 
     @ui @javascript
     Scenario: Trying to create an order when item prices are not defined for channel
-        When I create a new order for "jon.snow@the-wall.com" and channel "Web-FR"
+        When I create a new order for "jon.snow@the-wall.com" and channel "Web-PW"
         Then there should be no product available

@@ -8,5 +8,5 @@ use Sylius\Component\Core\Repository\ProductVariantRepositoryInterface as BasePr
 
 interface ProductVariantRepositoryInterface extends BaseProductVariantRepositoryInterface
 {
-    public function findByPhraseAndChannelPricing(string $phrase, string $channel, string $locale): array;
+    public function findByPhraseAndChannelCode(string $phrase, string $channelCode, string $locale): array;
 }
