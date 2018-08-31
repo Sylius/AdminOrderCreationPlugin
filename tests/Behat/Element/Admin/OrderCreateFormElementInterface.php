@@ -14,6 +14,8 @@ interface OrderCreateFormElementInterface
 
     public function removeProduct(string $productCode): void;
 
+    public function areProductsVisible(): bool;
+
     public function specifyShippingAddress(AddressInterface $address): void;
 
     public function specifyBillingAddress(AddressInterface $address): void;

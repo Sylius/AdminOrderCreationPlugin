@@ -486,6 +486,14 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
+     * @Then it should have :localeName locale
+     */
+    public function orderShouldHaveLocale(string $localeName): void
+    {
+        Assert::true($this->orderPreviewPage->hasLocale($localeName));
+    }
+
+    /**
      * @Then I should be able to confirm order creation
      */
     public function shouldBeAbleToConfirmOrderCreation(): void
@@ -510,10 +518,10 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
-     * @Then the order should have locale :localeName
+     * @Then there should be no product available
      */
-    public function orderShouldHaveLocale(string $localeName): void
+    public function thereShouldBeNoProductAvailable(): void
     {
-        Assert::true($this->orderShowPage->hasLocale($localeName));
+        Assert::false($this->orderCreateFormElement->areProductsVisible());
     }
 }

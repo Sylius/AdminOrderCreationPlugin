@@ -56,6 +56,15 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         $item->clickLink('Delete');
     }
 
+    public function areProductsVisible(): bool
+    {
+        $this->clickOnTabAndWait('Items');
+
+        $item = $this->addItemAndWaitForIt();
+
+        return $this->autoCompleteSelector->areItemsVisible($item);
+    }
+
     public function specifyShippingAddress(AddressInterface $address): void
     {
         $this->clickOnTabAndWait('Shipping address & Billing address');

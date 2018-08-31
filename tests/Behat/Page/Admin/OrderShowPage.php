@@ -14,16 +14,4 @@ final class OrderShowPage extends ShowPage implements OrderShowPageInterface
 
         return null !== $lastPayment->find('css', '#payment-link');
     }
-
-    public function hasLocale(string $localeName): bool
-    {
-        return strpos($this->getElement('header')->getText(), $localeName) !== false;
-    }
-
-    protected function getDefinedElements()
-    {
-        return array_merge(parent::getDefinedElements(), [
-            'header' => '.ui .horizontal .divided .list'
-        ]);
-    }
 }
