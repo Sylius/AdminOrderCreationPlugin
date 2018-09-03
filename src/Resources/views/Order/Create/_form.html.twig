@@ -20,11 +20,12 @@
         </div>
 
         <div id="localeTab" class="title">
-            <i class="dropdown icon"></i> {{ 'sylius.ui.locale'|trans }}
+            <i class="dropdown icon"></i> {{ 'sylius.ui.locale'|trans }} & {{ 'sylius.ui.currency'|trans }}
         </div>
         <div id="locale" class="content">
-            <div class="ui segment">
-                {{ form_row(form.localeCode) }}
+            <div class="ui horizontal segments">
+                <div class="ui segment">{{ form_row(form.localeCode) }}</div>
+                <div class="ui segment">{{ form_row(form.currencyCode) }}</div>
             </div>
         </div>
 

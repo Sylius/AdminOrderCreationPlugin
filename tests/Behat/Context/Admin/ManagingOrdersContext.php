@@ -169,6 +169,14 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
+     * @When I select :currencyName currency
+     */
+    public function selectCurrency(string $currencyName): void
+    {
+        $this->orderCreateFormElement->selectcurrency($currencyName);
+    }
+
+    /**
      * @When I want to select shipping method
      */
     public function wantToSelectShippingMethod(): void
@@ -491,6 +499,14 @@ final class ManagingOrdersContext implements Context
     public function orderShouldHaveLocale(string $localeName): void
     {
         Assert::true($this->orderPreviewPage->hasLocale($localeName));
+    }
+
+    /**
+     * @Then it should have :currencyName currency
+     */
+    public function orderShouldHaveCurrency(string $currencyName): void
+    {
+        Assert::true($this->orderPreviewPage->hasCurrency($currencyName));
     }
 
     /**

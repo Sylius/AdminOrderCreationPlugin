@@ -6,6 +6,7 @@ Feature: Previewing order before creation
 
     Background:
         Given the store operates on a single channel in "United States"
+        And that channel allows to shop using "EUR" and "PLN" currencies
         And the store has locale "English (United States)"
         And the store has a product "Stark Coat" priced at "$100"
         And the store ships everywhere for free
@@ -19,6 +20,7 @@ Feature: Previewing order before creation
         And I add "Stark Coat" to this order
         And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
         And I select "English (United States)" locale
+        And I select "Polish Zloty" currency
         And I select "Free" shipping method
         And I select "Cash on Delivery" payment method
         And I place this order
@@ -27,4 +29,5 @@ Feature: Previewing order before creation
         And its shipping total should be "$0.00"
         And it should have one "Cash on Delivery" payment
         And it should have "English (United States)" locale
+        And it should have "PLN" currency
         And I should be able to confirm order creation

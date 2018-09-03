@@ -75,6 +75,12 @@ final class NewOrderType extends AbstractResourceType
                         'choices' => $event->getData()->getChannel()->getLocales(),
                         'empty_data' => $event->getData()->getLocaleCode(),
                     ])
+                    ->add('currencyCode', CurrencyCodeChoiceType::class, [
+                        'label' => false,
+                        'placeholder' => 'sylius.ui.currency',
+                        'choices' => $event->getData()->getChannel()->getCurrencies(),
+                        'empty_data' => $event->getData()->getCurrencyCode()
+                    ])
                 ;
             })
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
