@@ -1,4 +1,4 @@
-@managing_orders
+@admin_order_creation_managing_orders
 Feature: Modifying order total
     In order to place an order in the name of a Customer with custom price
     As an Administrator

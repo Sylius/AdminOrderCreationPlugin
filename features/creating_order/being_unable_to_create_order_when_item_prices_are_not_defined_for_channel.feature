@@ -1,4 +1,4 @@
-@managing_orders
+@admin_order_creation_managing_orders
 Feature: Being unable to create order when item prices are not defined for channel
     In order to have proper data provided for channel when creating an order
     As an Administrator

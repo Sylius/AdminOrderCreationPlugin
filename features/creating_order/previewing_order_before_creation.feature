@@ -1,4 +1,4 @@
-@managing_orders
+@admin_order_creation_managing_orders
 Feature: Previewing order before creation
     In order to be sure about details of the order I am placing
     As an Administrator

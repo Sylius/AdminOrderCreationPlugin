@@ -1,4 +1,4 @@
-@managing_orders
+@admin_order_creation_managing_orders
 Feature: Creating order with offline payment
     In order to place order in the name of a Customer
     As an Administrator
