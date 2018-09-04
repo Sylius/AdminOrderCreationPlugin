@@ -73,7 +73,7 @@ script:
     - composer validate --strict
     - bin/phpstan.phar analyse -c phpstan.neon -l max src/
 
-    - bin/behat -vvv --no-interaction --strict --tags="~@to_be_fixed" || bin/behat -vvv --no-interaction --strict --rerun --tags="~@to_be_fixed"
+    - bin/behat -vvv --no-interaction --strict || bin/behat -vvv --no-interaction --strict --rerun
     - bin/phpspec run
 
 after_failure:

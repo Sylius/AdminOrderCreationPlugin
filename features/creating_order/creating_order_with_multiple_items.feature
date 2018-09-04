@@ -15,7 +15,7 @@ Feature: Creating order with multiple items
         And there is a customer account "jon.snow@the-wall.com"
         And I am logged in as an administrator
 
-    @ui @javascript @to_be_fixed
+    @ui @javascript
     Scenario: Creating an expanded order
         When I create a new order for "jon.snow@the-wall.com" and channel "United States"
         And I add 3 of "Stark Coat" to this order
@@ -28,7 +28,7 @@ Feature: Creating order with multiple items
         And I place and confirm this order
         Then I should be notified that order has been successfully created
         And the order's total should be "$2,340.00"
-        And there should be one not paid nor shipped order with channel code 'WEB-US' for "jon.snow@the-wall.com" in the registry
+        And there should be one not paid nor shipped order with channel code "WEB-US" for "jon.snow@the-wall.com" in the registry
 
     @ui @javascript
     Scenario: Being able to remove items during order creation
@@ -44,4 +44,4 @@ Feature: Creating order with multiple items
         And I place and confirm this order
         Then I should be notified that order has been successfully created
         And the order's total should be "$1,340.00"
-        And there should be one not paid nor shipped order with channel code 'WEB-US' for "jon.snow@the-wall.com" in the registry
+        And there should be one not paid nor shipped order with channel code "WEB-US" for "jon.snow@the-wall.com" in the registry
