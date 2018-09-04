@@ -7,6 +7,8 @@ namespace Sylius\AdminOrderCreationPlugin\Form\Type;
 use Sylius\Bundle\AddressingBundle\Form\Type\AddressType;
 use Sylius\Bundle\PromotionBundle\Form\Type\PromotionCouponToCodeType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
+use Sylius\Component\Core\Model\ChannelInterface;
+use Sylius\Component\Core\Model\OrderInterface;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -45,13 +47,19 @@ final class NewOrderType extends AbstractResourceType
                 'required' => false,
             ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
+                /** @var OrderInterface $order */
+                $order = $event->getData();
+
+                /** @var ChannelInterface $channel */
+                $channel = $order->getChannel();
+
                 $event
                     ->getForm()
                     ->add('items', CollectionType::class, [
                         'label' => 'sylius.ui.items',
                         'entry_type' => OrderItemType::class,
                         'entry_options' => [
-                            'currency' => $event->getData()->getCurrencyCode(),
+                            'currency' => $order->getCurrencyCode(),
                         ],
                         'allow_add' => true,
                         'allow_delete' => true,
@@ -62,7 +70,7 @@ final class NewOrderType extends AbstractResourceType
                         'entry_type' => AdjustmentType::class,
                         'entry_options' => [
                             'label' => 'sylius_admin_order_creation.ui.order_discount',
-                            'currency' => $event->getData()->getCurrencyCode(),
+                            'currency' => $order->getCurrencyCode(),
                         ],
                         'allow_add' => true,
                         'allow_delete' => true,
@@ -71,15 +79,13 @@ final class NewOrderType extends AbstractResourceType
                     ])
                     ->add('localeCode', LocaleCodeChoiceType::class, [
                         'label' => false,
-                        'placeholder' => 'sylius.ui.locale',
-                        'choices' => $event->getData()->getChannel()->getLocales(),
-                        'empty_data' => $event->getData()->getLocaleCode(),
+                        'choices' => $channel->getLocales(),
+                        'empty_data' => $order->getLocaleCode(),
                     ])
                     ->add('currencyCode', CurrencyCodeChoiceType::class, [
                         'label' => false,
-                        'placeholder' => 'sylius.ui.currency',
-                        'choices' => $event->getData()->getChannel()->getCurrencies(),
-                        'empty_data' => $event->getData()->getCurrencyCode()
+                        'choices' => $channel->getCurrencies(),
+                        'empty_data' => $order->getCurrencyCode()
                     ])
                 ;
             })
