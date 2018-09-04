@@ -1,4 +1,4 @@
-@managing_orders @ui @javascript
+@admin_order_creation_managing_orders @ui @javascript
 Feature: Placing order after going back from the order preview
     In order to apply changes after previewing the order
     As an Administrator

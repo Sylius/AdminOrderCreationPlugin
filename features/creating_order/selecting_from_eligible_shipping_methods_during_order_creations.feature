@@ -1,4 +1,4 @@
-@managing_orders
+@admin_order_creation_managing_orders
 Feature: Selecting from eligible shipping methods during order creations
     In order not to place an order with invalid shipping method
     As an Administrator

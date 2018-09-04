@@ -1,4 +1,4 @@
-@admin_reordering @ui @javascript
+@admin_order_creation_admin_reordering @ui @javascript
 Feature: Previewing order before creation during reordering
     In order to be sure about details of the order I am placing
     As an Administrator

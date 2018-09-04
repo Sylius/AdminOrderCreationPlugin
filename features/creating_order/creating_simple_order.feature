@@ -1,4 +1,4 @@
-@managing_orders @ui @javascript
+@admin_order_creation_managing_orders @ui @javascript
 Feature: Creating simple order
     In order to place an order in the name of a Customer
     As an Administrator

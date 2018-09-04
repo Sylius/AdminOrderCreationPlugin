@@ -1,4 +1,4 @@
-@admin_reordering @ui @javascript
+@admin_order_creation_admin_reordering @ui @javascript
 Feature: Placing order after going back from the order preview during reordering
     In order to apply changes after previewing the order
     As an Administrator

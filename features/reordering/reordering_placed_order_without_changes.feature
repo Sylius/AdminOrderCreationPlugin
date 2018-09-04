@@ -1,4 +1,4 @@
-@admin_reordering @ui
+@admin_order_creation_admin_reordering @ui
 Feature: Reordering previously placed order
     In order to reorder the same order as a Customer placed before in the name of this Customer
     As an Administrator

@@ -1,4 +1,4 @@
-@managing_orders
+@admin_order_creation_managing_orders
 Feature: Creating order with multiple items
     In order to place an order in the name of a Customer
     As an Administrator

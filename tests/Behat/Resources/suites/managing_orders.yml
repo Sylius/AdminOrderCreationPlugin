@@ -1,6 +1,6 @@
 default:
     suites:
-        ui_managing_orders:
+        ui_admin_order_creation_managing_orders:
             contexts_services:
                 - sylius.behat.context.hook.doctrine_orm
                 - sylius.behat.context.hook.email_spool
@@ -56,4 +56,4 @@ default:
 
                 - Tests\Sylius\AdminOrderCreationPlugin\Behat\Context\Admin\ManagingOrdersContext
             filters:
-                tags: "@managing_orders && @ui"
+                tags: "@admin_order_creation_managing_orders && @ui"

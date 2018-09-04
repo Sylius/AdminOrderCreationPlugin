@@ -1,4 +1,4 @@
-@admin_reordering @ui
+@admin_order_creation_admin_reordering @ui
 Feature: Applying promotions during reordering previously placed order
     In order to reorder the same order with the same promotions if they are still available as a Customer placed before
     As an Administrator
