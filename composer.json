@@ -54,7 +54,7 @@
         }
     },
     "autoload-dev": {
-        "classmap": ["tests/Application/app/AppKernel.php"]
+        "classmap": ["tests/Application/app/AppKernel.php", "tests/Application/app/TestAppKernel.php"]
     },
     "extra": {
         "branch-alias": {

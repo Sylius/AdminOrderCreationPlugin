@@ -19,3 +19,24 @@ default:
             directory: etc/build
             clean_start: false
             screenshot: true
+
+cached:
+    extensions:
+        FriendsOfBehat\ContextServiceExtension:
+            imports:
+                - vendor/sylius/sylius/src/Sylius/Behat/Resources/config/services.xml
+                - tests/Behat/Resources/services.xml
+
+        FriendsOfBehat\SymfonyExtension:
+            env_file: .env.test_cached
+            kernel:
+                env: test_cached
+                debug: false
+                class: TestAppKernel
+                path: tests/Application/app/TestAppKernel.php
+                bootstrap: vendor/autoload.php
+
+        Lakion\Behat\MinkDebugExtension:
+            directory: etc/build
+            clean_start: false
+            screenshot: true
