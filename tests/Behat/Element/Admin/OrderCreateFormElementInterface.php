@@ -42,4 +42,6 @@ interface OrderCreateFormElementInterface
     public function placeOrder(): void;
 
     public function getShippingMethodsValidationMessage(): string;
+
+    public function isAddPaymentButtonVisible(): bool;
 }

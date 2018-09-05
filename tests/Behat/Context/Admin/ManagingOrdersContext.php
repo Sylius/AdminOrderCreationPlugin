@@ -540,4 +540,12 @@ final class ManagingOrdersContext implements Context
     {
         Assert::false($this->orderCreateFormElement->areProductsVisible());
     }
+
+    /**
+     * @Then adding another payment method should not be possible
+     */
+    public function addingAnotherPaymentMethodShouldNotBePossible(): void
+    {
+        Assert::false($this->orderCreateFormElement->isAddPaymentButtonVisible());
+    }
 }
