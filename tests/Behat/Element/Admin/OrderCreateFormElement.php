@@ -270,6 +270,7 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
             ;
         });
     }
+
     private function waitForFormToLoad(): void
     {
         $form = $this->getDocument()->find('css', '[name="sylius_admin_order_creation_new_order"]');
@@ -280,9 +281,8 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
 
     public function isAddPaymentButtonVisible(): bool
     {
-        return $this
-                ->getElement('payments')
-                ->find('css', '[data-form-collection="Add"]') !== null
+        return
+            $this->getElement('payments')->find('css', '[data-form-collection="add"]')->isVisible()
         ;
     }
 }
