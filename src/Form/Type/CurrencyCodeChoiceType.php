@@ -13,9 +13,7 @@ use Symfony\Component\Form\ReversedTransformer;
 
 final class CurrencyCodeChoiceType extends AbstractType
 {
-    /**
-     * @var RepositoryInterface
-     */
+    /** @var RepositoryInterface */
     private $currencyRepository;
 
     public function __construct(RepositoryInterface $currencyRepository)
@@ -23,9 +21,6 @@ final class CurrencyCodeChoiceType extends AbstractType
         $this->currencyRepository = $currencyRepository;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer(
@@ -33,17 +28,11 @@ final class CurrencyCodeChoiceType extends AbstractType
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent(): string
     {
         return CurrencyChoiceType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix(): string
     {
         return 'sylius_currency_code_choice';

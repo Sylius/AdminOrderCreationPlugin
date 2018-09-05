@@ -85,7 +85,7 @@ final class NewOrderType extends AbstractResourceType
                     ->add('currencyCode', CurrencyCodeChoiceType::class, [
                         'label' => false,
                         'choices' => $channel->getCurrencies(),
-                        'empty_data' => $order->getCurrencyCode()
+                        'empty_data' => $order->getCurrencyCode(),
                     ])
                 ;
             })
