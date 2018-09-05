@@ -22,6 +22,8 @@ interface OrderPreviewPageInterface
 
     public function hasLocale(string $localeName): bool;
 
+    public function hasCurrency(string $currencyName): bool;
+
     public function lowerOrderPriceBy(string $discount): void;
 
     public function lowerItemWithProductPriceBy(string $productCode, string $discount): void;

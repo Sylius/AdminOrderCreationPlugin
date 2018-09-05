@@ -70,6 +70,10 @@
             <argument type="service" id="sylius.repository.locale" />
             <tag name="form.type" />
         </service>
+        <service id="Sylius\AdminOrderCreationPlugin\Form\Type\CurrencyCodeChoiceType" >
+            <argument type="service" id="sylius.repository.currency" />
+            <tag name="form.type" />
+        </service>
 
         <service id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory">
             <argument type="service" id="sylius.factory.order" />

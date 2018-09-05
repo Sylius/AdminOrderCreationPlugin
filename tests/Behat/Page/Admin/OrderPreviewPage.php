@@ -68,6 +68,14 @@ final class OrderPreviewPage extends SymfonyPage implements OrderPreviewPageInte
         return strpos($localeElement->getText(), $localeName) !== false;
     }
 
+    public function hasCurrency(string $currencyName): bool
+    {
+        /** @var NodeElement $localeElement */
+        $localeElement = $this->getDocument()->find('css', '#sylius-order-currency');
+
+        return strpos($localeElement->getText(), $currencyName) !== false;
+    }
+
     public function lowerOrderPriceBy(string $discount): void
     {
         $discountCollection = $this->getDocument()->find('css', '#sylius_admin_order_creation_new_order_adjustments');

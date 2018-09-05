@@ -22,6 +22,8 @@ interface OrderCreateFormElementInterface
 
     public function selectLocale(string $localeName): void;
 
+    public function selectCurrency(string $currencyName): void;
+
     /** @return array|string[] */
     public function getAvailableShippingMethods(): array;
 

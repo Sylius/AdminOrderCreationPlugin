@@ -145,9 +145,16 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
 
     public function selectLocale(string $localeName): void
     {
-        $this->clickOnTabAndWait('Locale');
+        $this->clickOnTabAndWait('Locale & Currency');
 
         $this->getElement('locale')->selectOption($localeName);
+    }
+
+    public function selectCurrency(string $currencyName): void
+    {
+        $this->clickOnTabAndWait('Locale & Currency');
+
+        $this->getElement('currency')->selectOption($currencyName);
     }
 
     public function getShippingMethodsValidationMessage(): string
@@ -168,6 +175,7 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
             'billing_last_name' => '#sylius_admin_order_creation_new_order_billingAddress_lastName',
             'billing_postcode' => '#sylius_admin_order_creation_new_order_billingAddress_postcode',
             'billing_street' => '#sylius_admin_order_creation_new_order_billingAddress_street',
+            'currency' => '#sylius_admin_order_creation_new_order_currencyCode',
             'locale' => '#sylius_admin_order_creation_new_order_localeCode',
             'payments' => '#sylius_admin_order_creation_new_order_payments',
             'shipments' => '#sylius_admin_order_creation_new_order_shipments',
