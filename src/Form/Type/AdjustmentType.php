@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints\Range;
 final class AdjustmentType extends AbstractResourceType
 {
     public const ORDER_DISCOUNT_ADJUSTMENT = 'order_discount';
+    public const ORDER_ITEM_DISCOUNT_ADJUSTMENT = 'order_item_discount';
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

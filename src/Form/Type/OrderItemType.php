@@ -16,6 +16,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class OrderItemType extends AbstractResourceType
 {
+    public const ORDER_ITEM_DISCOUNT_ADJUSTMENT = 'order_item_discount';
+
     /** @var DataMapperInterface */
     private $dataMapper;
 
