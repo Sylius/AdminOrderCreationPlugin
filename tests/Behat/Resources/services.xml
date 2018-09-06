@@ -10,7 +10,7 @@
         <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\ReorderPage" parent="sylius.behat.symfony_page" />
         <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderPreviewPage" parent="sylius.behat.symfony_page" />
 
-        <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Context\Admin\ManagingOrdersContext">
+        <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Context\Admin\Ui\ManagingOrdersContext">
             <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderIndexPage"/>
             <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\NewOrderCustomerPage" />
             <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderPreviewPage" />
@@ -20,6 +20,12 @@
             <argument type="service" id="sylius.behat.notification_checker" />
             <argument type="service" id="__symfony__.sylius.behat.email_checker" />
             <argument type="service" id="__symfony__.sylius.address_comparator" />
+            <tag name="fob.context_service" />
+        </service>
+
+        <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Context\Admin\Application\ManagingOrdersContext">
+            <argument type="service" id="mink.default_session" />
+            <argument type="service" id="__symfony__.router" />
             <tag name="fob.context_service" />
         </service>
 

@@ -1,3 +1,4 @@
 imports:
     - suites/managing_orders.yml
     - suites/admin_reordering.yml
+    - suites/admin_application.yml

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Context\Admin;
+namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Context\Admin\Ui;
 
 use Behat\Behat\Context\Context;
 use Sylius\Component\Core\Model\OrderInterface;
