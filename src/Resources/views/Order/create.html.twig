@@ -33,6 +33,14 @@
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
     <script>
         $(document).ready(function() {
+            $('body').on('DOMNodeInserted', '#sylius_admin_order_creation_new_order_payments [data-form-collection="item"]', function() {
+                $('#sylius_admin_order_creation_new_order_payments [data-form-collection="add"]').hide();
+            });
+
+            $('body').on('DOMNodeRemoved', '#sylius_admin_order_creation_new_order_payments [data-form-collection="item"]', function() {
+                $('#sylius_admin_order_creation_new_order_payments [data-form-collection="add"]').show();
+            });
+
             $('#sylius_admin_order_creation_new_order_shipments [data-form-collection="add"]').on('click', function(e) {
                 if (!canShippingMethodBeProvided()) {
                     e.stopPropagation();

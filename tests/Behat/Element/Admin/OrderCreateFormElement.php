@@ -278,4 +278,11 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
             return !$form->hasClass('loading');
         });
     }
+
+    public function isAddPaymentButtonVisible(): bool
+    {
+        return
+            $this->getElement('payments')->find('css', '[data-form-collection="add"]')->isVisible()
+        ;
+    }
 }

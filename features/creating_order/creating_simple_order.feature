@@ -40,3 +40,8 @@ Feature: Creating simple order
     Scenario: Trying to create an order for a new customer without email
         When I try to create a new order for a new customer without email
         Then I should be notified that customer email cannot be empty
+
+    Scenario: Being unable to add multiple payment methods
+        When I create a new order for "jon.snow@the-wall.com" and channel "United States"
+        And I select "Cash on Delivery" payment method
+        Then adding another payment method should not be possible
