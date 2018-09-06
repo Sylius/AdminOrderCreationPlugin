@@ -2,9 +2,9 @@
 
 {% set orderPromotionAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::ORDER_PROMOTION_ADJUSTMENT') %}
 {% set itemPromotionAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::ORDER_ITEM_PROMOTION_ADJUSTMENT') %}
-{% set orderItemDiscountAdjustment = constant('Sylius\\AdminOrderCreationPlugin\\Form\\Type\\OrderItemDiscountAdjustmentType::ORDER_ITEM_DISCOUNT_ADJUSTMENT') %}
 {% set shippingAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::SHIPPING_ADJUSTMENT') %}
 {% set taxAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::TAX_ADJUSTMENT') %}
+{% set orderItemDiscountAdjustment = constant('Sylius\\AdminOrderCreationPlugin\\Form\\Type\\OrderItemDiscountAdjustmentType::ORDER_ITEM_DISCOUNT_ADJUSTMENT') %}
 
 {% set variant = item.variant %}
 {% set product = variant.product %}
@@ -34,10 +34,5 @@
     </td>
     <td class="right aligned total">
         {{ money.format(item.total, order.currencyCode) }}
-    </td>
-</tr>
-<tr class="item-discount">
-    <td colspan="8">
-        {{ form_row(form.adjustments) }}
     </td>
 </tr>

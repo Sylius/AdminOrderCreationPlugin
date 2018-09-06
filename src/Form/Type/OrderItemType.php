@@ -50,7 +50,7 @@ final class OrderItemType extends AbstractResourceType
                     ->getForm()
                     ->add('adjustments', CollectionType::class, [
                         'label' => false,
-                        'entry_type' => AdjustmentType::class,
+                        'entry_type' => OrderItemDiscountAdjustmentType::class,
                         'entry_options' => [
                             'label' => 'sylius_admin_order_creation.ui.item_discount',
                             'currency' => $options['currency'],

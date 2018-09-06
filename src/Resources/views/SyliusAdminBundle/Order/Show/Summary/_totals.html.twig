@@ -5,8 +5,7 @@
 {% set itemPromotionAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::ORDER_ITEM_PROMOTION_ADJUSTMENT') %}
 {% set shippingAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::SHIPPING_ADJUSTMENT') %}
 {% set taxAdjustment = constant('Sylius\\Component\\Core\\Model\\AdjustmentInterface::TAX_ADJUSTMENT') %}
-{% set orderDiscountAdjustment = constant('Sylius\\AdminOrderCreationPlugin\\Form\\Type\\AdjustmentType::ORDER_DISCOUNT_ADJUSTMENT') %}
-{% set orderItemDiscountAdjustment = constant('Sylius\\AdminOrderCreationPlugin\\Form\\Type\\AdjustmentType::ORDER_ITEM_DISCOUNT_ADJUSTMENT') %}
+{% set orderDiscountAdjustment = constant('Sylius\\AdminOrderCreationPlugin\\Form\\Type\\OrderDiscountAdjustmentType::ORDER_DISCOUNT_ADJUSTMENT') %}
 
 {% set orderShippingPromotions = sylius_aggregate_adjustments(order.getAdjustmentsRecursively(orderShippingPromotionAdjustment)) %}
 

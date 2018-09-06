@@ -548,4 +548,12 @@ final class ManagingOrdersContext implements Context
     {
         Assert::false($this->orderCreateFormElement->isAddPaymentButtonVisible());
     }
+
+    /**
+     * @Then :itemName discount should be :discount
+     */
+    public function discountShouldBe(string $itemName, string $discount): void
+    {
+        Assert::eq($this->orderShowPage->getItemDiscount($itemName), $discount);
+    }
 }

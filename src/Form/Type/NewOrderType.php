@@ -67,7 +67,7 @@ final class NewOrderType extends AbstractResourceType
                     ])
                     ->add('adjustments', CollectionType::class, [
                         'label' => false,
-                        'entry_type' => AdjustmentType::class,
+                        'entry_type' => OrderDiscountAdjustmentType::class,
                         'entry_options' => [
                             'label' => 'sylius_admin_order_creation.ui.order_discount',
                             'currency' => $order->getCurrencyCode(),
