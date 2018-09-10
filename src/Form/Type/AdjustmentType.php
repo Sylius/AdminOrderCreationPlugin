@@ -14,6 +14,9 @@ use Symfony\Component\Validator\Constraints\Range;
 
 final class AdjustmentType extends AbstractResourceType
 {
+    public const ORDER_DISCOUNT_ADJUSTMENT = 'order_discount';
+    public const ORDER_ITEM_DISCOUNT_ADJUSTMENT = 'order_item_discount';
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('amount', MoneyType::class, [
@@ -24,7 +27,7 @@ final class AdjustmentType extends AbstractResourceType
             ],
         ]);
 
-        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event): void {
+        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use ($options): void {
             $adjustment = $event->getData();
 
             if ($adjustment === null) {
@@ -33,6 +36,7 @@ final class AdjustmentType extends AbstractResourceType
 
             $adjustment->setLabel('sylius_admin_order_creation.ui.order_discount');
             $adjustment->setAmount(-1 * $adjustment->getAmount());
+            $adjustment->setType($options['type']);
 
             $event->setData($adjustment);
         });
@@ -44,6 +48,7 @@ final class AdjustmentType extends AbstractResourceType
 
         $resolver->setRequired('label');
         $resolver->setRequired('currency');
+        $resolver->setRequired('type');
     }
 
     public function getBlockPrefix(): string

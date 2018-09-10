@@ -16,8 +16,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class OrderItemType extends AbstractResourceType
 {
-    public const ORDER_ITEM_DISCOUNT_ADJUSTMENT = 'order_item_discount';
-
     /** @var DataMapperInterface */
     private $dataMapper;
 
@@ -50,10 +48,11 @@ final class OrderItemType extends AbstractResourceType
                     ->getForm()
                     ->add('adjustments', CollectionType::class, [
                         'label' => false,
-                        'entry_type' => OrderItemDiscountAdjustmentType::class,
+                        'entry_type' => AdjustmentType::class,
                         'entry_options' => [
                             'label' => 'sylius_admin_order_creation.ui.item_discount',
                             'currency' => $options['currency'],
+                            'type' => AdjustmentType::ORDER_ITEM_DISCOUNT_ADJUSTMENT,
                         ],
                         'allow_add' => true,
                         'allow_delete' => true,
