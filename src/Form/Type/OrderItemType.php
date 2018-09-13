@@ -52,6 +52,7 @@ final class OrderItemType extends AbstractResourceType
                         'entry_options' => [
                             'label' => 'sylius_admin_order_creation.ui.item_discount',
                             'currency' => $options['currency'],
+                            'type' => AdjustmentType::ORDER_ITEM_DISCOUNT_ADJUSTMENT,
                         ],
                         'allow_add' => true,
                         'allow_delete' => true,

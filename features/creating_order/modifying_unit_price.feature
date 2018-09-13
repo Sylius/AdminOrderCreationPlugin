@@ -26,6 +26,7 @@ Feature: Modifying unit price
         And I confirm this order
         Then I should be notified that order has been successfully created
         And the order's total should be "$425.00"
+        And "Stark Coat" discount should be "-$95.00"
 
     @ui @javascript
     Scenario: Not being able to set order item unit discount below 0
