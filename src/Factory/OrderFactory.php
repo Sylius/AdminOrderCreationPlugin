@@ -10,8 +10,9 @@ use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
+use Sylius\Component\Currency\Model\CurrencyInterface;
+use Sylius\Component\Locale\Model\LocaleInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
-use Webmozart\Assert\Assert;
 
 final class OrderFactory implements OrderFactoryInterface
 {
@@ -62,16 +63,19 @@ final class OrderFactory implements OrderFactoryInterface
 
         /** @var ChannelInterface|null $channel */
         $channel = $this->channelRepository->findOneByCode($channelCode);
+        assert($channel instanceof ChannelInterface);
 
         $order->setCustomer($customer);
         $order->setChannel($channel);
 
+        /** @var CurrencyInterface|null $currency */
         $currency = $channel->getBaseCurrency();
-        Assert::notNull($currency);
+        assert($currency instanceof CurrencyInterface);
         $order->setCurrencyCode($currency->getCode());
 
+        /** @var LocaleInterface|null $defaultLocale */
         $defaultLocale = $channel->getDefaultLocale();
-        Assert::notNull($defaultLocale);
+        assert($defaultLocale instanceof LocaleInterface);
         $order->setLocaleCode($defaultLocale->getCode());
 
         return $order;
