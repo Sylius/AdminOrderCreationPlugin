@@ -15,7 +15,6 @@ use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 use Sylius\Component\Currency\Model\CurrencyInterface;
 use Sylius\Component\Locale\Model\LocaleInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class OrderFactorySpec extends ObjectBehavior
 {
@@ -24,8 +23,6 @@ final class OrderFactorySpec extends ObjectBehavior
         FactoryInterface $customerFactory,
         CustomerRepositoryInterface $customerRepository,
         ChannelRepositoryInterface $channelRepository,
-        RepositoryInterface $currencyRepository,
-        RepositoryInterface $localeRepository,
         ReorderProcessor $reorderProcessor
     ) {
         $this->beConstructedWith(
@@ -33,8 +30,6 @@ final class OrderFactorySpec extends ObjectBehavior
             $customerFactory,
             $customerRepository,
             $channelRepository,
-            $currencyRepository,
-            $localeRepository,
             $reorderProcessor
         );
     }
@@ -55,8 +50,6 @@ final class OrderFactorySpec extends ObjectBehavior
         FactoryInterface $baseOrderFactory,
         CustomerRepositoryInterface $customerRepository,
         ChannelRepositoryInterface $channelRepository,
-        RepositoryInterface $currencyRepository,
-        RepositoryInterface $localeRepository,
         OrderInterface $order,
         CustomerInterface $customer,
         ChannelInterface $channel,
@@ -67,10 +60,10 @@ final class OrderFactorySpec extends ObjectBehavior
         $customerRepository->findOneBy(['email' => 'customer@example.com'])->willReturn($customer);
         $channelRepository->findOneByCode('WEB-US')->willReturn($channel);
 
-        $currencyRepository->findOneBy([])->willReturn($currency);
+        $channel->getBaseCurrency()->willReturn($currency);
         $currency->getCode()->willReturn('USD');
 
-        $localeRepository->findOneBy([])->willReturn($locale);
+        $channel->getDefaultLocale()->willReturn($locale);
         $locale->getCode()->willReturn('en_US');
 
         $order->setCustomer($customer)->shouldBeCalled();
@@ -86,8 +79,6 @@ final class OrderFactorySpec extends ObjectBehavior
         FactoryInterface $customerFactory,
         CustomerRepositoryInterface $customerRepository,
         ChannelRepositoryInterface $channelRepository,
-        RepositoryInterface $currencyRepository,
-        RepositoryInterface $localeRepository,
         OrderInterface $order,
         CustomerInterface $customer,
         ChannelInterface $channel,
@@ -102,10 +93,10 @@ final class OrderFactorySpec extends ObjectBehavior
 
         $channelRepository->findOneByCode('WEB-US')->willReturn($channel);
 
-        $currencyRepository->findOneBy([])->willReturn($currency);
+        $channel->getBaseCurrency()->willReturn($currency);
         $currency->getCode()->willReturn('USD');
 
-        $localeRepository->findOneBy([])->willReturn($locale);
+        $channel->getDefaultLocale()->willReturn($locale);
         $locale->getCode()->willReturn('en_US');
 
         $order->setCustomer($customer)->shouldBeCalled();

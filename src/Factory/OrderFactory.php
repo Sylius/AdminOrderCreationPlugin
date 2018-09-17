@@ -6,13 +6,12 @@ namespace Sylius\AdminOrderCreationPlugin\Factory;
 
 use Sylius\AdminOrderCreationPlugin\ReorderProcessing\ReorderProcessor;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
+use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
-use Sylius\Component\Currency\Model\CurrencyInterface;
-use Sylius\Component\Locale\Model\LocaleInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Webmozart\Assert\Assert;
 
 final class OrderFactory implements OrderFactoryInterface
 {
@@ -28,12 +27,6 @@ final class OrderFactory implements OrderFactoryInterface
     /** @var ChannelRepositoryInterface */
     private $channelRepository;
 
-    /** @var RepositoryInterface */
-    private $currencyRepository;
-
-    /** @var RepositoryInterface */
-    private $localeRepository;
-
     /** @var ReorderProcessor */
     private $reorderProcessor;
 
@@ -42,16 +35,12 @@ final class OrderFactory implements OrderFactoryInterface
         FactoryInterface $customerFactory,
         CustomerRepositoryInterface $customerRepository,
         ChannelRepositoryInterface $channelRepository,
-        RepositoryInterface $currencyRepository,
-        RepositoryInterface $localeRepository,
         ReorderProcessor $reorderProcessor
     ) {
         $this->baseOrderFactory = $baseOrderFactory;
         $this->customerFactory = $customerFactory;
         $this->customerRepository = $customerRepository;
         $this->channelRepository = $channelRepository;
-        $this->currencyRepository = $currencyRepository;
-        $this->localeRepository = $localeRepository;
 
         $this->reorderProcessor = $reorderProcessor;
     }
@@ -71,16 +60,19 @@ final class OrderFactory implements OrderFactoryInterface
         $order = $this->baseOrderFactory->createNew();
         assert($order instanceof OrderInterface);
 
-        $order->setCustomer($customer);
-        $order->setChannel($this->channelRepository->findOneByCode($channelCode));
+        /** @var ChannelInterface|null $channel */
+        $channel = $this->channelRepository->findOneByCode($channelCode);
 
-        $currency = $this->currencyRepository->findOneBy([]);
-        assert($currency instanceof CurrencyInterface);
+        $order->setCustomer($customer);
+        $order->setChannel($channel);
+
+        $currency = $channel->getBaseCurrency();
+        Assert::notNull($currency);
         $order->setCurrencyCode($currency->getCode());
 
-        $locale = $this->localeRepository->findOneBy([]);
-        assert($locale instanceof LocaleInterface);
-        $order->setLocaleCode($locale->getCode());
+        $defaultLocale = $channel->getDefaultLocale();
+        Assert::notNull($defaultLocale);
+        $order->setLocaleCode($defaultLocale->getCode());
 
         return $order;
     }
