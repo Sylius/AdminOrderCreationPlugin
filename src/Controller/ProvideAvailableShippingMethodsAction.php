@@ -32,11 +32,10 @@ final class ProvideAvailableShippingMethodsAction
         $order = $this->orderPreparator->prepareFromRequest($request);
         $shipment = $order->getShipments()->get((int) $request->attributes->get('shipmentNumber'));
 
-        $jsonResponse = [];
-        if ($shipment instanceof ShipmentInterface) {
-            $jsonResponse = $this->availableShippingMethodsListProvider->__invoke($shipment);
+        if ($shipment === null) {
+            return new JsonResponse([]);
         }
 
-        return new JsonResponse($jsonResponse, 200);
+        return new JsonResponse($this->availableShippingMethodsListProvider->__invoke($shipment));
     }
 }
