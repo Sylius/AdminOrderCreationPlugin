@@ -75,9 +75,13 @@
             <tag name="form.type" />
         </service>
 
+        <service id="Sylius\AdminOrderCreationPlugin\Controller\CustomerCreationAction">
+            <argument type="service" id="router"/>
+            <argument type="service" id="Sylius\AdminOrderCreationPlugin\Provider\CustomerProvider" />
+        </service>
+
         <service id="Sylius\AdminOrderCreationPlugin\Factory\OrderFactory">
             <argument type="service" id="sylius.factory.order" />
-            <argument type="service" id="sylius.factory.customer" />
             <argument type="service" id="sylius.repository.customer" />
             <argument type="service" id="sylius.repository.channel" />
             <argument type="service" id="Sylius\AdminOrderCreationPlugin\ReorderProcessing\CompositeReorderProcessor"/>
@@ -104,6 +108,11 @@
         <service id="Sylius\AdminOrderCreationPlugin\Provider\PaymentTokenProvider">
             <argument type="service" id="payum" />
             <argument type="string">sylius_shop_order_after_pay</argument>
+        </service>
+
+        <service id="Sylius\AdminOrderCreationPlugin\Provider\CustomerProvider">
+            <argument type="service" id="sylius.repository.customer"/>
+            <argument type="service" id="sylius.factory.customer"/>
         </service>
 
         <service id="Sylius\AdminOrderCreationPlugin\Preparator\NewOrderPreparator">

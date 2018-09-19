@@ -4,20 +4,18 @@ sylius_admin_order_creation_select_order_customer:
     defaults:
         _controller: Sylius\AdminOrderCreationPlugin\Controller\SelectNewOrderCustomerAction
 
-sylius_admin_order_creation_order_preview:
-    path: /admin/orders/new/{customerEmail}/{channelCode}/preview
-    methods: [POST]
+sylius_admin_order_creation_customer_create:
+    path: /admin/orders/new/customer/{customerEmail}/{channelCode}
+    methods: [GET]
+    options:
+        expose: true
     defaults:
-        _controller: Sylius\AdminOrderCreationPlugin\Controller\OrderPreviewAction
-        _sylius:
-            form:
-                type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
-            factory:
-                method: ['expr:service("Sylius\\AdminOrderCreationPlugin\\Factory\\OrderFactory")', 'createForCustomerAndChannel']
-                arguments: [$customerEmail, $channelCode]
+        _controller: Sylius\AdminOrderCreationPlugin\Controller\CustomerCreationAction
+    requirements:
+        customerId: \d+
 
 sylius_admin_order_creation_order_create:
-    path: /admin/orders/new/{customerEmail}/{channelCode}
+    path: /admin/orders/new/{customerId}/{channelCode}
     methods: [GET]
     options:
         expose: true
@@ -32,12 +30,24 @@ sylius_admin_order_creation_order_create:
                 type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
             factory:
                 method: ['expr:service("Sylius\\AdminOrderCreationPlugin\\Factory\\OrderFactory")', 'createForCustomerAndChannel']
-                arguments: [$customerEmail, $channelCode]
+                arguments: [$customerId, $channelCode]
     requirements:
-        customerEmail: .+
+        customerId: \d+
+
+sylius_admin_order_creation_order_preview:
+    path: /admin/orders/new/{customerId}/{channelCode}/preview
+    methods: [POST]
+    defaults:
+        _controller: Sylius\AdminOrderCreationPlugin\Controller\OrderPreviewAction
+        _sylius:
+            form:
+                type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
+            factory:
+                method: ['expr:service("Sylius\\AdminOrderCreationPlugin\\Factory\\OrderFactory")', 'createForCustomerAndChannel']
+                arguments: [$customerId, $channelCode]
 
 sylius_admin_order_creation_order_create_from_preview:
-    path: /admin/orders/new/{customerEmail}/{channelCode}/create-from-preview
+    path: /admin/orders/new/{customerId}/{channelCode}/create-from-preview
     methods: [POST]
     options:
         expose: true
@@ -52,15 +62,19 @@ sylius_admin_order_creation_order_create_from_preview:
                 type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
             factory:
                 method: ['expr:service("Sylius\\AdminOrderCreationPlugin\\Factory\\OrderFactory")', 'createForCustomerAndChannel']
-                arguments: [$customerEmail, $channelCode]
+                arguments: [$customerId, $channelCode]
+    requirements:
+        customerId: \d+
 
 sylius_admin_order_creation_order_create_back:
-    path: /admin/orders/edit/{customerEmail}/{channelCode}
+    path: /admin/orders/edit/{customerId}/{channelCode}
     methods: [POST]
     options:
         expose: true
     defaults:
         _controller: Sylius\AdminOrderCreationPlugin\Controller\OrderCreateAction
+    requirements:
+        customerId: \d+
 
 sylius_admin_order_creation_reorder:
     path: /admin/orders/{id}/reorder

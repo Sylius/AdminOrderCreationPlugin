@@ -14,7 +14,7 @@ final class NewOrderCustomerCreateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('customer', TextType::class, [
+            ->add('customerEmail', TextType::class, [
                 'label' => false,
             ])
             ->add('channel', ChannelChoiceType::class, [

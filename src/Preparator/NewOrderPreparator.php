@@ -35,8 +35,8 @@ final class NewOrderPreparator implements OrderPreparatorInterface
 
     public function prepareFromRequest(Request $request): OrderInterface
     {
-        Assert::true($request->attributes->has('customerEmail'));
-        $customerEmail = $request->attributes->get('customerEmail');
+        Assert::true($request->attributes->has('customerId'));
+        $customerEmail = $request->attributes->get('customerId');
 
         Assert::true($request->attributes->has('channelCode'));
         $channelCode = $request->attributes->get('channelCode');
