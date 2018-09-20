@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Sylius\AdminOrderCreationPlugin\Provider;
-
 
 use Sylius\AdminOrderCreationPlugin\Doctrine\ORM\CustomerRepository;
 use Sylius\Component\Core\Model\CustomerInterface;
@@ -20,7 +20,6 @@ final class CustomerProvider implements CustomerProviderInterface
         CustomerRepository $customerRepository,
         FactoryInterface $customerFactory
     ) {
-
         $this->customerRepository = $customerRepository;
         $this->customerFactory = $customerFactory;
     }
@@ -47,6 +46,5 @@ final class CustomerProvider implements CustomerProviderInterface
         $this->customerRepository->add($customer);
 
         return $customer;
-
     }
 }

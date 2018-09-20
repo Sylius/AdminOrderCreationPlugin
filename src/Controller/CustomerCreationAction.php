@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Sylius\AdminOrderCreationPlugin\Controller;
-
 
 use Sylius\AdminOrderCreationPlugin\Provider\CustomerProviderInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -33,7 +33,7 @@ final class CustomerCreationAction
         return new RedirectResponse(
             $this->router->generate(
                 'sylius_admin_order_creation_order_create', [
-                'customerId'  => $customer->getId(),
+                'customerId' => $customer->getId(),
                 'channelCode' => $request->attributes->get('channelCode'),
             ]
             )
