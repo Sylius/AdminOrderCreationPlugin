@@ -6,6 +6,7 @@ namespace Sylius\AdminOrderCreationPlugin\Controller;
 
 use Sylius\AdminOrderCreationPlugin\Preparator\OrderPreparatorInterface;
 use Sylius\AdminOrderCreationPlugin\Provider\AvailableShippingMethodsListProvider;
+use Sylius\Component\Core\Model\ShipmentInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,6 +31,10 @@ final class ProvideAvailableShippingMethodsAction
     {
         $order = $this->orderPreparator->prepareFromRequest($request);
         $shipment = $order->getShipments()->get((int) $request->attributes->get('shipmentNumber'));
+
+        if ($shipment === null) {
+            return new JsonResponse([]);
+        }
 
         return new JsonResponse($this->availableShippingMethodsListProvider->__invoke($shipment));
     }
