@@ -50,7 +50,7 @@ sylius_admin_order_creation_ajax_product_variant_by_codes:
                 arguments: $code
 
 sylius_admin_order_creation_ajax_provide_available_shipping_methods:
-    path: /admin/orders/available-shipping-methods/{customerEmail}/{channelCode}/{shipmentNumber}
+    path: /admin/orders/available-shipping-methods/{customerId}/{channelCode}/{shipmentNumber}
     methods: [GET]
     defaults:
         _controller: Sylius\AdminOrderCreationPlugin\Controller\ProvideAvailableShippingMethodsAction
