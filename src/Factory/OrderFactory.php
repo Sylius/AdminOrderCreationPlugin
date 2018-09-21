@@ -57,8 +57,7 @@ final class OrderFactory implements OrderFactoryInterface
         assert($customer instanceof CustomerInterface);
 
         /** @var OrderInterface $order */
-        $order = $this->baseOrderFactory->createNew();
-        Assert::isInstanceOf($order, OrderInterface::class);
+        $order = $this->createNew();
 
         /** @var ChannelInterface|null $channel */
         $channel = $this->channelRepository->findOneByCode($channelCode);
