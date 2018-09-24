@@ -41,6 +41,11 @@
         </div>
     </div>
     <div class="ui stackable grid">
+        <div class="wide column">
+            {{ form_errors(form) }}
+        </div>
+    </div>
+    <div class="ui stackable grid">
         <div class="twelve wide column">
             <div class="ui segment">
                 {% include '@SyliusAdminOrderCreationPlugin/Order/Show/_summary.html.twig' with {'form': form.items} %}
