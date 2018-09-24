@@ -13,6 +13,7 @@ use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 use Sylius\Component\Currency\Model\CurrencyInterface;
 use Sylius\Component\Locale\Model\LocaleInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
+use Webmozart\Assert\Assert;
 
 final class OrderFactory implements OrderFactoryInterface
 {
@@ -48,8 +49,9 @@ final class OrderFactory implements OrderFactoryInterface
 
     public function createNew(): OrderInterface
     {
+        /** @var OrderInterface|null $order */
         $order = $this->baseOrderFactory->createNew();
-        assert($order instanceof OrderInterface);
+        Assert::isInstanceOf($order, OrderInterface::class);
 
         return $order;
     }
@@ -58,24 +60,25 @@ final class OrderFactory implements OrderFactoryInterface
     {
         $customer = $this->getCustomerForOrder($customerEmail);
 
+        /** @var OrderInterface $order */
         $order = $this->baseOrderFactory->createNew();
-        assert($order instanceof OrderInterface);
+        Assert::isInstanceOf($order, OrderInterface::class);
 
         /** @var ChannelInterface|null $channel */
         $channel = $this->channelRepository->findOneByCode($channelCode);
-        assert($channel instanceof ChannelInterface);
+        Assert::isInstanceOf($channel, ChannelInterface::class);
 
         $order->setCustomer($customer);
         $order->setChannel($channel);
 
         /** @var CurrencyInterface|null $currency */
         $currency = $channel->getBaseCurrency();
-        assert($currency instanceof CurrencyInterface);
+        Assert::isInstanceOf($currency, CurrencyInterface::class);
         $order->setCurrencyCode($currency->getCode());
 
         /** @var LocaleInterface|null $defaultLocale */
         $defaultLocale = $channel->getDefaultLocale();
-        assert($defaultLocale instanceof LocaleInterface);
+        Assert::isInstanceOf($defaultLocale, LocaleInterface::class);
         $order->setLocaleCode($defaultLocale->getCode());
 
         return $order;
@@ -84,7 +87,7 @@ final class OrderFactory implements OrderFactoryInterface
     public function createFromExistingOrder(OrderInterface $order): OrderInterface
     {
         $reorder = $this->createNew();
-        assert($reorder instanceof OrderInterface);
+        Assert::isInstanceOf($reorder, OrderInterface::class);
 
         $this->reorderProcessor->process($order, $reorder);
 
@@ -97,12 +100,12 @@ final class OrderFactory implements OrderFactoryInterface
 
         if (null === $customer) {
             $customer = $this->customerFactory->createNew();
-            assert($customer instanceof CustomerInterface);
+            Assert::isInstanceOf($customer, CustomerInterface::class);
 
             $customer->setEmail($email);
         }
 
-        assert($customer instanceof CustomerInterface);
+        Assert::isInstanceOf($customer, CustomerInterface::class);
 
         return $customer;
     }
