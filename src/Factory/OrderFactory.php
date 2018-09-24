@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sylius\AdminOrderCreationPlugin\Factory;
 
+use InvalidArgumentException;
 use Sylius\AdminOrderCreationPlugin\ReorderProcessing\ReorderProcessor;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
@@ -53,8 +54,9 @@ final class OrderFactory implements OrderFactoryInterface
 
     public function createForCustomerAndChannel(string $customerId, string $channelCode): OrderInterface
     {
+        /** @var CustomerInterface|null $customer */
         $customer = $this->customerRepository->find($customerId);
-        assert($customer instanceof CustomerInterface);
+        Assert::isInstanceOf($customer, CustomerInterface::class);
 
         /** @var OrderInterface $order */
         $order = $this->createNew();

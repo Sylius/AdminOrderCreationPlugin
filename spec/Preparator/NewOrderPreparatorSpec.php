@@ -40,7 +40,7 @@ final class NewOrderPreparatorSpec extends ObjectBehavior
         FormInterface $form
     ): void {
         $request->attributes = new ParameterBag([
-            'customerEmail' => 'jon.snow@thewall.com',
+            'customerId' => 'jon.snow@thewall.com',
             'channelCode' => 'WEB-US'
         ]);
 
