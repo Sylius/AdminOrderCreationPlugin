@@ -17,3 +17,4 @@ sylius_admin_order_creation:
         order_preview: 'Order preview'
         reorder: 'Reorder'
         shipping_methods_selection_requirement: 'You need to add some items and shipping address to select from eligible shipping method'
+        no_customer_selected: "You don't have a customer selected"
