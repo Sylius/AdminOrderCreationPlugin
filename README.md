@@ -19,16 +19,16 @@ The whole process of placing an order is not that obvious, however. For some rea
 confused when a promotion is no longer available or shipping method is not eligible for given area. Here comes
 Admin Order Creation Plugin.
 
-Briefly speaking, it allows an Administrator to place or reorder an order for a Customer. It helps them solve
-even more of Customer's fundamental problems and equips an Administrator with basic tools making creating an 
+Briefly speaking, it allows an Administrator to place or reorder an order in the name of a Customer. It helps them solve
+even more of Customers' fundamental problems and equips an Administrator with basic tools making creating an 
 order possible.
 
 Admin Order Creation Plugin processes are strongly based on standard Order model taken from SyliusCoreBundle.
-The only thing that differs are order creation context and business requirements. Right now it is up to the Administrator
+The only things that differ are order creation context and business requirements. Right now it is up to the Administrator
 to provide a channel, locale and currency in which an Order is created. What's more, the Administrator is able to add
 a discount for any item or the whole Order, which is, technically speaking, a new type of Sylius Adjustments.
 
-After Admin Order creation it is listed on Order index view just like any other orders placed via Sylius.
+After creating an Order via Admin panel, this new Order is listed like any other order placed via Sylius.
 
 ## Installation
 
@@ -82,15 +82,15 @@ After Admin Order creation it is listed on Order index view just like any other 
 ## Extension points
 
 Admin Order Creation Plugin makes it possible to add custom discount during order creation - thus some of Order
-Show templates need to be replaced with those placed in Resources/views package.
+Show templates need to be replaced with those placed in `Resources/views` package.
 
-Payment link generation and sending process is based on logic placed in PaymentLinkCreationListener class. Thus, it can
+Payment link generation and sending process is based on logic placed in the PaymentLinkCreationListener class. Thus, it can
 be easily replaced with suitable implementation.
 
-Adjustments set is not closed and strictly defined - adding custom adjustment means defining a new constant in
+Adjustments set is not closed and strictly defined - adding custom adjustment means defining a new constant in the
 AdjustmentType class.
 
-Significant part of Reorder Processing is inspired by official Sylius' 
+Significant part of Reorder Processing is inspired by official Sylius 
 [Customer Reorder Plugin](https://github.com/Sylius/CustomerReorderPlugin/). In case of the need for more processors,
 just add new class implementing `ReorderProcessor` interface, declare it in `reorder_processing.xml` file and match
 it with a proper tag.
