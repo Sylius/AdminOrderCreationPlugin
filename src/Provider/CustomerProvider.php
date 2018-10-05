@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace Sylius\AdminOrderCreationPlugin\Provider;
 
-use Sylius\AdminOrderCreationPlugin\Doctrine\ORM\CustomerRepository;
 use Sylius\Component\Core\Model\CustomerInterface;
+use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 
 final class CustomerProvider implements CustomerProviderInterface
 {
-    /** @var CustomerRepository */
+    /** @var CustomerRepositoryInterface */
     private $customerRepository;
 
     /** @var FactoryInterface */
     private $customerFactory;
 
     public function __construct(
-        CustomerRepository $customerRepository,
+        CustomerRepositoryInterface $customerRepository,
         FactoryInterface $customerFactory
     ) {
         $this->customerRepository = $customerRepository;

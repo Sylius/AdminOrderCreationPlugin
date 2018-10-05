@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace spec\Sylius\AdminOrderCreationPlugin\Factory;
 
-use InvalidArgumentException;
 use Mockery\Matcher\AnyArgs;
 use PhpSpec\ObjectBehavior;
 use Sylius\AdminOrderCreationPlugin\Factory\OrderFactoryInterface;
@@ -72,7 +71,9 @@ final class OrderFactorySpec extends ObjectBehavior
         $order->setCurrencyCode('USD')->shouldBeCalled();
         $order->setLocaleCode('en_US')->shouldBeCalled();
 
-        $this->createForCustomerAndChannel('1', 'WEB-US')->shouldReturn($order);
+        $this
+            ->createForCustomerAndChannel('1', 'WEB-US')
+            ->shouldReturn($order);
     }
 
     function it_throws_an_exception_if_the_customer_does_not_exist(
@@ -83,7 +84,8 @@ final class OrderFactorySpec extends ObjectBehavior
 
         $baseOrderFactory->createNew()->shouldNotBeCalled();
 
-        $this->shouldThrow(InvalidArgumentException::class)
+        $this
+            ->shouldThrow(\InvalidArgumentException::class)
             ->during('createForCustomerAndChannel', ['1', 'WEB-US']);
     }
 
@@ -102,12 +104,12 @@ final class OrderFactorySpec extends ObjectBehavior
 
         $channel->getBaseCurrency()->willReturn(null);
 
-
         $order->setCustomer($customer)->shouldBeCalled();
         $order->setChannel($channel)->shouldBeCalled();
         $order->setCurrencyCode(AnyArgs::class)->shouldNotBeCalled();
 
-        $this->shouldThrow(InvalidArgumentException::class)
+        $this
+            ->shouldThrow(\InvalidArgumentException::class)
             ->during('createForCustomerAndChannel', ['1', 'WEB-US']);
     }
 
@@ -135,7 +137,8 @@ final class OrderFactorySpec extends ObjectBehavior
         $order->setCurrencyCode('USD')->shouldBeCalled();
         $order->setLocaleCode(AnyArgs::class)->shouldNotBeCalled();
 
-        $this->shouldThrow(InvalidArgumentException::class)
+        $this
+            ->shouldThrow(\InvalidArgumentException::class)
             ->during('createForCustomerAndChannel', ['1', 'WEB-US']);
     }
 

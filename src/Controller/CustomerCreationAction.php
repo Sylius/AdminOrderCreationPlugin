@@ -32,10 +32,11 @@ final class CustomerCreationAction
 
         return new RedirectResponse(
             $this->router->generate(
-                'sylius_admin_order_creation_order_create', [
-                'customerId' => $customer->getId(),
-                'channelCode' => $request->attributes->get('channelCode'),
-            ]
+                'sylius_admin_order_creation_order_create',
+                [
+                    'customerId' => $customer->getId(),
+                    'channelCode' => $request->attributes->get('channelCode'),
+                ]
             )
         );
     }

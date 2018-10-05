@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Sylius\AdminOrderCreationPlugin\Factory;
 
-use InvalidArgumentException;
 use Sylius\AdminOrderCreationPlugin\ReorderProcessing\ReorderProcessor;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
