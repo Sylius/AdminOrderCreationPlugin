@@ -38,46 +38,25 @@ After creating an Order via Admin panel, this new Order is listed like any other
     composer require sylius/admin-order-creation-plugin
     ```
 
-2. Import configuration:
-
-    ```yaml
-    imports:
-        - { resource: "@SyliusAdminOrderCreationPlugin/Resources/config/app/config.yml" }
-    ```
-
-3. Import routing:
-
-    ```yaml
-    sylius_admin_order_creation:
-        resource: "@SyliusAdminOrderCreationPlugin/Resources/config/app/routing.yml"
-    ```
-
-4. Add plugin class to your `AppKernel`:
-
-    ```php
-    $bundles = [
-        new \FOS\JsRoutingBundle\FOSJsRoutingBundle(), //used by plugin
-        new \Sylius\AdminOrderCreationPlugin\SyliusAdminOrderCreationPlugin(),
-    ];
-    ```
-
-5. Copy templates from `vendor/sylius/admin-order-creation-plugin/src/Resources/views/SyliusAdminBundle/` 
-   to `app/Resources/SyliusAdminBundle/views/`.
-
-6. Copy migrations from `vendor/sylius/admin-order-creation-plugin/migrations/` 
-   to your migrations directory and run `bin/console doctrine:migrations:migrate`.
-
-7. Install `FOSJsRoutingBundle` assets:
+2. Copy Sylius templates overridden in plugin to your templates directory (e.g `templates/bundles/`):
 
     ```bash
-    bin/console assets:install --symlink web
+    mkdir -p templates/bundles/SyliusAdminBundle/
+    cp -R vendor/sylius/admin-order-creation-plugin/src/Resources/views/SyliusAdminBundle/* templates/bundles/SyliusAdminBundle/
     ```
 
-8. Clear cache:
+3. Copy plugin migrations to your migrations directory (e.g. `src/Migrations`) and apply them to your database:
 
     ```bash
-    bin/console cache:clear
+    cp -R vendor/sylius/admin-order-creation-plugin/migrations/* src/Migrations
+    bin/console doctrine:migrations:migrate
     ```
+
+#### Beware!
+
+This installation instruction assumes that you're using Symfony Flex. If you don't, take a look at the
+[legacy installation instruction](docs/legacy_installation.md). However, we strongly encourage you to use
+Symfony Flex, it's much quicker! :)
 
 ## Extension points
 
