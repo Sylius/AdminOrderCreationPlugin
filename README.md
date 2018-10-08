@@ -32,11 +32,19 @@ After creating an Order via Admin panel, this new Order is listed like any other
 
 ## Installation
 
+#### Beware!
+
+> This installation instruction assumes that you're using Symfony Flex. If you don't, take a look at the
+[legacy installation instruction](docs/legacy_installation.md). However, we strongly encourage you to use
+Symfony Flex, it's much quicker! :)
+
 1. Require plugin with composer:
 
     ```bash
     composer require sylius/admin-order-creation-plugin
     ```
+    
+    > Remember to allow community recipes with `composer config extra.symfony.allow-contrib true` or during plugin installation process
 
 2. Copy Sylius templates overridden in plugin to your templates directory (e.g `templates/bundles/`):
 
@@ -51,12 +59,6 @@ After creating an Order via Admin panel, this new Order is listed like any other
     cp -R vendor/sylius/admin-order-creation-plugin/migrations/* src/Migrations
     bin/console doctrine:migrations:migrate
     ```
-
-#### Beware!
-
-This installation instruction assumes that you're using Symfony Flex. If you don't, take a look at the
-[legacy installation instruction](docs/legacy_installation.md). However, we strongly encourage you to use
-Symfony Flex, it's much quicker! :)
 
 ## Extension points
 

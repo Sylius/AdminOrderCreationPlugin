@@ -6,14 +6,14 @@
     composer require sylius/admin-order-creation-plugin
     ```
 
-2. Import configuration:
+2. Import configuration to `app/config/config.yml`:
 
     ```yaml
     imports:
         - { resource: "@SyliusAdminOrderCreationPlugin/Resources/config/app/config.yml" }
     ```
 
-3. Import routing:
+3. Import routing to `app/config/routing.yml`:
 
     ```yaml
     sylius_admin_order_creation:
@@ -29,11 +29,11 @@
     ];
     ```
 
-5. Copy Sylius templates overridden in plugin to your templates directory (e.g `templates/bundles/`):
+5. Copy Sylius templates overridden in plugin to your templates directory (e.g `app/Resources/SyliusAdminBundle/views/`):
 
     ```bash
-    mkdir -p templates/bundles/SyliusAdminBundle/
-    cp -R vendor/sylius/admin-order-creation-plugin/src/Resources/views/SyliusAdminBundle/* templates/bundles/SyliusAdminBundle/
+    mkdir -p app/Resources/SyliusAdminBundle/views/
+    cp -R vendor/sylius/admin-order-creation-plugin/src/Resources/views/SyliusAdminBundle/* app/Resources/SyliusAdminBundle/views/
     ```
 
 6. Copy plugin migrations to your migrations directory (e.g. `src/Migrations`) and apply them to your database:
