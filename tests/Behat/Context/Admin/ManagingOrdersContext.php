@@ -538,7 +538,7 @@ final class ManagingOrdersContext implements Context
      */
     public function shouldBeNotifiedThatUserDoesNotExist(): void
     {
-        Assert::true($this->newOrderCustomerPage->hasCustomerEmailValidationMessage('You don\'t have a customer selected'));
+        Assert::true($this->newOrderCustomerPage->hasCustomerEmailValidationMessage('You haven\'t selected a customer'));
     }
 
     /**
