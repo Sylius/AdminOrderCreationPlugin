@@ -13,7 +13,7 @@ sylius_admin_order_creation:
         customer_email: 'Customer email cannot be empty'
         item_discount: 'Item discount'
         new_customer_email: 'New customer email'
-        no_customer_selected: "You don't have a customer selected"
+        no_customer_selected: "You haven't selected a customer"
         order_discount: 'Order discount'
         order_preview: 'Order preview'
         reorder: 'Reorder'

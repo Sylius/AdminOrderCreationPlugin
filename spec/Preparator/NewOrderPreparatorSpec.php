@@ -40,11 +40,11 @@ final class NewOrderPreparatorSpec extends ObjectBehavior
         FormInterface $form
     ): void {
         $request->attributes = new ParameterBag([
-            'customerId' => 'jon.snow@thewall.com',
+            'customerId' => '1',
             'channelCode' => 'WEB-US'
         ]);
 
-        $orderFactory->createForCustomerAndChannel('jon.snow@thewall.com', 'WEB-US')->willReturn($order);
+        $orderFactory->createForCustomerAndChannel('1', 'WEB-US')->willReturn($order);
         $formFactory->create(NewOrderType::class, $order)->willReturn($form);
 
         $form->handleRequest($request)->willReturn($form);

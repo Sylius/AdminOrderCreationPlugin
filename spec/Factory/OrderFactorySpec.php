@@ -86,7 +86,8 @@ final class OrderFactorySpec extends ObjectBehavior
 
         $this
             ->shouldThrow(\InvalidArgumentException::class)
-            ->during('createForCustomerAndChannel', ['1', 'WEB-US']);
+            ->during('createForCustomerAndChannel', ['1', 'WEB-US'])
+        ;
     }
 
     function it_throws_an_exception_if_there_is_no_default_currency(

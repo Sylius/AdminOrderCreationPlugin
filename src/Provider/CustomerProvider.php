@@ -7,6 +7,7 @@ namespace Sylius\AdminOrderCreationPlugin\Provider;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
+use Webmozart\Assert\Assert;
 
 final class CustomerProvider implements CustomerProviderInterface
 {
@@ -27,8 +28,9 @@ final class CustomerProvider implements CustomerProviderInterface
     /** {@inheritdoc}  */
     public function provideExistingCustomer(string $id): CustomerInterface
     {
+        /** @var CustomerInterface|null $customer */
         $customer = $this->customerRepository->find($id);
-        assert($customer instanceof CustomerInterface);
+        Assert::notNull($customer);
 
         return $customer;
     }
@@ -36,12 +38,10 @@ final class CustomerProvider implements CustomerProviderInterface
     /** {@inheritdoc}  */
     public function provideNewCustomer(string $email): CustomerInterface
     {
+        /** @var CustomerInterface $customer */
         $customer = $this->customerFactory->createNew();
-        assert($customer instanceof CustomerInterface);
 
         $customer->setEmail($email);
-
-        assert($customer instanceof CustomerInterface);
 
         $this->customerRepository->add($customer);
 
