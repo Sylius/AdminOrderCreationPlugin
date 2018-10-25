@@ -78,3 +78,8 @@ it with a proper tag.
 
 Admin Order Creation process is based on Symfony Forms. To find out more about Symfony Forms extension possibilities, check out
 [Symfony Docs](https://symfony.com/doc/current/form/create_form_type_extension.html).   
+
+## Security issues
+
+If you think that you have found a security issue, please do not use the issue tracker and do not post it publicly. 
+Instead, all security issues must be sent to `security@sylius.com`.
