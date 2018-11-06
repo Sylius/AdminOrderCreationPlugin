@@ -81,7 +81,7 @@ final class OrderFactorySpec extends ObjectBehavior
         FactoryInterface $baseOrderFactory,
         CustomerRepositoryInterface $customerRepository
     ): void {
-        $customerRepository->find('1')->shouldBeCalled()->willReturn(null);
+        $customerRepository->find('1')->willReturn(null);
 
         $baseOrderFactory->createNew()->shouldNotBeCalled();
 
@@ -138,7 +138,7 @@ final class OrderFactorySpec extends ObjectBehavior
         $order->setCustomer($customer)->shouldBeCalled();
         $order->setChannel($channel)->shouldBeCalled();
         $order->setCurrencyCode('USD')->shouldBeCalled();
-        $order->setLocaleCode(AnyArgs::class)->shouldNotBeCalled();
+        $order->setLocaleCode(Argument::any())->shouldNotBeCalled();
 
         $this
             ->shouldThrow(\InvalidArgumentException::class)

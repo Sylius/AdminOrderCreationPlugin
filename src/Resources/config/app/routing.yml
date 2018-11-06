@@ -11,8 +11,6 @@ sylius_admin_order_creation_customer_create:
         expose: true
     defaults:
         _controller: Sylius\AdminOrderCreationPlugin\Controller\CustomerCreationAction
-    requirements:
-        customerId: \d+
 
 sylius_admin_order_creation_order_create:
     path: /admin/orders/new/{customerId}/{channelCode}
@@ -63,8 +61,6 @@ sylius_admin_order_creation_order_create_from_preview:
             factory:
                 method: ['expr:service("Sylius\\AdminOrderCreationPlugin\\Factory\\OrderFactory")', 'createForCustomerAndChannel']
                 arguments: [$customerId, $channelCode]
-    requirements:
-        customerId: \d+
 
 sylius_admin_order_creation_order_create_back:
     path: /admin/orders/edit/{customerId}/{channelCode}
