@@ -6,6 +6,7 @@ namespace spec\Sylius\AdminOrderCreationPlugin\Factory;
 
 use Mockery\Matcher\AnyArgs;
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 use Sylius\AdminOrderCreationPlugin\Factory\OrderFactoryInterface;
 use Sylius\AdminOrderCreationPlugin\ReorderProcessing\ReorderProcessor;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
