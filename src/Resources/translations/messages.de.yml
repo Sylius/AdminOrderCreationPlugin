@@ -1,0 +1,19 @@
+sylius_admin_order_creation:
+    email:
+        order_created:
+            subject: "Es wurde eine neue Bestellung für Sie erstellt"
+            body: "Ein Admin hat eine neue Bestellung für Sie erstellt. Sie finden sie unter "Bestellungen". Um zu bezahlen, klicken Sie auf {{ link }}."
+    form:
+        order:
+            order_price: 'Gesamtpreis'
+    ui:
+        add_discount: 'Rabatt hinzufügen'
+        confirm: 'Bestätigen'
+        create_new: 'Neue Bestellung'
+        customer_email: 'Die E-Mail Adresse des Kunden darf nicht leer sein'
+        item_discount: 'Rabatt per Position'
+        new_customer_email: 'Neue Kunden E-Mail'
+        order_discount: 'Bestellrabatt'
+        order_preview: 'Bestellvorschau'
+        reorder: 'Nachbestellen'
+        shipping_methods_selection_requirement: 'Bevor Sie die Versandart auswählen können, fügen Sie bitte Positionen zu der Bestellung hinzu und geben eine Versandadresse aus.'
