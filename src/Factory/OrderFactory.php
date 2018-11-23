@@ -20,9 +20,6 @@ final class OrderFactory implements OrderFactoryInterface
     /** @var FactoryInterface */
     private $baseOrderFactory;
 
-    /** @var FactoryInterface */
-    private $customerFactory;
-
     /** @var CustomerRepositoryInterface */
     private $customerRepository;
 
@@ -34,13 +31,11 @@ final class OrderFactory implements OrderFactoryInterface
 
     public function __construct(
         FactoryInterface $baseOrderFactory,
-        FactoryInterface $customerFactory,
         CustomerRepositoryInterface $customerRepository,
         ChannelRepositoryInterface $channelRepository,
         ReorderProcessor $reorderProcessor
     ) {
         $this->baseOrderFactory = $baseOrderFactory;
-        $this->customerFactory = $customerFactory;
         $this->customerRepository = $customerRepository;
         $this->channelRepository = $channelRepository;
 
@@ -56,13 +51,14 @@ final class OrderFactory implements OrderFactoryInterface
         return $order;
     }
 
-    public function createForCustomerAndChannel(string $customerEmail, string $channelCode): OrderInterface
+    public function createForCustomerAndChannel(string $customerId, string $channelCode): OrderInterface
     {
-        $customer = $this->getCustomerForOrder($customerEmail);
+        /** @var CustomerInterface|null $customer */
+        $customer = $this->customerRepository->find($customerId);
+        Assert::isInstanceOf($customer, CustomerInterface::class);
 
         /** @var OrderInterface $order */
-        $order = $this->baseOrderFactory->createNew();
-        Assert::isInstanceOf($order, OrderInterface::class);
+        $order = $this->createNew();
 
         /** @var ChannelInterface|null $channel */
         $channel = $this->channelRepository->findOneByCode($channelCode);
@@ -92,21 +88,5 @@ final class OrderFactory implements OrderFactoryInterface
         $this->reorderProcessor->process($order, $reorder);
 
         return $reorder;
-    }
-
-    private function getCustomerForOrder(string $email): CustomerInterface
-    {
-        $customer = $this->customerRepository->findOneBy(['email' => $email]);
-
-        if (null === $customer) {
-            $customer = $this->customerFactory->createNew();
-            Assert::isInstanceOf($customer, CustomerInterface::class);
-
-            $customer->setEmail($email);
-        }
-
-        Assert::isInstanceOf($customer, CustomerInterface::class);
-
-        return $customer;
     }
 }

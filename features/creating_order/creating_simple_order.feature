@@ -35,7 +35,7 @@ Feature: Creating simple order
 
     Scenario: Trying to create an order for an existing customer without selecting them
         When I try to create a new order for an existing customer without selecting them
-        Then I should be notified that customer email cannot be empty
+        Then I should be notified that customer was not selected
 
     Scenario: Trying to create an order for a new customer without email
         When I try to create a new order for a new customer without email

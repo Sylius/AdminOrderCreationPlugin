@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin;
 
-use Sylius\Behat\Page\SymfonyPage;
+use FriendsOfBehat\PageObjectExtension\Page\SymfonyPage;
 
 final class ReorderPage extends SymfonyPage implements ReorderPageInterface
 {

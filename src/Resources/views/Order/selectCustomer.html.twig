@@ -8,19 +8,20 @@
         {{ form_start(selectCustomerForm, {'method': 'GET'})}}
         {{ form_row(selectCustomerForm.customer) }} <br /><br />
         {{ form_row(selectCustomerForm.channel, {'attr': {'class': 'ui fluid selection dropdown'}}) }} <br /><br />
-        <button class="ui blue submit button">{{ 'sylius.ui.next'|trans }}</button>
+        <button class="ui blue submit button" id="order_select_customer_submit">{{ 'sylius.ui.next'|trans }}</button>
         {{ form_end(selectCustomerForm) }}
     </div>
     <div class="ui horizontal divider">
             {{ 'sylius.ui.or'|trans }}
     </div>
+
     <div class="ui center aligned basic segment">
         {{ form_start(createCustomerForm, {'method': 'GET'})}}
         <div class="ui input fluid ">
-            {{ form_widget(createCustomerForm.customer, {'attr': {'placeholder': 'sylius_admin_order_creation.ui.new_customer_email'|trans}}) }}
+            {{ form_widget(createCustomerForm.customerEmail, {'attr': {'placeholder': 'sylius_admin_order_creation.ui.new_customer_email'|trans}}) }}
         </div> <br /><br />
         {{ form_row(createCustomerForm.channel, {'attr': {'class': 'ui fluid selection dropdown'}}) }} <br /><br />
-        <button class="ui green right labeled icon button">
+        <button class="ui green right labeled icon button" id="order_create_new_customer_submit">
             <i class="plus icon"></i> {{ 'sylius_admin_order_creation.ui.create_new'|trans }}
         </button> <br /><br />
         {{ form_end(createCustomerForm) }}
@@ -35,23 +36,50 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('form button').on('click', function(e) {
-                function addErrorMessage(element, message){
-                    element.after(`<div class="ui red pointing label sylius-validation-error">${message}</div>`);
-                }
+            function addErrorMessage(element, message){
+                element.after(`<div class="ui red pointing label sylius-validation-error">${message}</div>`);
+            }
 
+            $('#order_select_customer_submit').on('click', function(e) {
                 e.preventDefault();
 
                 let form = $(this).parents('form');
-                let emailInputField = form.find('[name*="[customer]"]');
-                let customerEmail = emailInputField.val();
+                let $customer = form.find('[name*="[customer]"]');
+                let customerId = $customer.val();
+                let channelCode = form.find('select[name*="[channel]"]').val();
 
-                if (customerEmail) {
+                if (customerId.length) {
                     form.attr('action', Routing.generate(
                         'sylius_admin_order_creation_order_create',
                         {
+                            'customerId': customerId,
+                            'channelCode': channelCode
+                        },
+                        true
+                    ));
+
+                    form.submit();
+
+                } else {
+                    addErrorMessage($customer.parent(), "{{ 'sylius_admin_order_creation.ui.no_customer_selected'|trans }}");
+                }
+            });
+
+            $('#order_create_new_customer_submit').on('click', function(e) {
+                e.preventDefault();
+
+                let form = $(this).parents('form');
+
+                let $customerEmailInput = form.find('[name*="[customerEmail]"]');
+                let customerEmail = $customerEmailInput.val();
+                let channelCode = form.find('[name*="[channel]"]').val();
+
+                if (customerEmail) {
+                    form.attr('action', Routing.generate(
+                        'sylius_admin_order_creation_customer_create',
+                        {
                             'customerEmail': customerEmail,
-                            'channelCode': form.find('[name*="[channel]"]').val()
+                            'channelCode': channelCode
                         },
                         true
                     ));
@@ -62,7 +90,7 @@
                 }
 
                 if (form.find('.sylius-validation-error').length === 0) {
-                    addErrorMessage(emailInputField.parent(), "{{ 'sylius_admin_order_creation.ui.customer_email'|trans }}");
+                    addErrorMessage($customerEmailInput.parent(), "{{ 'sylius_admin_order_creation.ui.customer_email'|trans }}");
                 }
             });
         });

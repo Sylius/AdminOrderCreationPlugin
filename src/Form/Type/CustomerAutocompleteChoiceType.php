@@ -17,7 +17,7 @@ final class CustomerAutocompleteChoiceType extends AbstractType
         $resolver->setDefaults([
             'resource' => 'sylius.customer',
             'choice_name' => 'email',
-            'choice_value' => 'email',
+            'choice_value' => 'id',
             'label' => false,
         ]);
     }

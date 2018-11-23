@@ -2,7 +2,7 @@ sylius_admin_order_creation:
     email:
         order_created:
             subject: "Es wurde eine neue Bestellung für Sie erstellt"
-            body: "Ein Admin hat eine neue Bestellung für Sie erstellt. Sie finden sie unter "Bestellungen". Um zu bezahlen, klicken Sie auf {{ link }}."
+            body: "Ein Admin hat eine neue Bestellung für Sie erstellt. Sie finden sie unter \"Bestellungen\". Um zu bezahlen, klicken Sie auf {{ link }}."
     form:
         order:
             order_price: 'Gesamtpreis'

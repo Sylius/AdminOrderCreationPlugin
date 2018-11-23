@@ -6,7 +6,7 @@ namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin;
 
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\NodeElement;
-use Sylius\Behat\Page\SymfonyPage;
+use FriendsOfBehat\PageObjectExtension\Page\SymfonyPage;
 
 final class OrderPreviewPage extends SymfonyPage implements OrderPreviewPageInterface
 {

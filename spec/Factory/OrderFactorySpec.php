@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace spec\Sylius\AdminOrderCreationPlugin\Factory;
 
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 use Sylius\AdminOrderCreationPlugin\Factory\OrderFactoryInterface;
 use Sylius\AdminOrderCreationPlugin\ReorderProcessing\ReorderProcessor;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
@@ -20,14 +21,12 @@ final class OrderFactorySpec extends ObjectBehavior
 {
     function let(
         FactoryInterface $baseOrderFactory,
-        FactoryInterface $customerFactory,
         CustomerRepositoryInterface $customerRepository,
         ChannelRepositoryInterface $channelRepository,
         ReorderProcessor $reorderProcessor
     ) {
         $this->beConstructedWith(
             $baseOrderFactory,
-            $customerFactory,
             $customerRepository,
             $channelRepository,
             $reorderProcessor
@@ -57,7 +56,8 @@ final class OrderFactorySpec extends ObjectBehavior
         LocaleInterface $locale
     ): void {
         $baseOrderFactory->createNew()->willReturn($order);
-        $customerRepository->findOneBy(['email' => 'customer@example.com'])->willReturn($customer);
+
+        $customerRepository->find('1')->willReturn($customer);
         $channelRepository->findOneByCode('WEB-US')->willReturn($channel);
 
         $channel->getBaseCurrency()->willReturn($currency);
@@ -71,40 +71,79 @@ final class OrderFactorySpec extends ObjectBehavior
         $order->setCurrencyCode('USD')->shouldBeCalled();
         $order->setLocaleCode('en_US')->shouldBeCalled();
 
-        $this->createForCustomerAndChannel('customer@example.com', 'WEB-US')->shouldReturn($order);
+        $this
+            ->createForCustomerAndChannel('1', 'WEB-US')
+            ->shouldReturn($order)
+        ;
     }
 
-    function it_creates_order_for_new_customer_with_default_channel_locale_and_currency(
+    function it_throws_an_exception_if_the_customer_does_not_exist(
         FactoryInterface $baseOrderFactory,
-        FactoryInterface $customerFactory,
+        CustomerRepositoryInterface $customerRepository
+    ): void {
+        $customerRepository->find('1')->willReturn(null);
+
+        $baseOrderFactory->createNew()->shouldNotBeCalled();
+
+        $this
+            ->shouldThrow(\InvalidArgumentException::class)
+            ->during('createForCustomerAndChannel', ['1', 'WEB-US'])
+        ;
+    }
+
+    function it_throws_an_exception_if_there_is_no_default_currency(
+        FactoryInterface $baseOrderFactory,
+        CustomerRepositoryInterface $customerRepository,
+        ChannelRepositoryInterface $channelRepository,
+        OrderInterface $order,
+        CustomerInterface $customer,
+        ChannelInterface $channel
+    ): void {
+        $baseOrderFactory->createNew()->willReturn($order);
+
+        $customerRepository->find('1')->willReturn($customer);
+        $channelRepository->findOneByCode('WEB-US')->willReturn($channel);
+
+        $channel->getBaseCurrency()->willReturn(null);
+
+        $order->setCustomer($customer)->shouldBeCalled();
+        $order->setChannel($channel)->shouldBeCalled();
+        $order->setCurrencyCode(Argument::any())->shouldNotBeCalled();
+
+        $this
+            ->shouldThrow(\InvalidArgumentException::class)
+            ->during('createForCustomerAndChannel', ['1', 'WEB-US'])
+        ;
+    }
+
+    function it_throws_an_exception_if_there_is_no_default_locale(
+        FactoryInterface $baseOrderFactory,
         CustomerRepositoryInterface $customerRepository,
         ChannelRepositoryInterface $channelRepository,
         OrderInterface $order,
         CustomerInterface $customer,
         ChannelInterface $channel,
-        CurrencyInterface $currency,
-        LocaleInterface $locale
+        CurrencyInterface $currency
     ): void {
         $baseOrderFactory->createNew()->willReturn($order);
-        $customerRepository->findOneBy(['email' => 'customer@example.com'])->willReturn(null);
 
-        $customerFactory->createNew()->willReturn($customer);
-        $customer->setEmail('customer@example.com')->shouldBeCalled();
-
+        $customerRepository->find('1')->willReturn($customer);
         $channelRepository->findOneByCode('WEB-US')->willReturn($channel);
 
         $channel->getBaseCurrency()->willReturn($currency);
         $currency->getCode()->willReturn('USD');
 
-        $channel->getDefaultLocale()->willReturn($locale);
-        $locale->getCode()->willReturn('en_US');
+        $channel->getDefaultLocale()->willReturn(null);
 
         $order->setCustomer($customer)->shouldBeCalled();
         $order->setChannel($channel)->shouldBeCalled();
         $order->setCurrencyCode('USD')->shouldBeCalled();
-        $order->setLocaleCode('en_US')->shouldBeCalled();
+        $order->setLocaleCode(Argument::any())->shouldNotBeCalled();
 
-        $this->createForCustomerAndChannel('customer@example.com', 'WEB-US')->shouldReturn($order);
+        $this
+            ->shouldThrow(\InvalidArgumentException::class)
+            ->during('createForCustomerAndChannel', ['1', 'WEB-US'])
+        ;
     }
 
     function it_creates_reorder_from_an_existing_order(

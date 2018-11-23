@@ -6,7 +6,6 @@ namespace Sylius\AdminOrderCreationPlugin\Controller;
 
 use Sylius\AdminOrderCreationPlugin\Preparator\OrderPreparatorInterface;
 use Sylius\AdminOrderCreationPlugin\Provider\AvailableShippingMethodsListProvider;
-use Sylius\Component\Core\Model\ShipmentInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
