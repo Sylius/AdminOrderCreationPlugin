@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace spec\Sylius\AdminOrderCreationPlugin\Factory;
 
-use Mockery\Matcher\AnyArgs;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Sylius\AdminOrderCreationPlugin\Factory\OrderFactoryInterface;
@@ -109,7 +108,7 @@ final class OrderFactorySpec extends ObjectBehavior
 
         $order->setCustomer($customer)->shouldBeCalled();
         $order->setChannel($channel)->shouldBeCalled();
-        $order->setCurrencyCode(AnyArgs::class)->shouldNotBeCalled();
+        $order->setCurrencyCode(Argument::any())->shouldNotBeCalled();
 
         $this
             ->shouldThrow(\InvalidArgumentException::class)
