@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin;
 
-use Behat\Mink\Exception\ElementNotFoundException;
 use Behat\Mink\Session;
 use Sylius\Behat\Page\Admin\Order\IndexPage;
 use Sylius\Behat\Service\Accessor\TableAccessorInterface;

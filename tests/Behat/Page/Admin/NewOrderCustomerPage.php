@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin;
 
 use Behat\Mink\Session;
-use Sylius\Behat\Page\SymfonyPage;
+use FriendsOfBehat\PageObjectExtension\Page\SymfonyPage;
 use Symfony\Component\Routing\RouterInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector;
 
