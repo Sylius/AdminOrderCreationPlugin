@@ -3,6 +3,16 @@
 {% form_theme selectCustomerForm '@SyliusAdminOrderCreationPlugin/Order/selectCustomerTheme.html.twig' %}
 {% form_theme createCustomerForm '@SyliusAdmin/Form/theme.html.twig' %}
 
+{% block pre_content %}
+    <h2 class="ui header">
+        <i class="circular cart plus icon"></i>
+        <div class="content">
+            {{ 'sylius.ui.new_order'|trans }}
+            <div class="sub header">{{ 'sylius_admin_order_creation.ui.customer_selection'|trans }}</div>
+        </div>
+    </h2>
+{% endblock %}
+
 {% block content %}
     <div class="ui center aligned basic segment">
         {{ form_start(selectCustomerForm, {'method': 'GET'})}}
