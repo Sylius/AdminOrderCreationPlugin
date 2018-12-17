@@ -1,0 +1,21 @@
+sylius_admin_order_creation:
+    email:
+        order_created:
+            subject: Une nouvelle commande a été créée pour vous.
+            body: Une nouvelle commande a été créée pour vous dans l'Administration. Vérifiez votre historique de commande. Pour payer cette commandez, cliquez sur le lien suivant :{{ link }}
+    form:
+        order:
+            order_price: Total de la commande
+    ui:
+        add_discount: Ajouter une réduction
+        confirm: Confirmer
+        create_new: Créer un nouveau
+        customer_email: L'email du client ne peut être vide
+        item_discount: Réduction sur le produit
+        new_customer_email: Nouveau email client
+        no_customer_selected: Vous n'avez sélectionner aucun client
+        order_discount: Réduction sur la commande
+        order_preview: Prévisualiser la commande
+        reorder: Recommander
+        shipping_methods_selection_requirement: Vous devez ajouter quelques produits ainsi qu'une addresse de livraison pour sélectionner la méthode de livraison éligible.
+        existing_customer_email: Email d'un client existant
