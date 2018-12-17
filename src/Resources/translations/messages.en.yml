@@ -11,6 +11,7 @@ sylius_admin_order_creation:
         confirm: 'Confirm'
         create_new: 'Create new'
         customer_email: 'Customer email cannot be empty'
+        customer_selection: 'Customer selection'
         item_discount: 'Item discount'
         new_customer_email: 'New customer email'
         no_customer_selected: "You haven't selected a customer"
@@ -18,4 +19,3 @@ sylius_admin_order_creation:
         order_preview: 'Order preview'
         reorder: 'Reorder'
         shipping_methods_selection_requirement: 'You need to add some items and shipping address to select from eligible shipping method'
-        customer_selection: 'Customer selection'
