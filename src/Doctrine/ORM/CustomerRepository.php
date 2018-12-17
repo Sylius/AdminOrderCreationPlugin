@@ -13,7 +13,7 @@ final class CustomerRepository extends BaseCustomerRepository implements Custome
         return $this
             ->_em
             ->createQueryBuilder()
-            ->select('o.email')
+            ->select('o.id', 'o.email')
             ->from($this->_entityName, 'o')
             ->andWhere('o.email LIKE :email')
             ->setParameter('email', '%' . $email . '%')
