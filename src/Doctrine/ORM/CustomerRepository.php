@@ -10,7 +10,11 @@ final class CustomerRepository extends BaseCustomerRepository implements Custome
 {
     public function findByEmailPart(string $email): array
     {
-        return $this->createQueryBuilder('o')
+        return $this
+            ->_em
+            ->createQueryBuilder()
+            ->select('o.id', 'o.email')
+            ->from($this->_entityName, 'o')
             ->andWhere('o.email LIKE :email')
             ->setParameter('email', '%' . $email . '%')
             ->getQuery()
