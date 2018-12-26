@@ -13,11 +13,13 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Validator\Constraints\Count;
 
 final class NewOrderType extends AbstractResourceType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $validationGroups = ['sylius'];
         $builder
             ->add('promotionCoupon', PromotionCouponToCodeType::class, [
                 'by_reference' => false,
@@ -37,6 +39,9 @@ final class NewOrderType extends AbstractResourceType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
+                'constraints' => [
+                    new Count(['min' => 1, 'max' => 1, 'groups' => $validationGroups]),
+                ],
             ])
             ->add('shipments', CollectionType::class, [
                 'entry_type' => ShipmentType::class,
