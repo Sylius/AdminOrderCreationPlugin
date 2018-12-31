@@ -91,7 +91,7 @@ sylius_admin_order_creation_reorder:
                 arguments: ["expr:service('sylius.repository.order').find($id)"]
 
 sylius_admin_order_creation_ajax:
-    prefix: /ajax
+    prefix: admin/ajax
     resource: "@SyliusAdminOrderCreationPlugin/Resources/config/app/ajax.yml"
 
 fos_js_routing:
