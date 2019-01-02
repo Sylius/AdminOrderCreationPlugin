@@ -56,7 +56,7 @@ final class NewOrderType extends AbstractResourceType
                 $event
                     ->getForm()
                     ->add('items', CollectionType::class, [
-                        'label' => 'sylius.ui.items',
+                        'label' => false,
                         'entry_type' => OrderItemType::class,
                         'entry_options' => [
                             'currency' => $order->getCurrencyCode(),
