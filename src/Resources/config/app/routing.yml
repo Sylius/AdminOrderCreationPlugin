@@ -1,11 +1,11 @@
 sylius_admin_order_creation_select_order_customer:
-    path: /admin/orders/new/select-customer
+    path: /orders/new/select-customer
     methods: [GET]
     defaults:
         _controller: Sylius\AdminOrderCreationPlugin\Controller\SelectNewOrderCustomerAction
 
 sylius_admin_order_creation_customer_create:
-    path: /admin/orders/new/customer/{customerEmail}/{channelCode}
+    path: /orders/new/customer/{customerEmail}/{channelCode}
     methods: [GET]
     options:
         expose: true
@@ -13,7 +13,7 @@ sylius_admin_order_creation_customer_create:
         _controller: Sylius\AdminOrderCreationPlugin\Controller\CustomerCreationAction
 
 sylius_admin_order_creation_order_create:
-    path: /admin/orders/new/{customerId}/{channelCode}
+    path: /orders/new/{customerId}/{channelCode}
     methods: [GET]
     options:
         expose: true
@@ -33,7 +33,7 @@ sylius_admin_order_creation_order_create:
         customerId: \d+
 
 sylius_admin_order_creation_order_preview:
-    path: /admin/orders/new/{customerId}/{channelCode}/preview
+    path: /orders/new/{customerId}/{channelCode}/preview
     methods: [POST]
     defaults:
         _controller: Sylius\AdminOrderCreationPlugin\Controller\OrderPreviewAction
@@ -45,7 +45,7 @@ sylius_admin_order_creation_order_preview:
                 arguments: [$customerId, $channelCode]
 
 sylius_admin_order_creation_order_create_from_preview:
-    path: /admin/orders/new/{customerId}/{channelCode}/create-from-preview
+    path: /orders/new/{customerId}/{channelCode}/create-from-preview
     methods: [POST]
     options:
         expose: true
@@ -63,7 +63,7 @@ sylius_admin_order_creation_order_create_from_preview:
                 arguments: [$customerId, $channelCode]
 
 sylius_admin_order_creation_order_create_back:
-    path: /admin/orders/edit/{customerId}/{channelCode}
+    path: /orders/edit/{customerId}/{channelCode}
     methods: [POST]
     options:
         expose: true
@@ -73,7 +73,7 @@ sylius_admin_order_creation_order_create_back:
         customerId: \d+
 
 sylius_admin_order_creation_reorder:
-    path: /admin/orders/{id}/reorder
+    path: /orders/{id}/reorder
     methods: [GET]
     options:
         expose: true
@@ -91,7 +91,7 @@ sylius_admin_order_creation_reorder:
                 arguments: ["expr:service('sylius.repository.order').find($id)"]
 
 sylius_admin_order_creation_ajax:
-    prefix: admin/ajax
+    prefix: ajax
     resource: "@SyliusAdminOrderCreationPlugin/Resources/config/app/ajax.yml"
 
 fos_js_routing:
