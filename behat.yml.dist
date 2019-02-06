@@ -37,6 +37,6 @@ default:
         FriendsOfBehat\SymfonyExtension:
             bootstrap: tests/Application/config/bootstrap.php
             kernel:
-                class: Tests\Sylius\CustomerOrderCancellationPlugin\Application\Kernel
+                class: Tests\Sylius\AdminOrderCreationPlugin\Application\Kernel
 
         FriendsOfBehat\VariadicExtension: ~

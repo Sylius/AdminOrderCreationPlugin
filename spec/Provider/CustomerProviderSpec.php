@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace spec\Sylius\AdminOrderCreationPlugin\Provider;
 
 use InvalidArgumentException;
+use PhpSpec\ObjectBehavior;
+use Sylius\AdminOrderCreationPlugin\Provider\CustomerProvider;
+use Sylius\AdminOrderCreationPlugin\Provider\CustomerProviderInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
-use Sylius\AdminOrderCreationPlugin\Provider\CustomerProvider;
-use PhpSpec\ObjectBehavior;
-use Sylius\AdminOrderCreationPlugin\Provider\CustomerProviderInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 
 class CustomerProviderSpec extends ObjectBehavior
@@ -49,7 +51,7 @@ class CustomerProviderSpec extends ObjectBehavior
         FactoryInterface $customerFactory,
         CustomerInterface $customer,
         CustomerRepositoryInterface $customerRepository
-    ){
+    ) {
         $customerFactory->createNew()->willReturn($customer);
 
         $customer->setEmail('jon.doe@sylius.com')->shouldBeCalled();

@@ -28,7 +28,7 @@ final class CustomerProvider implements CustomerProviderInterface
     /** {@inheritdoc}  */
     public function provideExistingCustomer(string $id): CustomerInterface
     {
-        /** @var CustomerInterface|null $customer */
+        /** @var CustomerInterface $customer */
         $customer = $this->customerRepository->find($id);
         Assert::notNull($customer);
 
