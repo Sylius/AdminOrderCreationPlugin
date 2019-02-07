@@ -15,14 +15,13 @@ abstract class Element
 {
     /** @var Session */
     private $session;
-
-    /** @var array */
+    
     private $parameters;
 
     /** @var DocumentElement|null */
     private $document;
 
-    public function __construct(Session $session, array $parameters = [])
+    public function __construct(Session $session, $parameters = [])
     {
         $this->session = $session;
         $this->parameters = $parameters;

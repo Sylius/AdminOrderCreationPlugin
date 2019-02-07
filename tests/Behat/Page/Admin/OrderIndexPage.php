@@ -16,7 +16,7 @@ final class OrderIndexPage extends IndexPage implements OrderIndexPageInterface
 
     public function __construct(
         Session $session,
-        array $parameters,
+        $parameters,
         RouterInterface $router,
         TableAccessorInterface $tableAccessor,
         $routeName
