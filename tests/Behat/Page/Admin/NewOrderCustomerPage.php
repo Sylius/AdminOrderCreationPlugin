@@ -16,7 +16,7 @@ final class NewOrderCustomerPage extends SymfonyPage implements NewOrderCustomer
 
     public function __construct(
         Session $session,
-        array $parameters,
+        $parameters,
         RouterInterface $router,
         AutoCompleteSelector $autoCompleteSelector
     ) {

@@ -44,7 +44,7 @@ final class OrderFactory implements OrderFactoryInterface
 
     public function createNew(): OrderInterface
     {
-        /** @var OrderInterface|null $order */
+        /** @var OrderInterface $order */
         $order = $this->baseOrderFactory->createNew();
         Assert::isInstanceOf($order, OrderInterface::class);
 
@@ -53,26 +53,26 @@ final class OrderFactory implements OrderFactoryInterface
 
     public function createForCustomerAndChannel(string $customerId, string $channelCode): OrderInterface
     {
-        /** @var CustomerInterface|null $customer */
+        /** @var CustomerInterface $customer */
         $customer = $this->customerRepository->find($customerId);
         Assert::isInstanceOf($customer, CustomerInterface::class);
 
         /** @var OrderInterface $order */
         $order = $this->createNew();
 
-        /** @var ChannelInterface|null $channel */
+        /** @var ChannelInterface $channel */
         $channel = $this->channelRepository->findOneByCode($channelCode);
         Assert::isInstanceOf($channel, ChannelInterface::class);
 
         $order->setCustomer($customer);
         $order->setChannel($channel);
 
-        /** @var CurrencyInterface|null $currency */
+        /** @var CurrencyInterface $currency */
         $currency = $channel->getBaseCurrency();
         Assert::isInstanceOf($currency, CurrencyInterface::class);
         $order->setCurrencyCode($currency->getCode());
 
-        /** @var LocaleInterface|null $defaultLocale */
+        /** @var LocaleInterface $defaultLocale */
         $defaultLocale = $channel->getDefaultLocale();
         Assert::isInstanceOf($defaultLocale, LocaleInterface::class);
         $order->setLocaleCode($defaultLocale->getCode());

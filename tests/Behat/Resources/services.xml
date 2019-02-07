@@ -2,13 +2,15 @@
 
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\NewOrderCustomerPage" parent="sylius.behat.symfony_page">
-            <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector" />
+        <defaults public="true" />
+
+        <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\NewOrderCustomerPage" parent="sylius.behat.symfony_page" public="true">
+            <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector"/>
         </service>
-        <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderIndexPage" parent="sylius.behat.page.admin.order.index" />
-        <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderShowPage" parent="sylius.behat.page.admin.order.show" />
-        <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\ReorderPage" parent="sylius.behat.symfony_page" />
-        <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderPreviewPage" parent="sylius.behat.symfony_page" />
+        <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderIndexPage" parent="sylius.behat.page.admin.order.index" public="true"/>
+        <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderShowPage" parent="sylius.behat.page.admin.order.show" public="true"/>
+        <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\ReorderPage" parent="sylius.behat.symfony_page" public="true"/>
+        <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderPreviewPage" parent="sylius.behat.symfony_page" public="true"/>
 
         <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Context\Admin\ManagingOrdersContext">
             <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderIndexPage"/>
@@ -18,19 +20,18 @@
             <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\ReorderPage" />
             <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Admin\OrderCreateFormElement" />
             <argument type="service" id="sylius.behat.notification_checker" />
-            <argument type="service" id="__symfony__.sylius.behat.email_checker" />
-            <argument type="service" id="__symfony__.sylius.address_comparator" />
-            <tag name="fob.context_service" />
+            <argument type="service" id="sylius.behat.email_checker" />
+            <argument type="service" id="sylius.address_comparator" />
         </service>
 
         <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector" />
 
-        <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Element" abstract="true" public="false">
-            <argument type="service" id="mink.default_session" />
-            <argument>%__behat__.mink.parameters%</argument>
+        <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Element" abstract="true">
+            <argument type="service" id="behat.mink.default_session" />
+            <argument type="service" id="behat.mink.parameters" />
         </service>
 
-        <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Admin\OrderCreateFormElement" parent="Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Element" public="false">
+        <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Admin\OrderCreateFormElement" parent="Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Element" public="true">
             <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector" />
         </service>
     </services>

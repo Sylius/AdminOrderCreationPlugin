@@ -19,7 +19,7 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
 
     public function __construct(
         Session $session,
-        array $parameters,
+        $parameters,
         AutoCompleteSelector $autoCompleteSelector
     ) {
         parent::__construct($session, $parameters);
