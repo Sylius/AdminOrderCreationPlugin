@@ -6,6 +6,8 @@
 
 <h1 align="center">Admin Order Creation Plugin</h1>
 
+<p align="center"><a href="https://sylius.com/plugins/" target="_blank"><img src="https://sylius.com/assets/badge-official-sylius-plugin.png" width="200"></a></p>
+
 <p align="center">This plugin allows to create an order in admin panel.</p>
 
 ![Screenshot showing the order creation page, Shipments&Payments section](docs/screenshot.png)
