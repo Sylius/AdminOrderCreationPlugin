@@ -13,9 +13,7 @@ use Symfony\Component\Form\ReversedTransformer;
 
 final class LocaleCodeChoiceType extends AbstractType
 {
-    /**
-     * @var RepositoryInterface
-     */
+    /** @var RepositoryInterface */
     private $localeRepository;
 
     public function __construct(RepositoryInterface $localeRepository)
