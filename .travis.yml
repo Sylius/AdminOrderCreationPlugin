@@ -72,7 +72,7 @@ script:
     - composer validate --strict
     - composer analyse
 
-    - vendor/bin/behat -vvv --no-interaction --strict || bin/behat -vvv --no-interaction --strict --rerun
+    - vendor/bin/behat -vvv --no-interaction --strict || vendor/bin/behat -vvv --no-interaction --strict --rerun
     - vendor/bin/phpspec run
     - vendor/bin/phpunit
 

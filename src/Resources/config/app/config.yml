@@ -29,7 +29,7 @@ sylius_mailer:
     emails:
         order_created_in_admin_panel:
             subject: 'sylius_admin_order_creation.email.order_created.subject'
-            template: 'SyliusAdminOrderCreationPlugin:Emails:orderCreated.html.twig'
+            template: '@SyliusAdminOrderCreationPlugin/Emails/orderCreated.html.twig'
 
 sylius_customer:
     resources:
