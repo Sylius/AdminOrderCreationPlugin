@@ -86,6 +86,12 @@
                     data: form.serializeArray(),
                     dataType: "json",
                     accept: "application/json",
+                    error: function() {
+                        alert('An error occured during the checking of available shipping methods.');
+                    },
+                    complete: function() {
+                        form.removeClass('loading');
+                    },
                     success: function(data) {
                         let lastShipment = $('#sylius_admin_order_creation_new_order_shipments [data-form-collection="list"]').find('[data-form-collection="item"]:last-child');
                         let selectBody = '';
@@ -95,7 +101,6 @@
                         });
 
                         lastShipment.find('select').html(selectBody);
-                        form.removeClass('loading');
                     }
                 });
             }
