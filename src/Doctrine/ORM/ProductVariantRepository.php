@@ -13,7 +13,7 @@ final class ProductVariantRepository extends BaseProductVariantRepository implem
         $expr = $this->getEntityManager()->getExpressionBuilder();
 
         return $this->createQueryBuilder('o')
-            ->innerJoin('o.translations', 'translation', 'WITH', 'translation.locale = :locale')
+            ->leftJoin('o.translations', 'translation', 'WITH', 'translation.locale = :locale')
             ->innerJoin('o.product', 'p')
             ->innerJoin('p.channels', 'c')
             ->andWhere('c.code = :channel')
