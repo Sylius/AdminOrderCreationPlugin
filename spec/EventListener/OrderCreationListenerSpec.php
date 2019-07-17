@@ -43,10 +43,10 @@ final class OrderCreationListenerSpec extends ObjectBehavior
         $event->getSubject()->willReturn($order);
 
         $stateMachineFactory->get($order, 'sylius_order_checkout')->willReturn($stateMachine);
-        $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_ADDRESS)->shouldBeCalled();
-        $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_SELECT_SHIPPING)->shouldBeCalled();
-        $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT)->shouldBeCalled();
-        $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_COMPLETE)->shouldBeCalled();
+        $stateMachine->can(OrderCheckoutTransitions::TRANSITION_ADDRESS)->shouldBeCalled();
+        $stateMachine->can(OrderCheckoutTransitions::TRANSITION_SELECT_SHIPPING)->shouldBeCalled();
+        $stateMachine->can(OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT)->shouldBeCalled();
+        $stateMachine->can(OrderCheckoutTransitions::TRANSITION_COMPLETE)->shouldBeCalled();
 
         $this->completeOrderBeforeCreation($event);
     }

@@ -40,9 +40,17 @@ final class OrderCreationListener
         Assert::isInstanceOf($order, OrderInterface::class);
 
         $stateMachine = $this->stateMachineFactory->get($order, 'sylius_order_checkout');
-        $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_ADDRESS);
-        $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_SELECT_SHIPPING);
-        $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT);
-        $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_COMPLETE);
+        $transitions = [
+            OrderCheckoutTransitions::TRANSITION_ADDRESS,
+            OrderCheckoutTransitions::TRANSITION_SELECT_SHIPPING,
+            OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT,
+            OrderCheckoutTransitions::TRANSITION_COMPLETE,
+        ];
+    
+        foreach ($transitions as $transition) {
+            if ($stateMachine->can($transition)) {
+                $stateMachine->apply($transition);
+            }
+        }
     }
 }
