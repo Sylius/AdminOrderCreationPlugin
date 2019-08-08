@@ -1,19 +1,26 @@
 <table class="ui celled compact small table fixed">
     <thead>
     <tr>
-        <th class="six wide sylius-table-column-item">{{ 'sylius.ui.order_item_product'|trans }}</th>
+        <th class="five wide sylius-table-column-item">{{ 'sylius.ui.order_item_product'|trans }}</th>
         <th class="center aligned sylius-table-column-unit_price">{{ 'sylius.ui.unit_price'|trans }}</th>
+        <th class="center aligned sylius-table-column-unit_discount">{{ 'sylius.ui.item_discount'|trans }}</th>
+        <th class="center aligned sylius-table-column-unit_order_discount">{{ 'sylius.ui.distributed_order_discount'|trans }}</th>
         <th class="center aligned sylius-table-column-discounted_unit_price">{{ 'sylius.ui.discounted_unit_price'|trans }}</th>
         <th class="center aligned sylius-table-column-quantity">{{ 'sylius.ui.quantity'|trans }}</th>
         <th class="center aligned sylius-table-column-subtotal">{{ 'sylius.ui.subtotal'|trans }}</th>
-        <th class="center aligned sylius-table-column-discount">{{ 'sylius.ui.discount'|trans }}</th>
         <th class="center aligned sylius-table-column-tax">{{ 'sylius.ui.tax'|trans }}</th>
         <th class="center aligned sylius-table-column-total">{{ 'sylius.ui.total'|trans }}</th>
     </tr>
     </thead>
     <tbody>
     {% for item_form in form.children %}
-        {% include '@SyliusAdminOrderCreationPlugin/Order/Show/_item.html.twig' with {'form': item_form, 'item': order.items.get(loop.index0)} %}
+        {% include '@SyliusAdmin/Order/Show/Summary/_item.html.twig' with {'item': order.items.get(loop.index0)} %}
+
+        <tr class="item-discount">
+            <td colspan="9">
+                {{ form_row(item_form.adjustments) }}
+            </td>
+        </tr>
     {% endfor %}
     </tbody>
     <tfoot>

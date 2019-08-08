@@ -17,7 +17,7 @@ final class OrderPreviewPage extends SymfonyPage implements OrderPreviewPageInte
 
     public function getTotal(): string
     {
-        return str_replace('Total: ', '', $this->getDocument()->find('css', 'td#total')->getText());
+        return str_replace('Order total: ', '', $this->getDocument()->find('css', 'td#total')->getText());
     }
 
     public function getShippingTotal(): string
