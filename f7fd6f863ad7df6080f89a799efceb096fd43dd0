@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by lchrusciel at 2019-08-08T07:08:48Z
+
+Should we use them in travis pipeline?
+
+---------------------------------------------------------------------------
+
+by GSadee at 2019-08-08T07:09:48Z
+
+I guess yes, but this is the first step of that. I wanted to have a ready to use test application after this PR
+
+---------------------------------------------------------------------------
+
+by Zales0123 at 2019-08-08T12:46:09Z
+
+Thank you, Grzegorz! :tada:
