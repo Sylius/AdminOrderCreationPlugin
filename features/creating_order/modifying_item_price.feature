@@ -14,7 +14,7 @@ Feature: Modifying unit price
         And I am logged in as an administrator
 
     @ui @javascript
-    Scenario: Modify unit price
+    Scenario: Modifying item price
         When I create a new order for "jon.snow@the-wall.com" and channel "United States"
         And I add 5 of "Stark Coat" to this order
         And I add 2 of "Lannister Banner" to this order
@@ -22,14 +22,18 @@ Feature: Modifying unit price
         And I select "Free" shipping method
         And I select "Cash on Delivery" payment method
         And I place this order
-        And I lower item with "Stark Coat" price by "$95"
+        And I lower item with "Stark Coat" price by "$100"
         And I confirm this order
+        And I check "Stark Coat" data
         Then I should be notified that order has been successfully created
-        And the order's total should be "$425.00"
-        And "Stark Coat" discount should be "-$95.00"
+        And its unit price should be $100.00
+        And its discount should be -$20.00
+        And its discounted unit price should be $80.00
+        And its subtotal should be $400.00
+        And the order's total should be "$420.00"
 
     @ui @javascript
-    Scenario: Not being able to set order item unit discount below 0
+    Scenario: Not being able to set item discount below 0
         When I create a new order for "jon.snow@the-wall.com" and channel "United States"
         And I add 5 of "Stark Coat" to this order
         And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"

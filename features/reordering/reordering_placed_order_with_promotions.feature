@@ -10,7 +10,7 @@ Feature: Applying promotions during reordering previously placed order
         And the store ships everywhere for free
         And the store allows paying with "Cash on Delivery"
         And there is a promotion "Holiday promotion"
-        And the promotion gives "$50.00" discount to every order with quantity at least 3
+        And the promotion gives "$60.00" discount to every order with quantity at least 3
         And there is a customer account "jon.snow@the-wall.com"
         And a customer "jon.snow@the-wall.com" placed an order "#00000666"
         And the customer bought 3 "Stark Coat" products
@@ -23,8 +23,8 @@ Feature: Applying promotions during reordering previously placed order
         When I reorder the order "#00000666"
         And I place and confirm this order
         Then I should be notified that order has been successfully created
-        And the order's total should be "$250.00"
-        And the order's promotion total should be "-$50.00"
+        And the order's total should be "$240.00"
+        And the order's promotion total should be "-$60.00"
 
     @javascript
     Scenario: Not applying promotion during reordering previously placed order
