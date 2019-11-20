@@ -21,7 +21,7 @@ Feature: Creating simple order
         And I select "Cash on Delivery" payment method
         And I place and confirm this order
         Then I should be notified that order has been successfully created
-        And there should be one not paid nor shipped order with channel code 'WEB-US' for "jon.snow@the-wall.com" in the registry
+        And there should be one not paid nor shipped order with channel "United States" for "jon.snow@the-wall.com" in the registry
 
     Scenario: Creating a simple order for a new customer
         When I create a new order for a new customer with email "ned.stark@the-wall.com" and channel "United States"
@@ -31,7 +31,7 @@ Feature: Creating simple order
         And I select "Cash on Delivery" payment method
         And I place and confirm this order
         Then I should be notified that order has been successfully created
-        And there should be one not paid nor shipped order with channel code 'WEB-US' for "ned.stark@the-wall.com" in the registry
+        And there should be one not paid nor shipped order with channel "United States" for "ned.stark@the-wall.com" in the registry
 
     Scenario: Trying to create an order for an existing customer without selecting them
         When I try to create a new order for an existing customer without selecting them
