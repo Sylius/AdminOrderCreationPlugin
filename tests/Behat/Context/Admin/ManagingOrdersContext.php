@@ -386,9 +386,9 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
-     * @Then there should be one not paid nor shipped order with channel code :channelCode for :customer in the registry
+     * @Then there should be one not paid nor shipped order with channel :channelName for :customer in the registry
      */
-    public function thereShouldBeOneOrderForInTheRegistry(string $channelCode, CustomerInterface $customer): void
+    public function thereShouldBeOneOrderForInTheRegistry(string $channelName, CustomerInterface $customer): void
     {
         $this->orderIndexPage->open();
 
@@ -397,7 +397,7 @@ final class ManagingOrdersContext implements Context
             'state' => 'New',
             'paymentState' => 'Awaiting payment',
             'shippingState' => 'Ready',
-            'channel' => $channelCode
+            'channel' => $channelName
         ]));
     }
 

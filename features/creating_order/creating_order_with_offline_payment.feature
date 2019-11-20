@@ -24,4 +24,4 @@ Feature: Creating order with offline payment
         Then I should be notified that order has been successfully created
         And there should be no payment link displayed next to order's payment
         And there should be no payment link sent to "jon.snow@the-wall.com"
-        And there should be one not paid nor shipped order with channel code 'WEB-US' for "jon.snow@the-wall.com" in the registry
+        And there should be one not paid nor shipped order with channel "United States" for "jon.snow@the-wall.com" in the registry
