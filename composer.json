@@ -21,7 +21,7 @@
     "require": {
         "php": "^7.2",
 
-        "sylius/sylius": "^1.6@alpha",
+        "sylius/sylius": "^1.6",
         "friendsofsymfony/jsrouting-bundle": "^2.2"
     },
     "require-dev": {
@@ -54,7 +54,6 @@
         "symfony/routing": "4.1.8"
     },
 
-    "minimum-stability": "dev",
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
