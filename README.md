@@ -55,13 +55,6 @@ Symfony Flex, it's much quicker! :)
     cp -R vendor/sylius/admin-order-creation-plugin/src/Resources/views/SyliusAdminBundle/* templates/bundles/SyliusAdminBundle/
     ```
 
-3. Copy plugin migrations to your migrations directory (e.g. `src/Migrations`) and apply them to your database:
-
-    ```bash
-    cp -R vendor/sylius/admin-order-creation-plugin/migrations/* src/Migrations
-    bin/console doctrine:migrations:migrate
-    ```
-
 ## Extension points
 
 Admin Order Creation Plugin makes it possible to add custom discount during order creation - thus some of Order
