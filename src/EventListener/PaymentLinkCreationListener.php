@@ -51,7 +51,7 @@ final class PaymentLinkCreationListener
         /** @var GatewayConfigInterface $gatewayConfig */
         $gatewayConfig = $paymentMethod->getGatewayConfig();
 
-        if ('offline' === $gatewayConfig->getGatewayName()) {
+        if ('Offline' === $gatewayConfig->getGatewayName()) {
             return;
         }
 
