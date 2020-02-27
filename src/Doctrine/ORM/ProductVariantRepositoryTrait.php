@@ -4,10 +4,15 @@ declare(strict_types=1);
 
 namespace Sylius\AdminOrderCreationPlugin\Doctrine\ORM;
 
-use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductVariantRepository as BaseProductVariantRepository;
+use Doctrine\ORM\EntityManager;
 
-final class ProductVariantRepository extends BaseProductVariantRepository implements ProductVariantRepositoryInterface
+trait ProductVariantRepositoryTrait
 {
+    /**
+     * @return EntityManager
+     */
+    abstract protected function getEntityManager();
+
     public function findByPhraseAndChannelCode(string $phrase, string $channelCode, string $locale): array
     {
         $expr = $this->getEntityManager()->getExpressionBuilder();

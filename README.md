@@ -62,6 +62,11 @@ Symfony Flex, it's much quicker! :)
     bin/console doctrine:migrations:migrate
     ```
 
+4. Override repositories
+
+    As shown [here](tests/Application/Doctrine/ORM)
+    and [here](tests/Application/config/packages/_sylius.yaml).
+
 ## Extension points
 
 Admin Order Creation Plugin makes it possible to add custom discount during order creation - thus some of Order
