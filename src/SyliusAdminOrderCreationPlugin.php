@@ -15,6 +15,7 @@ final class SyliusAdminOrderCreationPlugin extends Bundle
 
     public function build(ContainerBuilder $container): void
     {
+        # Nothing was actually changed
         $container->addCompilerPass(new RegisterReorderProcessorsPass());
     }
 }
