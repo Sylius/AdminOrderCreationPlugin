@@ -5,7 +5,6 @@ dist: trusty
 sudo: false
 
 php:
-    - 7.2
     - 7.3
 
 cache:
@@ -39,7 +38,7 @@ before_script:
     # Configure display
     - /sbin/start-stop-daemon --start --quiet --pidfile /tmp/xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1680x1050x16
     - export DISPLAY=:99
-    
+
     # Download Symfony command
     - wget https://get.symfony.com/cli/installer -O - | bash
 

@@ -31,7 +31,7 @@ final class AutoCompleteSelector
 
         $scope->waitFor(1, function() use ($scope) {
             return $scope
-                ->find('css', '.sylius-autocomplete .menu')
+                ->find('css', '.sylius-autocomplete .search')
                 ->hasClass('visible')
             ;
         });

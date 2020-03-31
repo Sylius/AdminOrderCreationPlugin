@@ -2,6 +2,12 @@ imports:
     - tests/Behat/Resources/suites.yml
 
 default:
+    formatters:
+        pretty:
+            verbose: true
+            paths: false
+            snippets: false
+
     extensions:
         Lakion\Behat\MinkDebugExtension:
             directory: etc/build
@@ -29,6 +35,8 @@ default:
                                     - "start-fullscreen"
                                     - "start-maximized"
                                     - "no-sandbox"
+                            extra_capabilities:
+                                unexpectedAlertBehaviour: accept
                 firefox:
                     selenium2:
                         browser: firefox
@@ -40,3 +48,11 @@ default:
                 class: Tests\Sylius\AdminOrderCreationPlugin\Application\Kernel
 
         FriendsOfBehat\VariadicExtension: ~
+
+        FriendsOfBehat\SuiteSettingsExtension:
+            paths:
+                - "features"
+
+    gherkin:
+        filters:
+            tags: "~@todo && ~@cli" # CLI is excluded as it registers an error handler that mutes fatal errors
