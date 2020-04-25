@@ -7,7 +7,7 @@
     <class name="Sylius\Component\Core\Model\Order">
         <property name="payments">
             <constraint name="Count">
-                <option name="min">1</option>
+                <option name="min">0</option>
                 <option name="max">1</option>
                 <option name="groups">sylius</option>
             </constraint>
