@@ -51,8 +51,6 @@
             });
 
             $('#shipmentsAndPaymentsTab').on('click', function(e) {
-                console.log(canShippingMethodBeProvided());
-
                 if (canShippingMethodBeProvided()) {
                     $('#shipmentsAndPayments').find('.invalid-data-message').hide();
                 } else {
