@@ -7,6 +7,7 @@ namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin;
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\NodeElement;
 use FriendsOfBehat\PageObjectExtension\Page\SymfonyPage;
+use WebDriver\Exception;
 
 final class OrderPreviewPage extends SymfonyPage implements OrderPreviewPageInterface
 {
@@ -78,10 +79,21 @@ final class OrderPreviewPage extends SymfonyPage implements OrderPreviewPageInte
 
     public function lowerOrderPriceBy(string $discount): void
     {
+        $this->getDocument()->waitFor(10, function() {
+            return $this->getDocument()->has('css', '#sylius_admin_order_creation_new_order_adjustments');
+        });
         $discountCollection = $this->getDocument()->find('css', '#sylius_admin_order_creation_new_order_adjustments');
 
-        $discountCollection->clickLink('Add discount');
-        $this->getDocument()->waitFor(1, function () use ($discountCollection) {
+        $this->getDocument()->waitFor(10, function () use ($discountCollection) {
+            try {
+                $discountCollection->clickLink('Add discount');
+
+                return true;
+            } catch (Exception $exception) {
+                return false;
+            }
+        });
+        $this->getDocument()->waitFor(10, function () use ($discountCollection) {
             return $discountCollection->has('css', '[data-form-collection="item"]');
         });
 
@@ -90,12 +102,23 @@ final class OrderPreviewPage extends SymfonyPage implements OrderPreviewPageInte
 
     public function lowerItemWithProductPriceBy(string $productCode, string $discount): void
     {
+        $this->getDocument()->waitFor(10, function () use ($productCode) {
+            return $this->getDocument()->has('css', sprintf('table tr:contains("%s") + tr', $productCode));
+        });
         $item = $this->getDocument()->find('css', sprintf('table tr:contains("%s") + tr', $productCode));
-        $item->clickLink('Add discount');
+        $this->getDocument()->waitFor(10, function () use ($item) {
+            try {
+                $item->clickLink('Add discount');
+
+                return true;
+            } catch (Exception $exception) {
+                return false;
+            }
+        });
 
         $discountCollection = $item->find('css', '[data-form-type="collection"]');
 
-        $this->getDocument()->waitFor(1, function () use ($discountCollection) {
+        $this->getDocument()->waitFor(10, function () use ($discountCollection) {
             return $discountCollection->has('css', '[data-form-collection="item"]');
         });
 
@@ -104,23 +127,39 @@ final class OrderPreviewPage extends SymfonyPage implements OrderPreviewPageInte
 
     public function confirm(): void
     {
-        $confirmButton = $this->getDocument()->findButton('Confirm');
+        $this->getDocument()->waitFor(10, function () {
+            try {
+                $confirmButton = $this->getDocument()->findButton('Confirm');
 
-        if ($this->getDriver() instanceof Selenium2Driver) {
-            $confirmButton->focus();
-        }
+                if ($this->getDriver() instanceof Selenium2Driver) {
+                    $confirmButton->focus();
+                }
 
-        $confirmButton->press();
+                $confirmButton->press();
+
+                return true;
+            } catch (Exception $exception) {
+                return false;
+            }
+        });
     }
 
     public function goBack(): void
     {
-        $backButton = $this->getDocument()->findButton('Back');
+        $this->getDocument()->waitFor(10, function () {
+            try {
+                $backButton = $this->getDocument()->findButton('Back');
 
-        if ($this->getDriver() instanceof Selenium2Driver) {
-            $backButton->focus();
-        }
+                if ($this->getDriver() instanceof Selenium2Driver) {
+                    $backButton->focus();
+                }
 
-        $backButton->press();
+                $backButton->press();
+
+                return true;
+            } catch (Exception $exception) {
+                return false;
+            }
+        });
     }
 }

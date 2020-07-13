@@ -56,6 +56,10 @@ final class NewOrderCustomerPage extends SymfonyPage implements NewOrderCustomer
 
     public function hasCustomerEmailValidationMessage(string $message): bool
     {
+        $this->getDocument()->waitFor(2, function () {
+            return $this->getDocument()->has('css', 'form .sylius-validation-error');
+        });
+
         $validationMessage = $this->getDocument()->find('css', 'form .sylius-validation-error');
 
         return $validationMessage !== null && $validationMessage->getText() === $message;

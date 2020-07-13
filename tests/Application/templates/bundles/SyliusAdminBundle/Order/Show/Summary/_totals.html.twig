@@ -59,12 +59,9 @@
         {{ money.format(order.shippingTotal, order.currencyCode) }}
     </td>
 </tr>
-<tr>
-    <td colspan="9" id="discount-total" class="right aligned">
-        <strong>{{ 'sylius_admin_order_creation.ui.order_discount'|trans }}</strong>:
-        {{ money.format(order.getAdjustmentsTotalRecursively(orderDiscountAdjustment), order.currencyCode) }}
-    </td>
-</tr>
+
+{% include '@SyliusAdmin/Order/Show/Summary/_totalsPromotions.html.twig' %}
+
 <tr>
     <td colspan="9" id="total" class="ui large header right aligned">
         <strong>{{ 'sylius.ui.order_total'|trans }}</strong>:

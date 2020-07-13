@@ -19,9 +19,9 @@
         }
     ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.3",
 
-        "sylius/sylius": "^1.6",
+        "sylius/sylius": "^1.7",
         "friendsofsymfony/jsrouting-bundle": "^2.2"
     },
     "require-dev": {
@@ -35,7 +35,7 @@
         "friends-of-behat/symfony-extension": "^2.0",
         "friends-of-behat/variadic-extension": "^1.1",
         "lakion/mink-debug-extension": "^1.2.3",
-        "phpspec/phpspec": "^4.0",
+        "phpspec/phpspec": "^6.1",
         "phpstan/phpstan-shim": "^0.11",
         "phpstan/phpstan-webmozart-assert": "^0.11",
         "phpunit/phpunit": "^6.5",

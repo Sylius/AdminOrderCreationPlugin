@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Context\Admin;
 
 use Behat\Behat\Context\Context;
-use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Behat\NotificationType;
 use Sylius\Behat\Service\NotificationCheckerInterface;
 use Sylius\Component\Addressing\Comparator\AddressComparatorInterface;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Test\Services\EmailCheckerInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Admin\OrderCreateFormElementInterface;
@@ -205,6 +205,7 @@ final class ManagingOrdersContext implements Context
      */
     public function selectPaymentMethod(string $paymentMethodName): void
     {
+        $this->orderCreateFormElement->moveToShippingAndPaymentsSection();
         $this->orderCreateFormElement->selectPaymentMethod($paymentMethodName);
     }
 
