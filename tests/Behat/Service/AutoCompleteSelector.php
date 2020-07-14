@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Service;
 
 use Behat\Mink\Element\ElementInterface;
+use Behat\Testwork\Call\Exception\FatalThrowableError;
 
 final class AutoCompleteSelector
 {
@@ -12,10 +13,15 @@ final class AutoCompleteSelector
     {
         $this->waitForItemsToLoad($scope);
 
-        $scope
-            ->find('css', sprintf('.sylius-autocomplete .menu .item:contains("%s")', $optionName))
-            ->click()
-        ;
+        $scope->waitFor(10, function () use ($scope, $optionName) {
+            try {
+                $scope->find('css', sprintf('.sylius-autocomplete .menu .item:contains("%s")', $optionName))->click();
+
+                return true;
+            } catch (FatalThrowableError $exception) {
+                return false;
+            }
+        });
     }
 
     public function areItemsVisible(ElementInterface $scope): bool
@@ -29,7 +35,7 @@ final class AutoCompleteSelector
     {
         $scope->find('css', '.sylius-autocomplete .icon')->click();
 
-        $scope->waitFor(1, function() use ($scope) {
+        $scope->waitFor(10, function() use ($scope) {
             return $scope
                 ->find('css', '.sylius-autocomplete .menu')
                 ->hasClass('visible')

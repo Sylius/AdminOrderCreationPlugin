@@ -7,7 +7,7 @@ Feature: Previewing order before creation
     Background:
         Given the store operates on a single channel in "United States"
         And that channel allows to shop using "EUR" and "PLN" currencies
-        And the store has locale "English (United States)"
+        And the store has locale "en_US"
         And the store has a product "Stark Coat" priced at "$100"
         And the store ships everywhere for free
         And the store allows paying with "Cash on Delivery"

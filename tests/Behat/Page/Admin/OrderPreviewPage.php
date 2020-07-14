@@ -6,6 +6,7 @@ namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin;
 
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\NodeElement;
+use DMore\ChromeDriver\ChromeDriver;
 use FriendsOfBehat\PageObjectExtension\Page\SymfonyPage;
 
 final class OrderPreviewPage extends SymfonyPage implements OrderPreviewPageInterface
@@ -106,7 +107,7 @@ final class OrderPreviewPage extends SymfonyPage implements OrderPreviewPageInte
     {
         $confirmButton = $this->getDocument()->findButton('Confirm');
 
-        if ($this->getDriver() instanceof Selenium2Driver) {
+        if ($this->getDriver() instanceof Selenium2Driver || $this->getDriver() instanceof ChromeDriver) {
             $confirmButton->focus();
         }
 
@@ -117,7 +118,7 @@ final class OrderPreviewPage extends SymfonyPage implements OrderPreviewPageInte
     {
         $backButton = $this->getDocument()->findButton('Back');
 
-        if ($this->getDriver() instanceof Selenium2Driver) {
+        if ($this->getDriver() instanceof Selenium2Driver || $this->getDriver() instanceof ChromeDriver) {
             $backButton->focus();
         }
 

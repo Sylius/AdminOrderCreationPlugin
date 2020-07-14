@@ -6,8 +6,9 @@ namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Admin;
 
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\NodeElement;
+use Behat\Mink\Exception\Exception;
 use Behat\Mink\Session;
-use Sylius\Component\Core\Model\Address;
+use DMore\ChromeDriver\ChromeDriver;
 use Sylius\Component\Core\Model\AddressInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Element;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector;
@@ -140,7 +141,16 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
 
     public function placeOrder(): void
     {
-        $this->getDocument()->pressButton('Create');
+        $this->getDocument()->waitFor(10, function() {
+            try {
+                $this->getDocument()->pressButton('Create');
+
+                return true;
+            } catch (Exception $exception) {
+                return false;
+            }
+        });
+
     }
 
     public function selectLocale(string $localeName): void
@@ -206,7 +216,15 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         $collection = $this->getElement($type);
 
         if ($addNew) {
-            $collection->clickLink('Add');
+            $this->getDocument()->waitFor(10, function () use ($collection) {
+                try {
+                    $collection->clickLink('Add');
+
+                    return true;
+                } catch (Exception $exception) {
+                    return false;
+                }
+            });
             $this->waitForFormToLoad();
         }
 
@@ -220,7 +238,15 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
     private function addItemAndWaitForIt(): NodeElement
     {
         $itemsCount = $this->countItems();
-        $this->getDocument()->clickLink('Add');
+        $this->getDocument()->waitFor(10, function() {
+            try {
+                $this->getDocument()->clickLink('Add');
+
+                return true;
+            } catch (Exception $exception) {
+                return false;
+            }
+        });
 
         $this->getDocument()->waitFor(1, function () use ($itemsCount) {
             return $this->countItems() > $itemsCount;
@@ -250,7 +276,7 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
 
     private function clickOnTabAndWait(string $tabName): void
     {
-        if (!$this->getDriver() instanceof Selenium2Driver) {
+        if (!$this->getDriver() instanceof Selenium2Driver && !$this->getDriver() instanceof ChromeDriver) {
             return;
         }
 
