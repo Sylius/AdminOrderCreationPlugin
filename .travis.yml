@@ -59,6 +59,9 @@ before_script:
     - (cd tests/Application && bin/console cache:warmup -vvv)
     - (cd tests/Application && yarn build)
 
+    # Download Symfony command
+    - wget https://get.symfony.com/cli/installer -O - | bash
+
     # Install certificates
     run_command "$SYLIUS_CACHE_DIR/symfony server:ca:install"
 
