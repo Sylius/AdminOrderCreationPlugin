@@ -1,9 +1,11 @@
 imports:
+    - vendor/sylius/sylius/src/Sylius/Behat/Resources/config/suites.yml
     - tests/Behat/Resources/suites.yml
 
 default:
     extensions:
         DMore\ChromeExtension\Behat\ServiceContainer\ChromeExtension: ~
+
         Lakion\Behat\MinkDebugExtension:
             directory: etc/build
             clean_start: false
@@ -35,11 +37,7 @@ default:
                                     - "start-maximized"
                                     - "no-sandbox"
                             extra_capabilities:
-                                acceptSslCerts: true
-                                acceptInsecureCerts: true
                                 unexpectedAlertBehaviour: accept
-                                goog:chromeOptions:
-                                    w3c: false # https://github.com/Sylius/Sylius/issues/10561
                 firefox:
                     selenium2:
                         browser: firefox
@@ -51,3 +49,7 @@ default:
                 class: Tests\Sylius\AdminOrderCreationPlugin\Application\Kernel
 
         FriendsOfBehat\VariadicExtension: ~
+
+        FriendsOfBehat\SuiteSettingsExtension:
+            paths:
+                - "features"
