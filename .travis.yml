@@ -62,13 +62,13 @@ before_script:
         fi
 
     # Install certificates
-    run_command "$SYLIUS_CACHE_DIR/symfony server:ca:install"
+    - $SYLIUS_CACHE_DIR/symfony server:ca:install
 
     # Run headless Chrome
-    run_command "google-chrome-stable --enable-automation --disable-background-networking --no-default-browser-check --no-first-run --disable-popup-blocking --disable-default-apps --allow-insecure-localhost --disable-translate --disable-extensions --no-sandbox --enable-features=Metal --headless --remote-debugging-port=9222 --window-size=2880,1800 --proxy-server='direct://' --proxy-bypass-list='*' http://127.0.0.1 > /dev/null 2>&1 &"
+    - google-chrome-stable --enable-automation --disable-background-networking --no-default-browser-check --no-first-run --disable-popup-blocking --disable-default-apps --allow-insecure-localhost --disable-translate --disable-extensions --no-sandbox --enable-features=Metal --headless --remote-debugging-port=9222 --window-size=2880,1800 --proxy-server='direct://' --proxy-bypass-list='*' http://127.0.0.1 > /dev/null 2>&1 &
 
     # Run webserver
-    run_command "$SYLIUS_CACHE_DIR/symfony server:start --port=8080 --dir=public --daemon"
+    - $SYLIUS_CACHE_DIR/symfony server:start --port=8080 --dir=public --daemon
 
     # Run webserver
     - (cd tests/Application && /home/travis/.symfony/bin/symfony server:start --port=8080 --dir=public --allow-http --no-tls --force-php-discovery --daemon)
