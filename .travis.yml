@@ -6,9 +6,16 @@ dist: bionic
 
 sudo: false
 
-php:
-    - 7.3
-    - 7.4
+jobs:
+    include:
+        -
+            php: 7.3
+            services:
+                - mysql
+        -
+            php: 7.4
+            services:
+                - mysql
 
 cache:
     yarn: true
