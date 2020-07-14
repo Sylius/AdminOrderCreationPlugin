@@ -51,6 +51,7 @@ before_script:
 
     # Download Symfony command
     - wget https://get.symfony.com/cli/installer -O - | bash
+    - mv ~/.symfony/bin/symfony $SYLIUS_CACHE_DIR
 
     # Download and configure ChromeDriver
     - |
