@@ -72,7 +72,7 @@ before_script:
     - $SYLIUS_CACHE_DIR/symfony server:start --port=8080 --dir=public --daemon
 
     # Run webserver
-    - (cd tests/Application && /home/travis/.symfony/bin/symfony server:start --port=8080 --dir=public --allow-http --no-tls --force-php-discovery --daemon)
+    - (cd tests/Application && $SYLIUS_CACHE_DIR/symfony server:start --port=8080 --dir=public --allow-http --no-tls --force-php-discovery --daemon)
 
 script:
     - composer validate --strict
