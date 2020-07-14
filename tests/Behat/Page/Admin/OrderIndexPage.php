@@ -28,9 +28,6 @@ final class OrderIndexPage extends IndexPage implements OrderIndexPageInterface
 
     public function createOrder(): void
     {
-        $this->getDocument()->waitFor(10, function () {
-            return $this->getDocument()->hasLink('Create');
-        });
         $this->getDocument()->clickLink('Create');
     }
 

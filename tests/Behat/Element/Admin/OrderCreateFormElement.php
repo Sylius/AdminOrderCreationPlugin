@@ -6,11 +6,12 @@ namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Admin;
 
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\NodeElement;
+use Behat\Mink\Exception\Exception;
 use Behat\Mink\Session;
+use DMore\ChromeDriver\ChromeDriver;
 use Sylius\Component\Core\Model\AddressInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Element;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector;
-use WebDriver\Exception;
 
 class OrderCreateFormElement extends Element implements OrderCreateFormElementInterface
 {
@@ -275,7 +276,7 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
 
     private function clickOnTabAndWait(string $tabName): void
     {
-        if (!$this->getDriver() instanceof Selenium2Driver) {
+        if (!$this->getDriver() instanceof Selenium2Driver && !$this->getDriver() instanceof ChromeDriver) {
             return;
         }
 
