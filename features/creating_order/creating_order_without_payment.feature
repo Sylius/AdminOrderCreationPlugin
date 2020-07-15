@@ -1,4 +1,4 @@
-@admin_order_creation_managing_orders @stipe
+@admin_order_creation_managing_orders
 Feature: Creating order without payment if order is free
     In order to place a free order in the name of a Customer
     As an Administrator
