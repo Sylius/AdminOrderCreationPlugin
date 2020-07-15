@@ -362,6 +362,14 @@ final class ManagingOrdersContext implements Context
     }
 
     /**
+     * @Then there should be no payment displayed next to order's payment
+     */
+    public function thereShouldBeNoPaymentDisplayedNextToOrderPayment(): void
+    {
+        Assert::true($this->orderShowPage->hasNoPaymentBlock());
+    }
+
+    /**
      * @Then there should be a payment link sent to :email
      */
     public function thereShouldBePaymentLinkSentTo(string $email): void
