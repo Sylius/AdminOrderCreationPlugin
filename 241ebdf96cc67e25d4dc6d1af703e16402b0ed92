@@ -1,0 +1,92 @@
+---------------------------------------------------------------------------
+
+by igormukhingmailcom at 2020-03-03T10:56:56Z
+
+Thanks, @lchrusciel
+Will be great to have this pr merged and tagged...
+
+---------------------------------------------------------------------------
+
+by lchrusciel at 2020-03-03T13:02:05Z
+
+But the build is red :(
+
+---------------------------------------------------------------------------
+
+by lchrusciel at 2020-03-03T13:03:29Z
+
+I'm also considering if more query specific class wouldn't be a better solution, but it is a broader topic.
+
+---------------------------------------------------------------------------
+
+by igormukhingmailcom at 2020-03-03T13:55:29Z
+
+> But the build is red :(
+
+I have feeling the reason of red builds is somewhere outside of my PR (kinda tests failed after upgrade to 1.6).
+This is PR of another author which have exactly same errors at travis: https://travis-ci.org/Sylius/AdminOrderCreationPlugin/jobs/645853418#L1036
+
+---------------------------------------------------------------------------
+
+by igormukhingmailcom at 2020-03-05T19:00:57Z
+
+`master` branch was green at Nov 22, 2019 but not now.
+I've created fake PR from `master` just to rerun checks and have same errors at master as I have in this PR (#146): https://travis-ci.org/Sylius/AdminOrderCreationPlugin/jobs/658827291#L1061
+
+So once master will be fixed - I will rebase my branch and it will be ready to be merged, @lchrusciel
+
+---------------------------------------------------------------------------
+
+by gabiudrescu at 2020-03-23T20:26:02Z
+
+@lchrusciel any chances this get merged to Master anytime soon?
+
+currently, if someone is using this plugin together with another plugin that requires methods in the EntityRepository it fails with a pretty obscure error like the one below:
+
+```
+[2020-03-23 17:49:07] messenger.ERROR: Error thrown while handling message Setono\SyliusMailchimpPlugin\Message\Command\RepushCustomers. Sending for retry #3 using 4000 ms delay. Error: "Argument 1 passed to Setono\SyliusMailchimpPlugin\Message\Handler\RepushCustomersHandler::__construct() must be an instance of Setono\SyliusMailchimpPlugin\Doctrine\ORM\CustomerRepositoryInterface, instance of Sylius\AdminOrderCreationPlugin\Doctrine\ORM\CustomerRepository given, called in /srv/sylius/var/cache/dev/ContainerE2kvtse/getSetonoSyliusMailchimp_Message_Handler_RepushCustomersService.php on line 12" {"message":"[object] (Setono\\SyliusMailchimpPlugin\\Message\\Command\\RepushCustomers: {})","class":"Setono\\SyliusMailchimpPlugin\\Message\\Command\\RepushCustomers","retryCount":3,"delay":4000,"error":"Argument 1 passed to Setono\\SyliusMailchimpPlugin\\Message\\Handler\\RepushCustomersHandler::__construct() must be an instance of Setono\\SyliusMailchimpPlugin\\Doctrine\\ORM\\CustomerRepositoryInterface, instance of Sylius\\AdminOrderCreationPlugin\\Doctrine\\ORM\\CustomerRepository given, called in /srv/sylius/var/cache/dev/ContainerE2kvtse/getSetonoSyliusMailchimp_Message_Handler_RepushCustomersService.php on line 12","exception":"[object] (TypeError(code: 0): Argument 1 passed to Setono\\SyliusMailchimpPlugin\\Message\\Handler\\RepushCustomersHandler::__construct() must be an instance of Setono\\SyliusMailchimpPlugin\\Doctrine\\ORM\\CustomerRepositoryInterface, instance of Sylius\\AdminOrderCreationPlugin\\Doctrine\\ORM\\CustomerRepository given, called in /srv/sylius/var/cache/dev/ContainerE2kvtse/getSetonoSyliusMailchimp_Message_Handler_RepushCustomersService.php on line 12 at /srv/sylius/vendor/setono/sylius-mailchimp-plugin/src/Message/Handler/RepushCustomersHandler.php:21)"} []
+```
+
+---------------------------------------------------------------------------
+
+by lchrusciel at 2020-03-24T07:52:19Z
+
+Hey Igor and Gabi 👋
+I will ask Magda, to put it to the next sprint, so where will be much higher chance, that someone will pick it up.
+Thanks for heads up ;)
+
+---------------------------------------------------------------------------
+
+by lchrusciel at 2020-07-15T09:54:09Z
+
+If, in any case this is still relevant to you, please rebase to the newest master and if green I will merge it.
+
+---------------------------------------------------------------------------
+
+by gabiudrescu at 2020-07-15T10:03:42Z
+
+in case this wasn't solved by some other commit, I find it very relevant, as this prevents the usage of this plugin together with other plugins, which makes the entire plugin ecosystem become irrelevant...
+
+---------------------------------------------------------------------------
+
+by gabiudrescu at 2020-07-15T10:04:03Z
+
+if no one shows some love to this PR, I'll give it a go this weekend and maybe try to fix it myself
+
+---------------------------------------------------------------------------
+
+by igormukhingmailcom at 2020-07-15T11:03:51Z
+
+@lchrusciel , its green. Could you merge and release please?
+
+---------------------------------------------------------------------------
+
+by igormukhingmailcom at 2020-07-15T12:35:32Z
+
+@lchrusciel, this one looks good?
+
+---------------------------------------------------------------------------
+
+by lchrusciel at 2020-07-15T13:17:20Z
+
+Thanks, Igor! :tada:
