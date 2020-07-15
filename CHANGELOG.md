@@ -1,5 +1,13 @@
 # CHANGELOG
 
+### v0.9.0 (2020-07-15)
+
+## TL;DR:
+- Repositories refactored to traits in order to make overriding repositories easier
+
+### Added
+- [#146](https://github.com/Sylius/AdminOrderCreationPlugin/issues/146) Extracted: Repository methods to traits (fixes #140) ([@igormukhingmailcom](https://github.com/igormukhingmailcom))
+
 ### v0.8.0 (2020-07-15)
 
 ## TL;DR:
