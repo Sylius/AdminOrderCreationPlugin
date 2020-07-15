@@ -9,4 +9,6 @@ use Sylius\Behat\Page\Admin\Order\ShowPageInterface;
 interface OrderShowPageInterface extends ShowPageInterface
 {
     public function hasPaymentLink(): bool;
+
+    public function hasNoPaymentBlock(): bool;
 }

@@ -42,7 +42,9 @@ final class OrderCreationListener
         $stateMachine = $this->stateMachineFactory->get($order, 'sylius_order_checkout');
         $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_ADDRESS);
         $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_SELECT_SHIPPING);
-        $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT);
+        if ($stateMachine->can(OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT)) {
+            $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT);
+        }
         $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_COMPLETE);
     }
 }

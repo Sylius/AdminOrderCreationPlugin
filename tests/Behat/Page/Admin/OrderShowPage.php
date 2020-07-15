@@ -14,4 +14,16 @@ final class OrderShowPage extends ShowPage implements OrderShowPageInterface
 
         return null !== $lastPayment->find('css', '#payment-link');
     }
+
+    public function hasNoPaymentBlock(): bool
+    {
+        return null !== $this->getElement('no-payments');
+    }
+
+    protected function getDefinedElements(): array
+    {
+        return array_merge(parent::getDefinedElements(), [
+            'no-payments' => '#no-payments',
+        ]);
+    }
 }
