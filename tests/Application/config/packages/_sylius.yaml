@@ -14,3 +14,15 @@ parameters:
 sylius_shop:
     product_grid:
         include_all_descendants: true
+
+sylius_customer:
+    resources:
+        customer:
+            classes:
+                repository: Tests\Sylius\AdminOrderCreationPlugin\Application\Doctrine\ORM\CustomerRepository
+
+sylius_product:
+    resources:
+        product_variant:
+            classes:
+                repository: Tests\Sylius\AdminOrderCreationPlugin\Application\Doctrine\ORM\ProductVariantRepository

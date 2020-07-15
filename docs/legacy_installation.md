@@ -36,14 +36,19 @@
     cp -R vendor/sylius/admin-order-creation-plugin/src/Resources/views/SyliusAdminBundle/* app/Resources/SyliusAdminBundle/views/
     ```
 
-6. Copy plugin migrations to your migrations directory (e.g. `src/Migrations`) and apply them to your database:
+6. Override repositories
+
+    As shown [here](tests/Application/Doctrine/ORM)
+    and [here](tests/Application/config/packages/_sylius.yaml).
+
+7. Copy plugin migrations to your migrations directory (e.g. `src/Migrations`) and apply them to your database:
 
     ```bash
     cp -R vendor/sylius/admin-order-creation-plugin/migrations/* src/Migrations
     bin/console doctrine:migrations:migrate
     ```
 
-7. Install `FOSJsRoutingBundle` assets:
+8. Install `FOSJsRoutingBundle` assets:
 
     ```bash
     bin/console assets:install --symlink web

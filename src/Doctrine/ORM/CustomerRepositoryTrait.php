@@ -4,17 +4,27 @@ declare(strict_types=1);
 
 namespace Sylius\AdminOrderCreationPlugin\Doctrine\ORM;
 
-use Sylius\Bundle\CoreBundle\Doctrine\ORM\CustomerRepository as BaseCustomerRepository;
+use Doctrine\ORM\EntityManager;
 
-final class CustomerRepository extends BaseCustomerRepository implements CustomerRepositoryInterface
+trait CustomerRepositoryTrait
 {
+    /**
+     * @return EntityManager
+     */
+    abstract protected function getEntityManager();
+
+    /**
+     * @return string
+     */
+    abstract protected function getEntityName();
+
     public function findByEmailPart(string $email): array
     {
         return $this
-            ->_em
+            ->getEntityManager()
             ->createQueryBuilder()
             ->select('o.id', 'o.email')
-            ->from($this->_entityName, 'o')
+            ->from($this->getEntityName(), 'o')
             ->andWhere('o.email LIKE :email')
             ->setParameter('email', '%' . $email . '%')
             ->getQuery()

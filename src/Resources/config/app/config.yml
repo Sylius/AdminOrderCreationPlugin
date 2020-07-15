@@ -30,15 +30,3 @@ sylius_mailer:
         order_created_in_admin_panel:
             subject: 'sylius_admin_order_creation.email.order_created.subject'
             template: '@SyliusAdminOrderCreationPlugin/Emails/orderCreated.html.twig'
-
-sylius_customer:
-    resources:
-        customer:
-            classes:
-                repository: Sylius\AdminOrderCreationPlugin\Doctrine\ORM\CustomerRepository
-
-sylius_product:
-    resources:
-        product_variant:
-            classes:
-                repository: Sylius\AdminOrderCreationPlugin\Doctrine\ORM\ProductVariantRepository
