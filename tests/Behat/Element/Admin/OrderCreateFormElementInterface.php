@@ -8,11 +8,11 @@ use Sylius\Component\Core\Model\AddressInterface;
 
 interface OrderCreateFormElementInterface
 {
-    public function addProduct(string $productName): void;
+    public function addProduct(string $productVariantDescriptor): void;
 
-    public function addMultipleProducts(string $productName, int $quantity): void;
+    public function addMultipleProducts(string $productVariantDescriptor, int $quantity): void;
 
-    public function removeProduct(string $productCode): void;
+    public function removeProduct(string $productVariantDescriptor): void;
 
     public function areProductsVisible(): bool;
 
@@ -37,7 +37,7 @@ interface OrderCreateFormElementInterface
 
     public function changePaymentMethod(string $paymentMethodName): void;
 
-    public function specifyQuantity(string $itemProductCode, int $quantity): void;
+    public function specifyQuantity(string $productVariantDescriptor, int $quantity): void;
 
     public function placeOrder(): void;
 

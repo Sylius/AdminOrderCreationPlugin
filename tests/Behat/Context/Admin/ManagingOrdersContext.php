@@ -125,7 +125,7 @@ final class ManagingOrdersContext implements Context
      */
     public function addProductToThisOrder(ProductInterface $product): void
     {
-        $this->orderCreateFormElement->addProduct($product->getName());
+        $this->orderCreateFormElement->addProduct($product->getVariants()->first()->getDescriptor());
     }
 
     /**
@@ -133,7 +133,7 @@ final class ManagingOrdersContext implements Context
      */
     public function addMultipleProductsToThisOrder(int $quantity, ProductInterface $product): void
     {
-        $this->orderCreateFormElement->addMultipleProducts($product->getName(), $quantity);
+        $this->orderCreateFormElement->addMultipleProducts($product->getVariants()->first()->getDescriptor(), $quantity);
     }
 
     /**
@@ -141,7 +141,7 @@ final class ManagingOrdersContext implements Context
      */
     public function removeProductFromThisOrder(ProductInterface $product): void
     {
-        $this->orderCreateFormElement->removeProduct($product->getCode());
+        $this->orderCreateFormElement->removeProduct($product->getVariants()->first()->getDescriptor());
     }
 
     /**
@@ -241,7 +241,7 @@ final class ManagingOrdersContext implements Context
      */
     public function iChangeQuantityOfItemTo(ProductInterface $product, int $quantity): void
     {
-        $this->orderCreateFormElement->specifyQuantity($product->getCode(), $quantity);
+        $this->orderCreateFormElement->specifyQuantity($product->getVariants()->first()->getDescriptor(), $quantity);
     }
 
     /**

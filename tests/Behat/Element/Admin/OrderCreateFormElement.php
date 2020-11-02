@@ -15,9 +15,11 @@ use Tests\Sylius\AdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector;
 
 class OrderCreateFormElement extends Element implements OrderCreateFormElementInterface
 {
+    public const TYPE_BILLING = 'billing';
+    public const TYPE_SHIPPING = 'shipping';
+
     /** @var AutoCompleteSelector */
     private $autoCompleteSelector;
-
     public function __construct(
         Session $session,
         $parameters,
@@ -28,30 +30,27 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         $this->autoCompleteSelector = $autoCompleteSelector;
     }
 
-    public const TYPE_BILLING = 'billing';
-    public const TYPE_SHIPPING = 'shipping';
-
-    public function addProduct(string $productName): void
+    public function addProduct(string $productVariantDescriptor): void
     {
         $this->clickOnTabAndWait('Items');
         $item = $this->addItemAndWaitForIt();
 
-        $this->autoCompleteSelector->selectOption($item, $productName);
+        $this->autoCompleteSelector->selectOption($item, $productVariantDescriptor);
     }
 
-    public function addMultipleProducts(string $productName, int $quantity): void
+    public function addMultipleProducts(string $productVariantDescriptor, int $quantity): void
     {
         $this->clickOnTabAndWait('Items');
 
         $item = $this->addItemAndWaitForIt();
 
-        $this->autoCompleteSelector->selectOption($item, $productName);
+        $this->autoCompleteSelector->selectOption($item, $productVariantDescriptor);
         $item->fillField('Quantity', $quantity);
     }
 
-    public function removeProduct(string $productCode): void
+    public function removeProduct(string $productVariantDescriptor): void
     {
-        $item = $this->getItemWithProductSelected($productCode);
+        $item = $this->getItemWithProductSelected($productVariantDescriptor);
         $item->focus();
 
         $item->clickLink('Delete');
@@ -132,9 +131,9 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         $this->selectMethod('payments', 'Payment Method', $paymentMethodName, false);
     }
 
-    public function specifyQuantity(string $itemProductCode, int $quantity): void
+    public function specifyQuantity(string $productVariantDescriptor, int $quantity): void
     {
-        $item = $this->getItemWithProductSelected($itemProductCode);
+        $item = $this->getItemWithProductSelected($productVariantDescriptor);
 
         $item->fillField('Quantity', $quantity);
     }
@@ -260,18 +259,18 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         return count($this->getDocument()->findAll('css', '#items [data-form-collection="item"]'));
     }
 
-    private function getItemWithProductSelected(string $productCode): NodeElement
+    private function getItemWithProductSelected(string $productVariantDescriptor): NodeElement
     {
         /** @var NodeElement $item */
         foreach ($this->getDocument()->findAll('css', '#items [data-form-collection="item"]') as $item) {
             $selectedProduct = $item->find('css', '.sylius-autocomplete .text')->getText();
 
-            if (strpos($selectedProduct, $productCode) !== false) {
+            if (strpos($selectedProduct, $productVariantDescriptor) !== false) {
                 return $item;
             }
         }
 
-        throw new \Exception(sprintf('There is no item with product with code "%s" selected', $productCode));
+        throw new \Exception(sprintf('There is no item with product with descriptor "%s" selected', $productVariantDescriptor));
     }
 
     private function clickOnTabAndWait(string $tabName): void
