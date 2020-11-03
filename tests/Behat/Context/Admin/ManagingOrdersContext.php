@@ -141,7 +141,12 @@ final class ManagingOrdersContext implements Context
      */
     public function removeProductFromThisOrder(ProductInterface $product): void
     {
-        $this->orderCreateFormElement->removeProduct($product->getVariants()->first()->getDescriptor());
+        try {
+            $this->orderCreateFormElement->removeProduct($product->getVariants()->first()->getDescriptor());
+        } catch (\InvalidArgumentException $exception) {
+            // TODO: Currently the autocomplete include product variant code instead of its descriptor when rendering a form with existing items
+            $this->orderCreateFormElement->removeProduct($product->getVariants()->first()->getCode());
+        }
     }
 
     /**
@@ -241,7 +246,12 @@ final class ManagingOrdersContext implements Context
      */
     public function iChangeQuantityOfItemTo(ProductInterface $product, int $quantity): void
     {
-        $this->orderCreateFormElement->specifyQuantity($product->getVariants()->first()->getDescriptor(), $quantity);
+        try {
+            $this->orderCreateFormElement->specifyQuantity($product->getVariants()->first()->getDescriptor(), $quantity);
+        } catch (\InvalidArgumentException $exception) {
+            // TODO: Currently the autocomplete include product variant code instead of its descriptor when rendering a form with existing items
+            $this->orderCreateFormElement->specifyQuantity($product->getVariants()->first()->getCode(), $quantity);
+        }
     }
 
     /**

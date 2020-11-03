@@ -270,7 +270,7 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
             }
         }
 
-        throw new \Exception(sprintf('There is no item with product with descriptor "%s" selected', $productVariantDescriptor));
+        throw new \InvalidArgumentException(sprintf('There is no item with product with descriptor "%s" selected', $productVariantDescriptor));
     }
 
     private function clickOnTabAndWait(string $tabName): void
