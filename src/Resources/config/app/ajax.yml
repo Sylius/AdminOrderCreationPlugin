@@ -30,6 +30,7 @@ sylius_admin_order_creation_ajax_product_variants_by_phrase_and_channel:
         _format: json
         _sylius:
             permission: true
+            serialization_groups: [Autocomplete]
             repository:
                 method: findByPhraseAndChannelCode
                 arguments:
