@@ -21,7 +21,7 @@
     "require": {
         "php": "^7.3",
 
-        "sylius/sylius": "^1.7",
+        "sylius/sylius": "^1.7|^1.8",
         "friendsofsymfony/jsrouting-bundle": "^2.2"
     },
     "require-dev": {
@@ -66,8 +66,12 @@
     },
     "scripts": {
         "analyse": [
+            "@composer validate --strict",
             "vendor/bin/phpstan analyse -c phpstan.neon -l max src/",
             "vendor/bin/ecs check src/ spec/"
+        ],
+        "fix": [
+            "vendor/bin/ecs check src/ spec/ --fix"
         ]
     },
     "extra": {
