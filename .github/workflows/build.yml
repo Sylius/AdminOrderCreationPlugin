@@ -94,9 +94,9 @@ jobs:
 
             -
                 name: Prepare migrations for Sylius 1.8
-                    if: matrix.sylius == '1.8.*'
-                    run: |
-                        composer require sylius-labs/doctrine-migrations-extra-bundle --no-interaction --no-update
+                if: matrix.sylius == '1.8.*'
+                run: |
+                    composer require sylius-labs/doctrine-migrations-extra-bundle --no-interaction --no-update
 
             -
                 name: Install Sylius version
