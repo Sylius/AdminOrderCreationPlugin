@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace spec\Sylius\AdminOrderCreationPlugin\EventListener;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Payum\Core\Model\GatewayConfigInterface;
 use Payum\Core\Payum;
 use Payum\Core\Security\TokenInterface;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Sylius\AdminOrderCreationPlugin\EventListener;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Payum\Core\Model\GatewayConfigInterface;
 use Sylius\AdminOrderCreationPlugin\Provider\PaymentTokenProviderInterface;
 use Sylius\AdminOrderCreationPlugin\Sender\OrderPaymentLinkSenderInterface;
