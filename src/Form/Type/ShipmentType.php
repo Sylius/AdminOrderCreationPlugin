@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 final class ShipmentType extends AbstractResourceType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('method', ShippingMethodChoiceType::class, [
             'required' => true,

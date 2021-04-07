@@ -9,7 +9,7 @@ use Zend\Stdlib\PriorityQueue;
 
 final class CompositeReorderProcessor implements ReorderProcessor
 {
-    /*** @var PriorityQueue|ReorderProcessor[] */
+    /** @var PriorityQueue|ReorderProcessor[] */
     private $reorderProcessors;
 
     public function __construct()
