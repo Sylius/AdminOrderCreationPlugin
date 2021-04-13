@@ -24,9 +24,9 @@ Feature: Previewing order before creation
         And I select "Free" shipping method
         And I select "Cash on Delivery" payment method
         And I place this order
-        Then I should see preview of the order with total "PLN100.00"
+        Then I should see preview of the order with total "PLN 100.00"
         And this order should contain "Stark Coat" product
-        And its shipping total should be "PLN0.00"
+        And its shipping total should be "PLN 0.00"
         And it should have one "Cash on Delivery" payment
         And it should have "English (United States)" locale
         And it should have "PLN" currency
