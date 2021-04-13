@@ -13,15 +13,16 @@ jobs:
     tests:
         runs-on: ubuntu-latest
 
-        name: "PHP ${{ matrix.php }}, MySQL ${{ matrix.mysql }}, Sylius ${{ matrix.sylius }}"
+        name: "Sylius ${{ matrix.sylius }}, PHP ${{ matrix.php }}, Symfony ${{ matrix.symfony }}, MySQL ${{ matrix.mysql }}"
 
         strategy:
             fail-fast: false
             matrix:
-                php: [7.4, 7.3]
+                php: [7.3, 7.4]
+                symfony: [^4.4]
+                sylius: [~1.7.0]
                 node: [10.x]
                 mysql: [5.7, 8.0]
-                sylius: [1.7.*, 1.8.*]
 
                 exclude:
                     - # PHP 7.3 does not support "caching_sha2_password" authentication plugin which is a default one in MySQL 8.0
@@ -93,19 +94,20 @@ jobs:
                         ${{ runner.os }}-php-${{ matrix.php }}-composer-
 
             -
-                name: Prepare migrations for Sylius 1.8
-                if: matrix.sylius == '1.8.*'
+                name: Restrict Symfony version
+                if: matrix.symfony != ''
                 run: |
-                    composer require sylius-labs/doctrine-migrations-extra-bundle --no-interaction --no-update
+                    composer global require --no-progress --no-scripts --no-plugins "symfony/flex:^1.10"
+                    composer config extra.symfony.require "${{ matrix.symfony }}"
 
             -
-                name: Install Sylius version
-                run: |
-                    composer require "sylius/sylius:${{ matrix.sylius }}" --no-update
+                name: Restrict Sylius version
+                if: matrix.sylius != ''
+                run: composer require "sylius/sylius:${{ matrix.sylius }}" --no-update --no-scripts --no-interaction
 
             -
                 name: Install PHP dependencies
-                run: composer install --no-interaction --prefer-dist
+                run: composer update --no-interaction
 
             -
                 name: Get Yarn cache directory
@@ -120,6 +122,7 @@ jobs:
                     key: ${{ runner.os }}-node-${{ matrix.node }}-yarn-${{ hashFiles('**/package.json **/yarn.lock') }}
                     restore-keys: |
                         ${{ runner.os }}-node-${{ matrix.node }}-yarn-
+
             -
                 name: Install JS dependencies
                 run: (cd tests/Application && yarn install)
@@ -127,14 +130,16 @@ jobs:
             -
                 name: Prepare test application database
                 run: |
+                    (cp migrations/* tests/Application/src/Migrations/)
                     (cd tests/Application && bin/console doctrine:database:create -vvv)
-                    (cd tests/Application && bin/console doctrine:schema:create -vvv)
+                    (cd tests/Application && bin/console doctrine:migrations:migrate -n -vvv -q)
 
             -
                 name: Prepare test application assets
                 run: |
                     (cd tests/Application && bin/console assets:install public -vvv)
                     (cd tests/Application && yarn build)
+
             -
                 name: Prepare test application cache
                 run: (cd tests/Application && bin/console cache:warmup -vvv)
@@ -152,6 +157,10 @@ jobs:
                 run: (cd tests/Application && bin/console doctrine:schema:validate)
 
             -
+                name: Run security check
+                run: symfony security:check
+
+            -
                 name: Run PHPStan
                 run: vendor/bin/phpstan analyse -c phpstan.neon -l max src/
 
@@ -165,7 +174,7 @@ jobs:
 
             -
                 name: Run Behat
-                run: vendor/bin/behat --colors --strict -vvv --no-interaction || vendor/bin/behat --colors --strict -vvv --no-interaction --rerun
+                run: vendor/bin/behat --colors --strict -vvv --no-interaction -f progress || vendor/bin/behat --colors --strict -vvv --no-interaction -f progress --rerun
 
             -
                 name: Upload Behat logs
