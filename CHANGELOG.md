@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.10.0 (2021-04-14)
+
+- [#160](https://github.com/Sylius/AdminOrderCreationPlugin/issues/160) Use Autocomplete serialization group (gain -75% of number of SQL requests) ([@jacquesbh](https://github.com/jacquesbh))
+- [#164](https://github.com/Sylius/AdminOrderCreationPlugin/issues/164) Initialize GitHub actions ([@clem21](https://github.com/clem21), [@GSadee](https://github.com/GSadee))
+- [#165](https://github.com/Sylius/AdminOrderCreationPlugin/issues/165) Upgrade to Sylius 1.8 ([@GSadee](https://github.com/GSadee))
+
 ## v0.9.1 (2020-11-03)
 
 #### Details
