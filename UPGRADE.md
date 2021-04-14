@@ -1,3 +1,9 @@
+### UPGRADE FROM 0.9 TO 0.10
+
+1. Upgrade your application to [Sylius 1.8](https://github.com/Sylius/Sylius/blob/master/UPGRADE-1.8.md).
+
+1. Remove previously copied migration files (you may check migrations to remove [here](https://github.com/Sylius/AdminOrderCreationPlugin/pull/165)).
+
 ### UPGRADE FROM 0.8 TO 0.9
 
 1. Create `CustomerRepository` / `ProductVariantRepository` repositories
