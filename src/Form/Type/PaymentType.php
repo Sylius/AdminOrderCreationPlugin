@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 final class PaymentType extends AbstractResourceType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('method', PaymentMethodChoiceType::class, [
             'required' => true,

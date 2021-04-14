@@ -20,7 +20,7 @@ jobs:
             matrix:
                 php: [7.3, 7.4]
                 symfony: [^4.4]
-                sylius: [~1.7.0]
+                sylius: [~1.8.0]
                 node: [10.x]
                 mysql: [5.7, 8.0]
 
@@ -130,7 +130,6 @@ jobs:
             -
                 name: Prepare test application database
                 run: |
-                    (cp migrations/* tests/Application/src/Migrations/)
                     (cd tests/Application && bin/console doctrine:database:create -vvv)
                     (cd tests/Application && bin/console doctrine:migrations:migrate -n -vvv -q)
 

@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormEvents;
 
 final class NewOrderType extends AbstractResourceType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('promotionCoupon', PromotionCouponToCodeType::class, [
