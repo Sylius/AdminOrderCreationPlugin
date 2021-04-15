@@ -1,3 +1,7 @@
+### UPGRADE FROM 0.10 TO 0.11
+
+1. Upgrade your application to [Sylius 1.9](https://github.com/Sylius/Sylius/blob/master/UPGRADE-1.9.md).
+
 ### UPGRADE FROM 0.9 TO 0.10
 
 1. Upgrade your application to [Sylius 1.8](https://github.com/Sylius/Sylius/blob/master/UPGRADE-1.8.md).
