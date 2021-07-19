@@ -1,5 +1,5 @@
 {
-    "name": "sylius/admin-order-creation-plugin",
+    "name": "tulik/admin-order-creation-plugin",
     "type": "sylius-plugin",
     "keywords": ["sylius", "sylius-plugin", "symfony", "e-commerce", "admin order creation"],
     "description": "Sylius Plugin for order creation in Admin panel",
