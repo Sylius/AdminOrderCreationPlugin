@@ -40,7 +40,6 @@ final class SyliusAdminOrderCreationExtension extends Extension implements Prepe
     {
         return [
             'Sylius\Bundle\CoreBundle\Migrations',
-            'Sylius\Bundle\AdminApiBundle\Migrations',
         ];
     }
 }
