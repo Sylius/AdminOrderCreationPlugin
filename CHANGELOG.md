@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.12.0 (2021-07-29)
+
+- [#170](https://github.com/Sylius/AdminOrderCreationPlugin/issues/170) Upgrade to Sylius 1.10 and Symfony >5.2 ([@Roshyo](https://github.com/Roshyo), [@Zales0123](https://github.com/Zales0123)
+
 ## v0.11.0 (2021-04-15)
 
 - [#167](https://github.com/Sylius/AdminOrderCreationPlugin/issues/167) Upgrade to Sylius 1.9 ([@GSadee](https://github.com/GSadee))
