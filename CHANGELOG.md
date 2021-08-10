@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.12.2 (2021-08-10)
+
+- [#174](https://github.com/Sylius/AdminOrderCreationPlugin/issues/174) [Maintenance] Remove redundant migrations ([@Arminek](https://github.com/Arminek))
+
 ## v0.12.1 (2021-07-30)
 
 - [#173](https://github.com/Sylius/AdminOrderCreationPlugin/issues/173) Really allow for Sylius 1.9 and 1.10 ([@pamil](https://github.com/pamil))
