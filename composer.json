@@ -49,6 +49,9 @@
         "symfony/web-profiler-bundle": "^4.4 || ^5.2",
         "symfony/web-server-bundle": "^4.4 || ^5.2"
     },
+    "conflict": {
+        "doctrine/dbal": "^3.0"
+    },
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
