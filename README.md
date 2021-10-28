@@ -64,8 +64,63 @@ Symfony Flex, it's much quicker! :)
 
 4. Override repositories
 
-    As shown [here](tests/Application/Doctrine/ORM)
-    and [here](tests/Application/config/packages/_sylius.yaml).
+   1. Create repository classes
+      ```bash
+      mkdir src/Repository
+      touch src/Repository/CustomerRepository.php
+      touch src/Repository/ProductVariantRepository.php
+      ```
+   2. Paste the following content to the `src/Repository/CustomerRepository.php`:
+      ```php
+      <?php
+    
+      declare(strict_types=1);
+    
+      namespace App\Repository;
+      
+      use Sylius\AdminOrderCreationPlugin\Doctrine\ORM\CustomerRepositoryInterface;
+      use Sylius\AdminOrderCreationPlugin\Doctrine\ORM\CustomerRepositoryTrait;
+      use Sylius\Bundle\CoreBundle\Doctrine\ORM\CustomerRepository as BaseCustomerRepository;
+      
+      final class CustomerRepository extends BaseCustomerRepository implements CustomerRepositoryInterface
+      {
+          use CustomerRepositoryTrait;
+      }
+      ```
+   3. Paste the following content to the `src/Repository/ProductVariantRepository.php`:
+      ```php
+      <?php
+    
+      declare(strict_types=1);
+    
+      namespace App\Repository;
+
+      use Sylius\AdminOrderCreationPlugin\Doctrine\ORM\ProductVariantRepositoryInterface;
+      use Sylius\AdminOrderCreationPlugin\Doctrine\ORM\ProductVariantRepositoryTrait;
+      use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductVariantRepository as BaseProductVariantRepository;
+      
+      final class ProductVariantRepository extends BaseProductVariantRepository implements ProductVariantRepositoryInterface
+      {
+          use ProductVariantRepositoryTrait;
+      }
+      ```
+   4. Configure repositories in `config/packages/_sylius.yaml`:
+   ```diff
+    sylius_customer:
+        resources:
+            customer:
+                classes:
+                    model: App\Entity\Customer\Customer
+   +                repository: App\Repository\CustomerRepository
+   
+    sylius_product:
+        resources:
+            product_variant:
+                classes:
+                    model: App\Entity\Product\ProductVariant
+   +                repository: App\Repository\ProductVariantRepository
+   ```
+      
 
 ## Extension points
 
