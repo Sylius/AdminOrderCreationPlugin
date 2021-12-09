@@ -55,14 +55,7 @@ Symfony Flex, it's much quicker! :)
     cp -R vendor/sylius/admin-order-creation-plugin/src/Resources/views/SyliusAdminBundle/* templates/bundles/SyliusAdminBundle/
     ```
 
-3. Copy plugin migrations to your migrations directory (e.g. `src/Migrations`) and apply them to your database:
-
-    ```bash
-    cp -R vendor/sylius/admin-order-creation-plugin/migrations/* src/Migrations
-    bin/console doctrine:migrations:migrate
-    ```
-
-4. Override repositories
+3. Override repositories
 
    1. Create repository classes
       ```bash
