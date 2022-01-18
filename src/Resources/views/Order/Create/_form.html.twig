@@ -12,10 +12,32 @@
         <div class="title">
             <i class="dropdown icon"></i> {{ 'sylius.ui.shipping_address'|trans }} &amp; {{ 'sylius.ui.billing_address'|trans }}
         </div>
+        {% set customer = resource.customer %}
         <div class="content">
-            <div class="ui horizontal segments">
-                <div class="ui segment">{{ form_row(form.shippingAddress) }}</div>
-                <div class="ui segment">{{ form_row(form.billingAddress) }}</div>
+            <div class="ui grid">
+                <div class="eight wide column">
+                    <div class="ui segment">
+                        <div class="custom-address-select js-address-select">
+                            {% include '@SyliusAdminOrderCreationPlugin/Order/Create/_addressBookSelect.html.twig' %}
+                        </div>
+
+                        <div class="js-address-container">
+                            {{ form_row(form.shippingAddress) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="eight wide column">
+                    <div class="ui segment">
+                        <div class="custom-address-select js-address-select">
+                            {% include '@SyliusAdminOrderCreationPlugin/Order/Create/_addressBookSelect.html.twig' %}
+                        </div>
+
+                        <div class="js-address-container">
+                            {{ form_row(form.billingAddress) }}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -50,3 +72,7 @@
     {{ form_row(form._token) }}
     {{ form_end(form, {'render_rest': false}) }}
 </div>
+
+{% block javascript %}
+    {% include '@SyliusUi/_javascripts.html.twig' with {'path': 'bundles/syliusadminordercreationplugin/js/AdminOrderCreationAddressBook.js'} %}
+{% endblock %}
