@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Sylius\AdminOrderCreationPlugin\ReorderProcessing;
 
 use Sylius\Component\Core\Model\OrderInterface;
-use Zend\Stdlib\PriorityQueue;
+use Laminas\Stdlib\PriorityQueue;
 
 final class CompositeReorderProcessor implements ReorderProcessor
 {

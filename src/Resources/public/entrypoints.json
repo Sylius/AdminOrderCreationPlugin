@@ -1,0 +1,20 @@
+{
+  "entrypoints": {
+    "bitbag-orderCreation-shop": {
+      "css": [
+        "/public/bitbag-orderCreation-shop.css"
+      ],
+      "js": [
+        "/public/bitbag-orderCreation-shop.js"
+      ]
+    },
+    "bitbag-orderCreation-admin": {
+      "css": [
+        "/public/bitbag-orderCreation-admin.css"
+      ],
+      "js": [
+        "/public/bitbag-orderCreation-admin.js"
+      ]
+    }
+  }
+}

@@ -4,9 +4,11 @@
 /vendor/
 /node_modules/
 /composer.lock
+/phpspec.yml
 
 /etc/build/*
 !/etc/build/.gitkeep
+!/etc/build/.gitignore
 
 /tests/Application/yarn.lock
 
