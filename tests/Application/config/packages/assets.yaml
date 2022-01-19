@@ -6,6 +6,6 @@ framework:
             admin:
                 json_manifest_path: '%kernel.project_dir%/public/build/admin/manifest.json'
             orderCreation_shop:
-                json_manifest_path: '%kernel.project_dir%/public/build/bitbag/orderCreation/shop/manifest.json'
+                json_manifest_path: '%kernel.project_dir%/public/build/sylius/orderCreation/shop/manifest.json'
             orderCreation_admin:
-                json_manifest_path: '%kernel.project_dir%/public/build/bitbag/orderCreation/admin/manifest.json'
+                json_manifest_path: '%kernel.project_dir%/public/build/sylius/orderCreation/admin/manifest.json'

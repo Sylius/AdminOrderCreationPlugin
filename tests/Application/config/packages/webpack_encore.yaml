@@ -3,5 +3,5 @@ webpack_encore:
     builds:
         shop: '%kernel.project_dir%/public/build/shop'
         admin: '%kernel.project_dir%/public/build/admin'
-        orderCreation_shop: '%kernel.project_dir%/public/build/bitbag/orderCreation/shop'
-        orderCreation_admin: '%kernel.project_dir%/public/build/bitbag/orderCreation/admin'
+        orderCreation_shop: '%kernel.project_dir%/public/build/sylius/orderCreation/shop'
+        orderCreation_admin: '%kernel.project_dir%/public/build/sylius/orderCreation/admin'

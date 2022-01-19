@@ -6,16 +6,16 @@ const getConfig = (pluginName, type) => {
   Encore.reset();
 
   Encore
-      .setOutputPath(`public/build/bitbag/${pluginName}/${type}/`)
-      .setPublicPath(`/build/bitbag/${pluginName}/${type}/`)
-      .addEntry(`bitbag-${pluginName}-${type}`, path.resolve(__dirname, `./src/Resources/assets/${type}/entry.js`))
+      .setOutputPath(`public/build/sylius/${pluginName}/${type}/`)
+      .setPublicPath(`/build/sylius/${pluginName}/${type}/`)
+      .addEntry(`sylius-${pluginName}-${type}`, path.resolve(__dirname, `./src/Resources/assets/${type}/entry.js`))
       .disableSingleRuntimeChunk()
       .cleanupOutputBeforeBuild()
       .enableSourceMaps(!Encore.isProduction())
       .enableSassLoader();
 
   const config = Encore.getWebpackConfig();
-  config.name = `bitbag-${pluginName}-${type}`;
+  config.name = `sylius-${pluginName}-${type}`;
 
   return config;
 }
@@ -23,14 +23,14 @@ const getConfig = (pluginName, type) => {
 Encore
   .setOutputPath(`src/Resources/public/`)
   .setPublicPath(`/public/`)
-  .addEntry(`bitbag-${pluginName}-shop`, path.resolve(__dirname, `./src/Resources/assets/shop/entry.js`))
-  .addEntry(`bitbag-${pluginName}-admin`, path.resolve(__dirname, `./src/Resources/assets/admin/entry.js`))
+  .addEntry(`sylius-${pluginName}-shop`, path.resolve(__dirname, `./src/Resources/assets/shop/entry.js`))
+  .addEntry(`sylius-${pluginName}-admin`, path.resolve(__dirname, `./src/Resources/assets/admin/entry.js`))
   .cleanupOutputBeforeBuild()
   .disableSingleRuntimeChunk()
   .enableSassLoader();
 
 const distConfig = Encore.getWebpackConfig();
-distConfig.name = `bitbag-plugin-dist`;
+distConfig.name = `sylius-plugin-dist`;
 
 Encore.reset();
 

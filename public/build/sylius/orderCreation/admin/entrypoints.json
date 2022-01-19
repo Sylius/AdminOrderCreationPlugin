@@ -1,0 +1,12 @@
+{
+  "entrypoints": {
+    "sylius-orderCreation-admin": {
+      "css": [
+        "/build/sylius/orderCreation/admin/sylius-orderCreation-admin.css"
+      ],
+      "js": [
+        "/build/sylius/orderCreation/admin/sylius-orderCreation-admin.js"
+      ]
+    }
+  }
+}

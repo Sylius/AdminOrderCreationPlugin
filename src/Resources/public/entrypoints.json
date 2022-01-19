@@ -1,19 +1,19 @@
 {
   "entrypoints": {
-    "bitbag-orderCreation-shop": {
+    "sylius-orderCreation-shop": {
       "css": [
-        "/public/bitbag-orderCreation-shop.css"
+        "/public/sylius-orderCreation-shop.css"
       ],
       "js": [
-        "/public/bitbag-orderCreation-shop.js"
+        "/public/sylius-orderCreation-shop.js"
       ]
     },
-    "bitbag-orderCreation-admin": {
+    "sylius-orderCreation-admin": {
       "css": [
-        "/public/bitbag-orderCreation-admin.css"
+        "/public/sylius-orderCreation-admin.css"
       ],
       "js": [
-        "/public/bitbag-orderCreation-admin.js"
+        "/public/sylius-orderCreation-admin.js"
       ]
     }
   }
