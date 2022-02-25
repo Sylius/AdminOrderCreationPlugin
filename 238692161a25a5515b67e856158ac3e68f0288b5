@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by devfive at 2021-01-20T13:14:13Z
+
+I think it should also pass `localeCode` like in other places, e.g. https://github.com/Sylius/Sylius/blob/f27be445c11eccd0556d5edbafd60067960ca46c/src/Sylius/Bundle/AdminBundle/EmailManager/OrderEmailManager.php#L32
+
+but then it won't be only `OrderPaymentLinkSender` anymore, so this file should be renamed probably, what do you think?
+
+---------------------------------------------------------------------------
+
+by GSadee at 2022-02-25T13:01:56Z
+
+Thanks, Igor! :tada:
