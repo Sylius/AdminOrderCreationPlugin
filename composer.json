@@ -19,9 +19,9 @@
         }
     ],
     "require": {
-        "php": "^7.4 || ^8.0",
+        "php": "^8.0",
 
-        "sylius/sylius": "~1.9.0 || ~1.10.0",
+        "sylius/sylius": "^1.10",
         "friendsofsymfony/jsrouting-bundle": "^2.2"
     },
     "require-dev": {
@@ -42,12 +42,12 @@
         "phpstan/phpstan": "0.12.84",
         "phpstan/phpstan-webmozart-assert": "0.12.12",
         "phpunit/phpunit": "^9.5",
+        "polishsymfonycommunity/symfony-mocker-container": "^1.0",
         "se/selenium-server-standalone": "^2.52",
         "sylius-labs/coding-standard": "^3.0",
-        "symfony/debug-bundle": "^4.4 || ^5.2",
-        "symfony/dotenv": "^4.4 || ^5.2",
-        "symfony/web-profiler-bundle": "^4.4 || ^5.2",
-        "symfony/web-server-bundle": "^4.4 || ^5.2"
+        "symfony/debug-bundle": "^4.4 || ^5.4",
+        "symfony/dotenv": "^4.4 || ^5.4",
+        "symfony/web-profiler-bundle": "^4.4 || ^5.4"
     },
     "conflict": {
         "doctrine/dbal": "^3.0"
