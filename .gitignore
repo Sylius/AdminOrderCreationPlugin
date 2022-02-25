@@ -11,3 +11,5 @@
 /tests/Application/yarn.lock
 
 /web/media
+
+/.phpunit.result.cache
