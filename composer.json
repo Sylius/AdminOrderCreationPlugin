@@ -44,10 +44,9 @@
         "phpunit/phpunit": "^9.5",
         "se/selenium-server-standalone": "^2.52",
         "sylius-labs/coding-standard": "^3.0",
-        "symfony/debug-bundle": "^4.4 || ^5.2",
-        "symfony/dotenv": "^4.4 || ^5.2",
-        "symfony/web-profiler-bundle": "^4.4 || ^5.2",
-        "symfony/web-server-bundle": "^4.4 || ^5.2"
+        "symfony/debug-bundle": "^4.4 || ^5.4",
+        "symfony/dotenv": "^4.4 || ^5.4",
+        "symfony/web-profiler-bundle": "^4.4 || ^5.4"
     },
     "conflict": {
         "doctrine/dbal": "^3.0"
