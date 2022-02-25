@@ -1,0 +1,117 @@
+---------------------------------------------------------------------------
+
+by maciekpaprocki at 2021-10-13T19:45:25Z
+
+For all people coming in and looking for quick patch until this is fixed:
+
+create class :
+
+`src/EventListener/Patch`
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\EventListener\Patch;
+
+use SM\Factory\FactoryInterface;
+use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Core\OrderCheckoutTransitions;
+use Sylius\Component\Order\Processor\OrderProcessorInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
+use Webmozart\Assert\Assert;
+
+final class AdminOrderCreationListener
+{
+    /** @var OrderProcessorInterface */
+    private $orderProcessor;
+
+    /** @var FactoryInterface */
+    private $stateMachineFactory;
+
+    public function __construct(OrderProcessorInterface $orderProcessor, FactoryInterface $stateMachineFactory)
+    {
+        $this->orderProcessor      = $orderProcessor;
+        $this->stateMachineFactory = $stateMachineFactory;
+    }
+
+    public function processOrderBeforeCreation(GenericEvent $event): void
+    {
+        $order = $event->getSubject();
+        Assert::isInstanceOf($order, OrderInterface::class);
+
+        $order->recalculateAdjustmentsTotal();
+        $this->orderProcessor->process($order);
+    }
+
+    public function completeOrderBeforeCreation(GenericEvent $event): void
+    {
+        $order = $event->getSubject();
+        Assert::isInstanceOf($order, OrderInterface::class);
+
+        $stateMachine = $this->stateMachineFactory->get($order, 'sylius_order_checkout');
+        $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_ADDRESS);
+
+        if ($stateMachine->can(OrderCheckoutTransitions::TRANSITION_SELECT_SHIPPING)) {
+            $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_SELECT_SHIPPING);
+        }
+
+        if ($stateMachine->can(OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT)) {
+            $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_SELECT_PAYMENT);
+        }
+        $stateMachine->apply(OrderCheckoutTransitions::TRANSITION_COMPLETE);
+    }
+}
+
+```
+
+add this to services.yaml:
+
+```yaml
+services:
+    ...
+
+    Sylius\AdminOrderCreationPlugin\EventListener\OrderCreationListener:
+        class: App\EventListener\Patch\AdminOrderCreationListener
+        public: yes
+        arguments:
+            - "@sylius.order_processing.order_processor"
+            - "@sm.factory"
+        tags:
+            - { name: "kernel.event_listener", event: "sylius.order.pre_admin_create", method: processOrderBeforeCreation }
+            - { name: "kernel.event_listener", event: "sylius.order.pre_admin_create", method: completeOrderBeforeCreation }
+
+```
+
+---------------------------------------------------------------------------
+
+by lchrusciel at 2021-10-27T11:01:09Z
+
+Hey Maciek,
+
+thanks a lot for your contribution. Can you fix the failing test? In the best scenario, we should also cover this behaviour with behat. Would you like to give it a try?
+
+Best regards
+
+---------------------------------------------------------------------------
+
+by maciekpaprocki at 2021-10-28T16:07:48Z
+
+Hi,
+
+I fixed the phpspec tests failing and added additional test for when shipping should be skipped. Hope this helps.
+
+Best
+
+---------------------------------------------------------------------------
+
+by jdubuisson at 2021-12-01T15:02:45Z
+
+The proposed fix looks good and the tests make sense. Could this PR be merged ?
+
+---------------------------------------------------------------------------
+
+by GSadee at 2022-02-25T13:06:02Z
+
+Thank you, @maciekpaprocki! :tada:
