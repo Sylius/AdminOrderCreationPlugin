@@ -12,10 +12,34 @@
         <div class="title">
             <i class="dropdown icon"></i> {{ 'sylius.ui.shipping_address'|trans }} &amp; {{ 'sylius.ui.billing_address'|trans }}
         </div>
+        {% set customer = resource.customer %}
         <div class="content">
-            <div class="ui horizontal segments">
-                <div class="ui segment">{{ form_row(form.shippingAddress) }}</div>
-                <div class="ui segment">{{ form_row(form.billingAddress) }}</div>
+            <div class="ui grid">
+                <div class="eight wide column">
+                    <div class="ui segment">
+                        {% if customer is not empty and customer.user is not empty and customer.addresses|length > 0 %}
+                            <div class="custom-address-select js-address-select shipping-address-book">
+                                {% include '@SyliusAdminOrderCreationPlugin/Order/Create/_addressBookSelect.html.twig' %}
+                            </div>
+                        {% endif %}
+                        <div class="js-address-container">
+                            {{ form_row(form.shippingAddress) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="eight wide column">
+                    <div class="ui segment">
+                        {% if customer is not empty and customer.user is not empty and customer.addresses|length > 0 %}
+                            <div class="custom-address-select js-address-select billing-address-book">
+                                {% include '@SyliusAdminOrderCreationPlugin/Order/Create/_addressBookSelect.html.twig' %}
+                            </div>
+                        {% endif %}
+                        <div class="js-address-container">
+                            {{ form_row(form.billingAddress) }}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
