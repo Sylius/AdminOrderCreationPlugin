@@ -36,7 +36,14 @@ final class OrderPaymentLinkSenderSpec extends ObjectBehavior
         $customer->getEmail()->willReturn('john@example.com');
 
         $sender
-            ->send('order_created_in_admin_panel', ['john@example.com'], ['paymentLink' => 'http://payment-link.com'])
+            ->send(
+                'order_created_in_admin_panel',
+                ['john@example.com'],
+                [
+                    'order' => $order,
+                    'paymentLink' => 'http://payment-link.com',
+                ]
+            )
             ->shouldBeCalled()
         ;
 

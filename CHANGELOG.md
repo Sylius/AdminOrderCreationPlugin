@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## v0.13.0 (2022-02-25)
+
+- [#183](https://github.com/Sylius/AdminOrderCreationPlugin/issues/183) [Maintenance] Upgrade dependencies ([@GSadee](https://github.com/GSadee))
+- [#182](https://github.com/Sylius/AdminOrderCreationPlugin/issues/182) Remove useless Migrations step from README.md ([@HerveEmagma](https://github.com/HerveEmagma))
+- [#168](https://github.com/Sylius/AdminOrderCreationPlugin/issues/168) Shouldn't have payment limit on order ([@kayue](https://github.com/kayue))
+- [#158](https://github.com/Sylius/AdminOrderCreationPlugin/issues/158) Improved: OrderPaymentLinkSender ([@igormukhingmailcom](https://github.com/igormukhingmailcom))
+- [#176](https://github.com/Sylius/AdminOrderCreationPlugin/issues/176) Fix state machine exception on order creation ([@maciekpaprocki](https://github.com/maciekpaprocki), [@GSadee](https://github.com/GSadee))
+
+## v0.12.3 (2021-10-28)
+
+- [#179](https://github.com/Sylius/AdminOrderCreationPlugin/issues/179) [Maintenance] Conflict with doctrine/dbal ^3.0 due to lack of json_array support ([@lchrusciel](https://github.com/lchrusciel))
+- [#177](https://github.com/Sylius/AdminOrderCreationPlugin/issues/177) [API] Add missing "Autocomplete" serialization group ([@lchrusciel](https://github.com/lchrusciel))
+- [#178](https://github.com/Sylius/AdminOrderCreationPlugin/issues/178) [README] Improve installation guide ([@lchrusciel](https://github.com/lchrusciel))
+
 ## v0.12.2 (2021-08-10)
 
 - [#174](https://github.com/Sylius/AdminOrderCreationPlugin/issues/174) [Maintenance] Remove redundant migrations ([@Arminek](https://github.com/Arminek))
