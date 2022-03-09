@@ -1,0 +1,9 @@
+{
+  "name": "@sylius/admin-order-creation-plugin",
+  "description": "Admin order creation plugin for Sylius.",
+  "repository": "https://github.com/Sylius/AdminOrderCreationPlugin.git",
+  "license": "MIT",
+  "scripts": {
+      "dist": "yarn encore production --config-name sylius-plugin-dist"
+  }
+}
