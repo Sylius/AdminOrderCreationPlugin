@@ -14,6 +14,7 @@ use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Test\Services\EmailCheckerInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Admin\OrderCreateFormElementInterface;
+use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\NewOrderCreatePageInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\NewOrderCustomerPageInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderIndexPageInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderPreviewPageInterface;
@@ -49,6 +50,9 @@ final class ManagingOrdersContext implements Context
 
     /** @var AddressComparatorInterface */
     private $addressComparator;
+    
+    /** @var NewOrderCreatePageInterface */ 
+    private $newOrderCreatePage;
 
     public function __construct(
         OrderIndexPageInterface $orderIndexPage,
@@ -59,7 +63,8 @@ final class ManagingOrdersContext implements Context
         OrderCreateFormElementInterface $orderCreateFormElement,
         NotificationCheckerInterface $notificationChecker,
         EmailCheckerInterface $emailChecker,
-        AddressComparatorInterface $addressComparator
+        AddressComparatorInterface $addressComparator,
+        NewOrderCreatePageInterface $newOrderCreatePage
     ) {
         $this->orderIndexPage = $orderIndexPage;
         $this->newOrderCustomerPage = $newOrderCustomerPage;
@@ -70,6 +75,7 @@ final class ManagingOrdersContext implements Context
         $this->notificationChecker = $notificationChecker;
         $this->emailChecker = $emailChecker;
         $this->addressComparator = $addressComparator;
+        $this->newOrderCreatePage = $newOrderCreatePage;
     }
 
     /**
@@ -582,5 +588,55 @@ final class ManagingOrdersContext implements Context
     public function discountShouldBe(string $itemName, string $discount): void
     {
         Assert::eq($this->orderShowPage->getItemDiscount($itemName), $discount);
+    }
+
+    /**
+     * @Given /^I see the address book billing address select$/
+     */
+    public function iSeeTheAddressBookBillingAddressSelect(): void
+    {
+        Assert::true($this->newOrderCreatePage->isBillingAddressAutocompleteField());
+    }
+
+    /**
+     * @Given /^I see the address book shipping address select$/
+     */
+    public function iSeeTheAddressBookShippingAddressSelect(): void
+    {
+        Assert::true($this->newOrderCreatePage->isShippingAddressAutocompleteField());
+    }
+
+    /**
+     * @Given /^I select first address in shipping address book with name "([^"]*)"$/
+     */
+    public function iSelectFirstAddressInShippingAddressBookWithName(string $name): void
+    {
+        $name = explode(' ',$name);
+        $this->newOrderCreatePage->selectShippingAddress($name);
+    }
+
+    /**
+     * @Given /^I select first address in billing address book with name "([^"]*)"$/
+     */
+    public function iSelectFirstAddressInBillingAddressBookWith(string $name): void
+    {
+        $name = explode(' ',$name);
+        $this->newOrderCreatePage->selectBillingAddress($name);
+    }
+
+    /**
+     * @Given /^I should not see the address book shipping address select$/
+     */
+    public function iShouldNotSeeTheAddressBookShippingAddressSelect(): void
+    {
+        Assert::false($this->newOrderCreatePage->isShippingAddressAutocompleteField());
+    }
+
+    /**
+     * @Given /^I should not see the address book billing address select$/
+     */
+    public function iShouldNotSeeTheAddressBookBillingAddressSelect(): void
+    {
+        Assert::false($this->newOrderCreatePage->isBillingAddressAutocompleteField());
     }
 }
