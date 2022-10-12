@@ -7,6 +7,7 @@ default:
 
                 - sylius.behat.context.setup.admin_security
                 - sylius.behat.context.setup.admin_user
+                - sylius.behat.context.setup.address
                 - sylius.behat.context.setup.channel
                 - sylius.behat.context.setup.currency
                 - sylius.behat.context.setup.customer

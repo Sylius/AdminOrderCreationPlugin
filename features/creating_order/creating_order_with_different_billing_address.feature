@@ -17,6 +17,8 @@ Feature: Creating order with different billing address
     Scenario: Creating an order with both addresses specified
         When I create a new order for "jon.snow@the-wall.com" and channel "United States"
         And I add "Stark Coat" to this order
+        And I should not see the address book shipping address select
+        And I should not see the address book billing address select
         And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
         And I specify this order billing address as "Rivendell", "Elm Street", "444", "United States" for "Ned Stark"
         And I select "Free" shipping method

@@ -22,6 +22,7 @@
             <argument type="service" id="sylius.behat.notification_checker" />
             <argument type="service" id="sylius.behat.email_checker" />
             <argument type="service" id="sylius.address_comparator" />
+            <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\NewOrderCreatePage" />
         </service>
 
         <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector" />
@@ -34,5 +35,7 @@
         <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Admin\OrderCreateFormElement" parent="Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Element" public="true">
             <argument type="service" id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector" />
         </service>
+
+        <service id="Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\NewOrderCreatePage" parent="sylius.behat.symfony_page" public="true" />
     </services>
 </container>
