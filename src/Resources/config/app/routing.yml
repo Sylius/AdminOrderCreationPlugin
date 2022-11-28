@@ -18,7 +18,7 @@ sylius_admin_order_creation_order_create:
     options:
         expose: true
     defaults:
-        _controller: sylius.controller.order:createAction
+        _controller: sylius.controller.order::createAction
         _sylius:
             event: admin_create
             section: admin
@@ -50,7 +50,7 @@ sylius_admin_order_creation_order_create_from_preview:
     options:
         expose: true
     defaults:
-        _controller: sylius.controller.order:createAction
+        _controller: sylius.controller.order::createAction
         _sylius:
             event: admin_create
             section: admin
@@ -78,7 +78,7 @@ sylius_admin_order_creation_reorder:
     options:
         expose: true
     defaults:
-        _controller: sylius.controller.order:createAction
+        _controller: sylius.controller.order::createAction
         _sylius:
             event: admin_create
             section: admin
@@ -95,4 +95,4 @@ sylius_admin_order_creation_ajax:
     resource: "@SyliusAdminOrderCreationPlugin/Resources/config/app/ajax.yml"
 
 fos_js_routing:
-    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing-sf4.xml"

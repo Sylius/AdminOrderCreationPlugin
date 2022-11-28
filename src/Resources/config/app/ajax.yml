@@ -2,7 +2,7 @@ sylius_admin_order_creation_ajax_customer:
     path: /customer-search
     methods: [GET]
     defaults:
-        _controller: sylius.controller.customer:indexAction
+        _controller: sylius.controller.customer::indexAction
         _format: json
         _sylius:
             permission: true
@@ -14,7 +14,7 @@ sylius_admin_order_creation_ajax_customer_by_email:
     path: /customer-search-by-email
     methods: [GET]
     defaults:
-        _controller: sylius.controller.customer:indexAction
+        _controller: sylius.controller.customer::indexAction
         _format: json
         _sylius:
             permission: true
@@ -26,7 +26,7 @@ sylius_admin_order_creation_ajax_product_variants_by_phrase_and_channel:
     path: /product-variant-search/{channelCode}
     methods: [GET]
     defaults:
-        _controller: sylius.controller.product_variant:indexAction
+        _controller: sylius.controller.product_variant::indexAction
         _format: json
         _sylius:
             permission: true
@@ -42,7 +42,7 @@ sylius_admin_order_creation_ajax_product_variant_by_codes:
     path: /product-variant-search-by-code
     methods: [GET]
     defaults:
-        _controller: sylius.controller.product_variant:indexAction
+        _controller: sylius.controller.product_variant::indexAction
         _format: json
         _sylius:
             permission: true

@@ -12,7 +12,8 @@ use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ProductInterface;
-use Sylius\Component\Core\Test\Services\EmailCheckerInterface;
+use Sylius\Behat\Service\Checker\EmailCheckerInterface as BehatEmailCheckerInterface;
+use Sylius\Component\Core\Test\Services\EmailCheckerInterface as CoreEmailCheckerInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Admin\OrderCreateFormElementInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\NewOrderCustomerPageInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderIndexPageInterface;
@@ -44,7 +45,7 @@ final class ManagingOrdersContext implements Context
     /** @var NotificationCheckerInterface */
     private $notificationChecker;
 
-    /** @var EmailCheckerInterface */
+    /** @var BehatEmailCheckerInterface|CoreEmailCheckerInterface */
     private $emailChecker;
 
     /** @var AddressComparatorInterface */
@@ -58,7 +59,7 @@ final class ManagingOrdersContext implements Context
         ReorderPageInterface $reorderPage,
         OrderCreateFormElementInterface $orderCreateFormElement,
         NotificationCheckerInterface $notificationChecker,
-        EmailCheckerInterface $emailChecker,
+        BehatEmailCheckerInterface|CoreEmailCheckerInterface $emailChecker,
         AddressComparatorInterface $addressComparator
     ) {
         $this->orderIndexPage = $orderIndexPage;
