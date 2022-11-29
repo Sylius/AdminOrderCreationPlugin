@@ -6,6 +6,7 @@ namespace Sylius\AdminOrderCreationPlugin\Controller;
 
 use Sylius\AdminOrderCreationPlugin\Factory\OrderFactoryInterface;
 use Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType;
+use Sylius\Component\Order\Model\OrderInterface;
 use Sylius\Component\Order\Processor\OrderProcessorInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,12 +41,16 @@ final class OrderPreviewAction
 
     public function __invoke(Request $request): Response
     {
+        /** @var string $customerId */
         $customerId = $request->attributes->get('customerId');
+
+        /** @var string $channelCode */
         $channelCode = $request->attributes->get('channelCode');
 
         $order = $this->orderFactory->createForCustomerAndChannel($customerId, $channelCode);
-
         $form = $this->formFactory->create(NewOrderType::class, $order);
+
+        /** @var OrderInterface $order */
         $order = $form->handleRequest($request)->getData();
         $this->orderProcessor->process($order);
 

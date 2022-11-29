@@ -62,6 +62,7 @@ final class OrderItemType extends AbstractResourceType
                 ;
             })
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
+                /** @var array $data */
                 $data = $event->getData();
                 if (empty($data['quantity'])) {
                     $data['quantity'] = '1';

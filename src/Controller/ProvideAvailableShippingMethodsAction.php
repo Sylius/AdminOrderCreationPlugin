@@ -29,7 +29,10 @@ final class ProvideAvailableShippingMethodsAction
     public function __invoke(Request $request): Response
     {
         $order = $this->orderPreparator->prepareFromRequest($request);
-        $shipment = $order->getShipments()->get((int) $request->attributes->get('shipmentNumber'));
+
+        /** @var int $shipmentNumber */
+        $shipmentNumber = $request->attributes->get('shipmentNumber');
+        $shipment = $order->getShipments()->get($shipmentNumber);
 
         if ($shipment === null) {
             return new JsonResponse([]);
