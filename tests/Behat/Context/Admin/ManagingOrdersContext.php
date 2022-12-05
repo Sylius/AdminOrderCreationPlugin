@@ -7,6 +7,7 @@ namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Context\Admin;
 use Behat\Behat\Context\Context;
 use Sylius\Behat\NotificationType;
 use Sylius\Behat\Service\NotificationCheckerInterface;
+use Sylius\Bundle\CoreBundle\Application\Kernel;
 use Sylius\Component\Addressing\Comparator\AddressComparatorInterface;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
@@ -396,13 +397,19 @@ final class ManagingOrdersContext implements Context
      */
     public function thereShouldBeNoPaymentLinkSentTo(string $email): void
     {
-        try {
-            $this->emailChecker->countMessagesTo($email);
-        } catch (\InvalidArgumentException $exception) {
-            return;
+        if (Kernel::VERSION_ID < 11200) {
+            try {
+                $this->emailChecker->countMessagesTo($email);
+            } catch (\InvalidArgumentException $exception) {
+                return;
+            }
+
+            throw new \Exception('There should be no messages exception thrown');
         }
 
-        throw new \Exception('There should be no messages exception thrown');
+        if (11200 <= Kernel::VERSION_ID) {
+            Assert::same($this->emailChecker->countMessagesTo($email), 0);
+        }
     }
 
     /**
