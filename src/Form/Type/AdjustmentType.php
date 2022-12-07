@@ -12,6 +12,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Range;
+use Webmozart\Assert\Assert;
 
 final class AdjustmentType extends AbstractResourceType
 {
@@ -30,18 +31,19 @@ final class AdjustmentType extends AbstractResourceType
         ]);
 
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use ($options): void {
-            /** @var Adjustment $adjustment */
+            /** @var Adjustment|null $adjustment */
             $adjustment = $event->getData();
 
-            if ($adjustment == null) {
+            if ($adjustment === null) {
                 return;
             }
 
             $adjustment->setLabel('sylius_admin_order_creation.ui.order_discount');
             $adjustment->setAmount(-1 * $adjustment->getAmount());
 
-            /** @var string $type */
             $type = $options['type'];
+            Assert::string($type);
+
             $adjustment->setType($type);
 
             $event->setData($adjustment);
