@@ -7,12 +7,14 @@ namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Context\Admin;
 use Behat\Behat\Context\Context;
 use Sylius\Behat\NotificationType;
 use Sylius\Behat\Service\NotificationCheckerInterface;
+use Sylius\Bundle\CoreBundle\Application\Kernel;
 use Sylius\Component\Addressing\Comparator\AddressComparatorInterface;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ProductInterface;
-use Sylius\Component\Core\Test\Services\EmailCheckerInterface;
+use Sylius\Behat\Service\Checker\EmailCheckerInterface as BehatEmailCheckerInterface;
+use Sylius\Component\Core\Test\Services\EmailCheckerInterface as CoreEmailCheckerInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Admin\OrderCreateFormElementInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\NewOrderCustomerPageInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderIndexPageInterface;
@@ -44,7 +46,7 @@ final class ManagingOrdersContext implements Context
     /** @var NotificationCheckerInterface */
     private $notificationChecker;
 
-    /** @var EmailCheckerInterface */
+    /** @var BehatEmailCheckerInterface|CoreEmailCheckerInterface */
     private $emailChecker;
 
     /** @var AddressComparatorInterface */
@@ -58,7 +60,7 @@ final class ManagingOrdersContext implements Context
         ReorderPageInterface $reorderPage,
         OrderCreateFormElementInterface $orderCreateFormElement,
         NotificationCheckerInterface $notificationChecker,
-        EmailCheckerInterface $emailChecker,
+        BehatEmailCheckerInterface|CoreEmailCheckerInterface $emailChecker,
         AddressComparatorInterface $addressComparator
     ) {
         $this->orderIndexPage = $orderIndexPage;
@@ -395,13 +397,19 @@ final class ManagingOrdersContext implements Context
      */
     public function thereShouldBeNoPaymentLinkSentTo(string $email): void
     {
-        try {
-            $this->emailChecker->countMessagesTo($email);
-        } catch (\InvalidArgumentException $exception) {
-            return;
+        if (Kernel::VERSION_ID < 11200) {
+            try {
+                $this->emailChecker->countMessagesTo($email);
+            } catch (\InvalidArgumentException $exception) {
+                return;
+            }
+
+            throw new \Exception('There should be no messages exception thrown');
         }
 
-        throw new \Exception('There should be no messages exception thrown');
+        if (11200 <= Kernel::VERSION_ID) {
+            Assert::same($this->emailChecker->countMessagesTo($email), 0);
+        }
     }
 
     /**

@@ -6,11 +6,13 @@ namespace Sylius\AdminOrderCreationPlugin\Form\Type;
 
 use Sylius\Bundle\MoneyBundle\Form\Type\MoneyType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
+use Sylius\Component\Core\Model\Adjustment;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Range;
+use Webmozart\Assert\Assert;
 
 final class AdjustmentType extends AbstractResourceType
 {
@@ -29,6 +31,7 @@ final class AdjustmentType extends AbstractResourceType
         ]);
 
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use ($options): void {
+            /** @var Adjustment|null $adjustment */
             $adjustment = $event->getData();
 
             if ($adjustment === null) {
@@ -37,7 +40,11 @@ final class AdjustmentType extends AbstractResourceType
 
             $adjustment->setLabel('sylius_admin_order_creation.ui.order_discount');
             $adjustment->setAmount(-1 * $adjustment->getAmount());
-            $adjustment->setType($options['type']);
+
+            $type = $options['type'];
+            Assert::string($type);
+
+            $adjustment->setType($type);
 
             $event->setData($adjustment);
         });

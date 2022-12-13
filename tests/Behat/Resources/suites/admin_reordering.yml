@@ -3,7 +3,7 @@ default:
         ui_admin_order_creation_admin_reordering:
             contexts:
                 - sylius.behat.context.hook.doctrine_orm
-                - sylius.behat.context.hook.email_spool
+                - sylius.behat.context.hook.mailer
 
                 - sylius.behat.context.setup.admin_security
                 - sylius.behat.context.setup.admin_user

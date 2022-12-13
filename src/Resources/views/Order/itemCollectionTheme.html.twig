@@ -1,7 +1,7 @@
 {% extends '@SyliusAdmin/Form/theme.html.twig' %}
 
 {% block _sylius_admin_order_creation_new_order_items_entry_widget %}
-    {% spaceless %}
+    {% apply spaceless %}
         <div class="two fields">
             {{ form_row(form.quantity, {'attr': {'class' : 'item-quantity'}}) }}
             {{ form_row(form.variant, {
@@ -11,5 +11,5 @@
                 'load_edit_url': path('sylius_admin_order_creation_ajax_product_variant_by_codes')
             }) }}
         </div>
-    {% endspaceless %}
+    {% endapply %}
 {% endblock %}

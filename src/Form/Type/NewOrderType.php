@@ -91,6 +91,7 @@ final class NewOrderType extends AbstractResourceType
                 ;
             })
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
+                /** @var array $orderData */
                 $orderData = $event->getData();
 
                 if (isset($orderData['shippingAddress']) && $this->isBillingAddressEmpty($orderData)) {

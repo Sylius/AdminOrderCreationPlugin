@@ -28,7 +28,9 @@ final class CustomerCreationAction
 
     public function __invoke(Request $request): Response
     {
-        $customer = $this->customerProvider->provideNewCustomer($request->attributes->get('customerEmail'));
+        /** @var string $customerEmail */
+        $customerEmail = $request->attributes->get('customerEmail');
+        $customer = $this->customerProvider->provideNewCustomer($customerEmail);
 
         return new RedirectResponse(
             $this->router->generate(

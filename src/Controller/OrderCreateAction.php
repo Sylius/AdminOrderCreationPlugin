@@ -34,7 +34,10 @@ final class OrderCreateAction
 
     public function __invoke(Request $request): Response
     {
+        /** @var string $customerId */
         $customerId = $request->attributes->get('customerId');
+
+        /** @var string $channelCode */
         $channelCode = $request->attributes->get('channelCode');
 
         $order = $this->orderFactory->createForCustomerAndChannel($customerId, $channelCode);
