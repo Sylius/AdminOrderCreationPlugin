@@ -66,13 +66,15 @@
                 $(this).dropdown('set text', $(this).find('input[type="hidden"]').val());
             });
 
-            function loadAvailableShippingMethods($shipmentNumber) {
+            function loadAvailableShippingMethods() {
                 if (!canShippingMethodBeProvided()) {
                     return;
                 }
 
                 let form = $('form');
                 form.addClass('loading');
+
+                Routing.setScheme(location.protocol.replace(':', ''));
 
                 $.ajax({
                     type: "GET",
