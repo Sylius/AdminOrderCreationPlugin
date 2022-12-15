@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## v0.14.0 (2022-12-15)
+
+- [#186](https://github.com/Sylius/AdminOrderCreationPlugin/issues/186) [Maintenance] Bump up Sylius versions to fix the build ([@GSadee](https://github.com/GSadee))
+- [#185](https://github.com/Sylius/AdminOrderCreationPlugin/issues/185) [GitHub Actions] Configure workflow to run on the workflow_dispatch event ([@GSadee](https://github.com/GSadee))
+- [#187](https://github.com/Sylius/AdminOrderCreationPlugin/issues/187) [Maintenance] Support PHP 8.1 ([@GSadee](https://github.com/GSadee))
+- [#188](https://github.com/Sylius/AdminOrderCreationPlugin/issues/188) [Maintenance] Allow flex plugin during plugin installation ([@lchrusciel](https://github.com/lchrusciel))
+- [#190](https://github.com/Sylius/AdminOrderCreationPlugin/issues/190) [GitHub Actions] Configure global flex to fix the build ([@GSadee](https://github.com/GSadee))
+- [#191](https://github.com/Sylius/AdminOrderCreationPlugin/issues/191) Drop support for Sylius 1.10 ([@GSadee](https://github.com/GSadee))
+- [#193](https://github.com/Sylius/AdminOrderCreationPlugin/issues/193) Support Symfony 6 and Sylius 1.12 ([@TheMilek](https://github.com/TheMilek))
+- [#194](https://github.com/Sylius/AdminOrderCreationPlugin/issues/194) Fix HTTP protocol for FOSJSRouting generation ([@coldic3](https://github.com/coldic3))
+
 ## v0.13.0 (2022-02-25)
 
 - [#183](https://github.com/Sylius/AdminOrderCreationPlugin/issues/183) [Maintenance] Upgrade dependencies ([@GSadee](https://github.com/GSadee))
