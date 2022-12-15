@@ -1,3 +1,13 @@
+### UPGRADE FROM 0.13.0 TO 0.14.0
+
+1. Support for Sylius 1.10 has been dropped, upgrade your application to [Sylius 1.11](https://github.com/Sylius/Sylius/blob/master/UPGRADE-1.11.md)
+   or to [Sylius 1.12](https://github.com/Sylius/Sylius/blob/master/UPGRADE-1.12.md) as this is the recommended Sylius version
+   to use with AdminOrderCreationPlugin.
+
+2. Support for Symfony 4.4 has been dropped.
+
+3. Support for Symfony 6 has been added.
+
 ### UPGRADE FROM 0.12.X TO 0.13.0
 
 1. Support for Sylius 1.9 has been dropped, upgrade your application to [Sylius 1.10](https://github.com/Sylius/Sylius/blob/master/UPGRADE-1.10.md)
