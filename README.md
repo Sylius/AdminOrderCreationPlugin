@@ -66,15 +66,15 @@ Symfony Flex, it's much quicker! :)
    2. Paste the following content to the `src/Repository/CustomerRepository.php`:
       ```php
       <?php
-    
+
       declare(strict_types=1);
-    
+
       namespace App\Repository;
-      
+
       use Sylius\AdminOrderCreationPlugin\Doctrine\ORM\CustomerRepositoryInterface;
       use Sylius\AdminOrderCreationPlugin\Doctrine\ORM\CustomerRepositoryTrait;
       use Sylius\Bundle\CoreBundle\Doctrine\ORM\CustomerRepository as BaseCustomerRepository;
-      
+
       final class CustomerRepository extends BaseCustomerRepository implements CustomerRepositoryInterface
       {
           use CustomerRepositoryTrait;
@@ -83,15 +83,15 @@ Symfony Flex, it's much quicker! :)
    3. Paste the following content to the `src/Repository/ProductVariantRepository.php`:
       ```php
       <?php
-    
+
       declare(strict_types=1);
-    
+
       namespace App\Repository;
 
       use Sylius\AdminOrderCreationPlugin\Doctrine\ORM\ProductVariantRepositoryInterface;
       use Sylius\AdminOrderCreationPlugin\Doctrine\ORM\ProductVariantRepositoryTrait;
       use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductVariantRepository as BaseProductVariantRepository;
-      
+
       final class ProductVariantRepository extends BaseProductVariantRepository implements ProductVariantRepositoryInterface
       {
           use ProductVariantRepositoryTrait;
@@ -105,7 +105,7 @@ Symfony Flex, it's much quicker! :)
                 classes:
                     model: App\Entity\Customer\Customer
    +                repository: App\Repository\CustomerRepository
-   
+
     sylius_product:
         resources:
             product_variant:
@@ -113,7 +113,56 @@ Symfony Flex, it's much quicker! :)
                     model: App\Entity\Product\ProductVariant
    +                repository: App\Repository\ProductVariantRepository
    ```
+    
+   4. Add plugin assets to your project
+      1. Import webpack config
+         1. Import plugin's `webpack.config.js` file
+            ```js
+            // webpack.config.js
+            const [ adminOrderCreationAdmin ] = require('./vendor/sylius/admin-order-creation-plugin/webpack.config.js')
+            ...
+
+            module.exports = [..., adminOrderCreationAdmin];
+            ```
+         2. Add new packages in `./config/packages/assets.yaml`
+            ```yml
+            # config/packages/assets.yaml
+   
+            framework:
+                assets:
+                    packages:
+                        # ...
+                        admin_order_creation:
+                            json_manifest_path: '%kernel.project_dir%/public/build/sylius/admin-order-creation/admin/manifest.json'
+            ```
+
+         3. Add new build paths in `./config/packages/webpack_encore.yml`
+            ```yml
+            # config/packages/webpack_encore.yml
       
+            webpack_encore:
+                builds:
+                    # ...
+                    admin_order_creation: '%kernel.project_dir%/public/build/sylius/admin-order-creation/admin'
+            ```
+      
+      2. Add entry to existing config
+         1. Add new entries to your `webpack.config.js`
+            ```js
+            // ./webpack.config.js
+
+            // Admin config
+                .addEntry('sylius-order-creation-admin', 'vendor/sylius/admin-order-creation-plugin/src/Resources/assets/admin/entry.js')
+            ```
+   
+         2. Run `yarn encore dev` or `yarn encore production`
+      
+      3. Import entries in your entry.js files
+         1. Just add these imports into your entry.js files
+            ```js
+            // ./assets/admin/entry.js
+            import '../../vendor/sylius/admin-order-creation-plugin/src/Resources/assets/admin/entry.js';
+            ```
 
 ## Extension points
 
