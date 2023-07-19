@@ -30,3 +30,14 @@ sylius_mailer:
         order_created_in_admin_panel:
             subject: 'sylius_admin_order_creation.email.order_created.subject'
             template: '@SyliusAdminOrderCreationPlugin/Emails/orderCreated.html.twig'
+
+sylius_ui:
+    events:
+        sylius.admin.layout.stylesheets:
+            blocks:
+                sylius_admin_order_creation:
+                    template: '@SyliusAdminOrderCreationPlugin/Event/Admin/_styles.html.twig'
+        sylius.admin.layout.javascripts:
+            blocks:
+                sylius_admin_order_creation:
+                    template: '@SyliusAdminOrderCreationPlugin/Event/Admin/_scripts.html.twig'
