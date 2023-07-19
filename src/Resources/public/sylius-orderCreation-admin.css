@@ -1,8 +1,0 @@
-.custom-address-select {
-  margin-bottom: 16px;
-}
-
-.custom-address-select .dropdown,
-.custom-address-select .ui.search.dropdown > input.search {
-  cursor: pointer;
-}
