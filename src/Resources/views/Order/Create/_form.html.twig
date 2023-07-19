@@ -12,7 +12,7 @@
         <div class="title">
             <i class="dropdown icon"></i> {{ 'sylius.ui.shipping_address'|trans }} &amp; {{ 'sylius.ui.billing_address'|trans }}
         </div>
-        {% set customer = resource.customer %}
+        {% set customer = form.vars.value.customer %}
         <div class="content">
             <div class="ui grid">
                 <div class="eight wide column">
