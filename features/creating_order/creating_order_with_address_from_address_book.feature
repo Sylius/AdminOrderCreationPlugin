@@ -19,8 +19,6 @@ Feature: Creating order with different billing address
     Scenario: Creating an order with both addresses from address books
         When I create a new order for "jon.snow@the-wall.com" and channel "United States"
         And I add "Stark Coat" to this order
-        And I see the address book shipping address select
-        And I see the address book billing address select
         And I select first address in shipping address book with name "Jon Snow"
         And I select first address in billing address book with name "Ned Stark"
         And I select "Free" shipping method
@@ -35,8 +33,6 @@ Feature: Creating order with different billing address
     Scenario: Creating an order with one address from address books
         When I create a new order for "jon.snow@the-wall.com" and channel "United States"
         And I add "Stark Coat" to this order
-        And I see the address book shipping address select
-        And I see the address book billing address select
         And I specify this order shipping address as "Ankh-Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
         And I select first address in billing address book with name "Ned Stark"
         And I select "Free" shipping method
