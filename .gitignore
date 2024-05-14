@@ -13,3 +13,7 @@
 /web/media
 
 /.phpunit.result.cache
+/phpunit.xml
+/phpspec.yml
+/phpstan.neon
+/behat.yml
