@@ -8,7 +8,7 @@ Feature: Creating order with multiple items
         Given the store operates on a single channel in "United States"
         And the store has a product "Stark Coat" priced at "$100.00"
         And the store has a product "Lannister Banner" priced at "$40.00"
-        And the store has a product "Greyjoy Boat" priced at "$1000.00"
+        And the store has a product "Greyjoy Boat" priced at "$1,000.00"
         And the store has a product "Targaryen Shield" priced at "$200.00"
         And the store ships everywhere for free
         And the store allows paying with "Cash on Delivery"
