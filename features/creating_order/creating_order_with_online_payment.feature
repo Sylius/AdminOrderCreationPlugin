@@ -6,8 +6,8 @@ Feature: Creating order with online payment
 
     Background:
         Given the store operates on a single channel in "United States"
-        And the store has a product "Stark Coat" priced at "$100"
-        And the store has a product "Lannister Banner" priced at "$40"
+        And the store has a product "Stark Coat" priced at "$100.00"
+        And the store has a product "Lannister Banner" priced at "$40.00"
         And the store ships everywhere for free
         And the store has a payment method "Paypal" with a code "PAYPAL" and Paypal Express Checkout gateway
         And there is a customer account "jon.snow@the-wall.com"

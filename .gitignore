@@ -1,6 +1,7 @@
 /bin/*
 !/bin/.gitkeep
 
+/drivers
 /vendor/
 /node_modules/
 /composer.lock
