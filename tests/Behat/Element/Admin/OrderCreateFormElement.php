@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Admin;
 
+use Behat\Mink\Driver\PantherDriver;
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Exception\Exception;
@@ -45,7 +46,7 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         $item = $this->addItemAndWaitForIt();
 
         $this->autoCompleteSelector->selectOption($item, $productVariantDescriptor);
-        $item->fillField('Quantity', $quantity);
+        $item->fillField('Quantity', (string) $quantity);
     }
 
     public function removeProduct(string $productVariantDescriptor): void
@@ -135,7 +136,7 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
     {
         $item = $this->getItemWithProductSelected($productVariantDescriptor);
 
-        $item->fillField('Quantity', $quantity);
+        $item->fillField('Quantity', (string) $quantity);
     }
 
     public function placeOrder(): void
@@ -275,7 +276,8 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
 
     private function clickOnTabAndWait(string $tabName): void
     {
-        if (!$this->getDriver() instanceof Selenium2Driver && !$this->getDriver() instanceof ChromeDriver) {
+        $driver = $this->getDriver();
+        if (!$driver instanceof Selenium2Driver && !$driver instanceof ChromeDriver && !$driver instanceof PantherDriver) {
             return;
         }
 
