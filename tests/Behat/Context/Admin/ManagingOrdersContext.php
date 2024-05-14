@@ -323,8 +323,8 @@ final class ManagingOrdersContext implements Context
     public function shouldBeNotifiedAboutShippingMethodsSelectionRequirements(): void
     {
         Assert::same(
-            'You need to add some items and shipping address to select from eligible shipping method',
-            $this->orderCreateFormElement->getShippingMethodsValidationMessage()
+            $this->orderCreateFormElement->getShippingMethodsValidationMessage(),
+            'You need to add some items and shipping address to select from eligible shipping method'
         );
     }
 
