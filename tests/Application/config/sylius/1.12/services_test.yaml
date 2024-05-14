@@ -1,0 +1,5 @@
+services:
+
+    sylius.behat.context.transform.lexical:
+        public: true
+        class: Tests\Sylius\AdminOrderCreationPlugin\Behat\Context\Transform\LexicalContext
