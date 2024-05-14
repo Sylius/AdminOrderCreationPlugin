@@ -35,7 +35,7 @@ final class AutoCompleteSelector
     {
         $scope->find('css', '.sylius-autocomplete .icon')->click();
 
-        $scope->waitFor(10, function() use ($scope) {
+        $scope->waitFor(100, function() use ($scope) {
             return $scope
                 ->find('css', '.sylius-autocomplete .menu')
                 ->hasClass('visible')
