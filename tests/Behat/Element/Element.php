@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Element;
 
+use ArrayAccess;
 use Behat\Mink\Driver\DriverInterface;
 use Behat\Mink\Element\DocumentElement;
 use Behat\Mink\Element\NodeElement;
@@ -13,18 +14,12 @@ use Behat\Mink\Session;
 
 abstract class Element
 {
-    /** @var Session */
-    private $session;
-    
-    private $parameters;
+    private ?DocumentElement $document = null;
 
-    /** @var DocumentElement|null */
-    private $document;
-
-    public function __construct(Session $session, $parameters = [])
-    {
-        $this->session = $session;
-        $this->parameters = $parameters;
+    public function __construct(
+        private Session $session,
+        private ArrayAccess $parameters,
+    ) {
     }
 
     protected function getParameter(string $name): NodeElement
@@ -115,7 +110,7 @@ abstract class Element
         }
 
         array_map(
-            function ($definedElement) use ($parameters): string {
+            static function ($definedElement) use ($parameters): string {
                 return strtr($definedElement, $parameters);
             }, $definedElements[$name]
         );
