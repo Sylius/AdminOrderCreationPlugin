@@ -14,7 +14,7 @@ Feature: Creating order with offline payment
         And I am logged in as an administrator
 
     @ui @javascript @email
-    Scenario: Creating an order with paypal payment for an existing customer
+    Scenario: Creating an order with offline payment for an existing customer
         When I create a new order for "jon.snow@the-wall.com" and channel "United States"
         And I add "Stark Coat" to this order
         And I specify this order shipping address as "Ankh Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
