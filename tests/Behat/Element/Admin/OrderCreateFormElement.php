@@ -27,15 +27,7 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         parent::__construct($session, $parameters);
     }
 
-    public function addProduct(string $productVariantDescriptor): void
-    {
-        $this->clickOnTabAndWait('Items');
-
-        $item = $this->addItemAndReturnIt();
-        $this->autoCompleteSelector->selectOption($this->getSession(), $item, $productVariantDescriptor);
-    }
-
-    public function addMultipleProducts(string $productVariantDescriptor, int $quantity): void
+    public function addProductWithQuantity(string $productVariantDescriptor, int $quantity): void
     {
         $this->clickOnTabAndWait('Items');
 

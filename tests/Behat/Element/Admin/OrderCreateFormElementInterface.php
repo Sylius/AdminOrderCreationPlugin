@@ -8,9 +8,7 @@ use Sylius\Component\Core\Model\AddressInterface;
 
 interface OrderCreateFormElementInterface
 {
-    public function addProduct(string $productVariantDescriptor): void;
-
-    public function addMultipleProducts(string $productVariantDescriptor, int $quantity): void;
+    public function addProductWithQuantity(string $productVariantDescriptor, int $quantity): void;
 
     public function removeProduct(string $productVariantDescriptor): void;
 

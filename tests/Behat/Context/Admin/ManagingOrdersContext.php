@@ -87,22 +87,13 @@ final class ManagingOrdersContext implements Context
 
     /**
      * @When I add :product to this order
-     */
-    public function addProductToThisOrder(ProductInterface $product): void
-    {
-        /** @var ProductVariantInterface $productVariant */
-        $productVariant = $product->getVariants()->first();
-        $this->orderCreateFormElement->addProduct($productVariant->getDescriptor());
-    }
-
-    /**
      * @When I add :quantity of :product to this order
      */
-    public function addMultipleProductsToThisOrder(int $quantity, ProductInterface $product): void
+    public function addProductToThisOrder(ProductInterface $product, int $quantity = 1): void
     {
         /** @var ProductVariantInterface $productVariant */
         $productVariant = $product->getVariants()->first();
-        $this->orderCreateFormElement->addMultipleProducts($productVariant->getDescriptor(), $quantity);
+        $this->orderCreateFormElement->addProductWithQuantity($productVariant->getDescriptor(), $quantity);
     }
 
     /**
