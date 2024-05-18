@@ -11,18 +11,13 @@ use Tests\Sylius\AdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector;
 
 final class NewOrderCustomerPage extends SymfonyPage implements NewOrderCustomerPageInterface
 {
-    /** @var AutoCompleteSelector */
-    private $autoCompleteSelector;
-
     public function __construct(
         Session $session,
         $parameters,
         RouterInterface $router,
-        AutoCompleteSelector $autoCompleteSelector,
+        private AutoCompleteSelector $autoCompleteSelector,
     ) {
         parent::__construct($session, $parameters, $router);
-
-        $this->autoCompleteSelector = $autoCompleteSelector;
     }
 
     public function getRouteName(): string
@@ -32,7 +27,7 @@ final class NewOrderCustomerPage extends SymfonyPage implements NewOrderCustomer
 
     public function selectCustomer(string $customerEmail): void
     {
-        $this->autoCompleteSelector->selectOption($this->getDocument(), $customerEmail);
+        $this->autoCompleteSelector->selectOption($this->getSession(), $this->getDocument(), $customerEmail);
     }
 
     public function next(): void

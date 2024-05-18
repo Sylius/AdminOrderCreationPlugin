@@ -8,6 +8,7 @@ use ArrayAccess;
 use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Exception\Exception;
 use Behat\Mink\Session;
+use Sylius\Behat\Service\JQueryHelper;
 use Sylius\Component\Core\Model\AddressInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Element;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector;
@@ -29,18 +30,18 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
     public function addProduct(string $productVariantDescriptor): void
     {
         $this->clickOnTabAndWait('Items');
-        $item = $this->addItemAndWaitForIt();
 
-        $this->autoCompleteSelector->selectOption($item, $productVariantDescriptor);
+        $item = $this->addItemAndReturnIt();
+        $this->autoCompleteSelector->selectOption($this->getSession(), $item, $productVariantDescriptor);
     }
 
     public function addMultipleProducts(string $productVariantDescriptor, int $quantity): void
     {
         $this->clickOnTabAndWait('Items');
 
-        $item = $this->addItemAndWaitForIt();
+        $item = $this->addItemAndReturnIt();
 
-        $this->autoCompleteSelector->selectOption($item, $productVariantDescriptor);
+        $this->autoCompleteSelector->selectOption($this->getSession(), $item, $productVariantDescriptor);
         $item->fillField('Quantity', (string) $quantity);
     }
 
@@ -56,9 +57,9 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
     {
         $this->clickOnTabAndWait('Items');
 
-        $item = $this->addItemAndWaitForIt();
+        $item = $this->addItemAndReturnIt();
 
-        return $this->autoCompleteSelector->areItemsVisible($item);
+        return $this->autoCompleteSelector->areItemsVisible($this->getSession(), $item);
     }
 
     public function specifyShippingAddress(AddressInterface $address): void
@@ -232,32 +233,14 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         $collection->selectFieldOption($field, $name);
     }
 
-    private function addItemAndWaitForIt(): NodeElement
+    private function addItemAndReturnIt(): NodeElement
     {
-        $itemsCount = $this->countItems();
-        $this->getDocument()->waitFor(10, function () {
-            try {
-                $this->getDocument()->clickLink('Add');
-
-                return true;
-            } catch (Exception $exception) {
-                return false;
-            }
-        });
-
-        $this->getDocument()->waitFor(1, function () use ($itemsCount) {
-            return $this->countItems() > $itemsCount;
-        });
+        $this->getDocument()->clickLink('Add');
 
         /** @var NodeElement $lastItem */
         $lastItem = $this->getDocument()->find('css', '#items [data-form-collection="item"]:last-child');
 
         return $lastItem;
-    }
-
-    private function countItems(): int
-    {
-        return count($this->getDocument()->findAll('css', '#items [data-form-collection="item"]'));
     }
 
     private function getItemWithProductSelected(string $productVariantDescriptor): NodeElement
@@ -279,28 +262,21 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
     {
         /** @var NodeElement $tab */
         $tab = $this->getDocument()->find('css', sprintf('.title:contains("%s")', $tabName));
-
         if ($tab->hasClass('active')) {
             return;
         }
 
         $tab->click();
 
-        $this->getDocument()->waitFor(5, function () use ($tabName) {
-            /** @var NodeElement $title */
-            $title = $this->getDocument()->find('css', sprintf('.title:contains("%s") + .content', $tabName));
+        /** @var NodeElement $tabContent */
+        $tabContent = $this->getDocument()->find('css', sprintf('.title:contains("%s") + .content', $tabName));
 
-            return $title->hasClass('active');
-        });
+        $this->getDocument()->waitFor(5, fn () => $tabContent->hasClass('active'));
     }
 
     private function waitForFormToLoad(): void
     {
-        /** @var NodeElement $form */
-        $form = $this->getDocument()->find('css', '[name="sylius_admin_order_creation_new_order"]');
-        $this->getDocument()->waitFor(1000, function () use ($form) {
-            return !$form->hasClass('loading');
-        });
+        JQueryHelper::waitForAsynchronousActionsToFinish($this->getSession());
     }
 
     public function isAddPaymentButtonVisible(): bool

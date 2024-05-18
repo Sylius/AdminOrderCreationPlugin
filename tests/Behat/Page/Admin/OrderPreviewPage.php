@@ -88,9 +88,7 @@ final class OrderPreviewPage extends SymfonyPage implements OrderPreviewPageInte
         $discountCollection = $this->getDocument()->find('css', '#sylius_admin_order_creation_new_order_adjustments');
 
         $discountCollection->clickLink('Add discount');
-        $this->getDocument()->waitFor(1, function () use ($discountCollection) {
-            return $discountCollection->has('css', '[data-form-collection="item"]');
-        });
+        $this->getDocument()->waitFor(1, fn () => $discountCollection->has('css', '[data-form-collection="item"]'));
 
         $discountCollection->fillField('Order discount', $discount);
     }
@@ -104,9 +102,7 @@ final class OrderPreviewPage extends SymfonyPage implements OrderPreviewPageInte
         /** @var NodeElement $discountCollection */
         $discountCollection = $item->find('css', '[data-form-type="collection"]');
 
-        $this->getDocument()->waitFor(1, function () use ($discountCollection) {
-            return $discountCollection->has('css', '[data-form-collection="item"]');
-        });
+        $this->getDocument()->waitFor(1, fn () => $discountCollection->has('css', '[data-form-collection="item"]'));
 
         $discountCollection->fillField('Item discount', $discount);
     }
