@@ -26,7 +26,7 @@ final class NewOrderPreparator implements OrderPreparatorInterface
     public function __construct(
         OrderFactoryInterface $orderFactory,
         FormFactoryInterface $formFactory,
-        OrderProcessorInterface $orderProcessor
+        OrderProcessorInterface $orderProcessor,
     ) {
         $this->orderFactory = $orderFactory;
         $this->formFactory = $formFactory;

@@ -112,6 +112,7 @@ final class ManagingOrdersContext implements Context
     {
         /** @var ProductVariantInterface $productVariant */
         $productVariant = $product->getVariants()->first();
+
         try {
             $this->orderCreateFormElement->removeProduct($productVariant->getDescriptor());
         } catch (\InvalidArgumentException $exception) {
@@ -210,7 +211,7 @@ final class ManagingOrdersContext implements Context
         $productCode = $product->getCode();
         $this->orderPreviewPage->lowerItemWithProductPriceBy(
             $productCode,
-            str_replace(['$', '€', '£'], '', $discount)
+            str_replace(['$', '€', '£'], '', $discount),
         );
     }
 
@@ -221,6 +222,7 @@ final class ManagingOrdersContext implements Context
     {
         /** @var ProductVariantInterface $productVariant */
         $productVariant = $product->getVariants()->first();
+
         try {
             $this->orderCreateFormElement->specifyQuantity($productVariant->getDescriptor(), $quantity);
         } catch (\InvalidArgumentException $exception) {
@@ -297,7 +299,7 @@ final class ManagingOrdersContext implements Context
     {
         Assert::same(
             $this->orderCreateFormElement->getShippingMethodsValidationMessage(),
-            'You need to add some items and shipping address to select from eligible shipping method'
+            'You need to add some items and shipping address to select from eligible shipping method',
         );
     }
 
@@ -308,7 +310,7 @@ final class ManagingOrdersContext implements Context
     {
         $this->notificationChecker->checkNotification(
             'Order has been successfully created',
-            NotificationType::success()
+            NotificationType::success(),
         );
     }
 
@@ -328,7 +330,7 @@ final class ManagingOrdersContext implements Context
         /** @var string $productCode */
         $productCode = $product->getCode();
         Assert::true(
-            $this->orderPreviewPage->hasItemDiscountValidationMessage($productCode, 'Discount cannot be below 0')
+            $this->orderPreviewPage->hasItemDiscountValidationMessage($productCode, 'Discount cannot be below 0'),
         );
     }
 
@@ -363,7 +365,7 @@ final class ManagingOrdersContext implements Context
     {
         Assert::true($this->emailChecker->hasMessageTo(
             'New order has been created for you in Admin panel. Check it out in your orders history. To pay for this order, click',
-            $email
+            $email,
         ));
     }
 
@@ -387,7 +389,7 @@ final class ManagingOrdersContext implements Context
             'state' => 'New',
             'paymentState' => 'Awaiting payment',
             'shippingState' => 'Ready',
-            'channel' => $channelName
+            'channel' => $channelName,
         ]));
     }
 
@@ -405,7 +407,7 @@ final class ManagingOrdersContext implements Context
                 'state' => 'New',
                 'paymentState' => 'Awaiting payment',
                 'shippingState' => 'Ready',
-            ])
+            ]),
         );
     }
 
@@ -417,7 +419,7 @@ final class ManagingOrdersContext implements Context
         string $street,
         string $postcode,
         string $city,
-        string $countryName
+        string $countryName,
     ): void {
         Assert::true($this->orderShowPage->hasShippingAddress($customerName, $street, $postcode, $city, $countryName));
     }
@@ -430,7 +432,7 @@ final class ManagingOrdersContext implements Context
         string $street,
         string $postcode,
         string $city,
-        string $countryName
+        string $countryName,
     ): void {
         Assert::true($this->orderShowPage->hasBillingAddress($customerName, $street, $postcode, $city, $countryName));
     }

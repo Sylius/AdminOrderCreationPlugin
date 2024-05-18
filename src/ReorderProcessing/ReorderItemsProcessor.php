@@ -25,7 +25,7 @@ final class ReorderItemsProcessor implements ReorderProcessor
     public function __construct(
         FactoryInterface $orderItemFactory,
         OrderItemQuantityModifierInterface $orderItemQuantityModifier,
-        OrderModifierInterface $orderModifier
+        OrderModifierInterface $orderModifier,
     ) {
         $this->orderItemFactory = $orderItemFactory;
         $this->orderItemQuantityModifier = $orderItemQuantityModifier;

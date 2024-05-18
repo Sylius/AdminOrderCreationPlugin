@@ -25,7 +25,7 @@ final class OrderCreateAction
     public function __construct(
         OrderFactoryInterface $orderFactory,
         FormFactoryInterface $formFactory,
-        Environment $twig
+        Environment $twig,
     ) {
         $this->orderFactory = $orderFactory;
         $this->formFactory = $formFactory;

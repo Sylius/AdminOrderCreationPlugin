@@ -40,14 +40,14 @@ final class PaymentTokenProvider implements PaymentTokenProviderInterface
             return $tokenFactory->createAuthorizeToken(
                 $gatewayConfig->getGatewayName(),
                 $payment,
-                $this->afterPayRoute
+                $this->afterPayRoute,
             );
         }
 
         return $tokenFactory->createCaptureToken(
             $gatewayConfig->getGatewayName(),
             $payment,
-            $this->afterPayRoute
+            $this->afterPayRoute,
         );
     }
 }

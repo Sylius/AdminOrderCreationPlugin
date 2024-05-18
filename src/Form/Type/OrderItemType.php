@@ -22,7 +22,7 @@ final class OrderItemType extends AbstractResourceType
     public function __construct(
         string $dataClass,
         DataMapperInterface $dataMapper,
-        array $validationGroups = []
+        array $validationGroups = [],
     ) {
         parent::__construct($dataClass, $validationGroups);
 
@@ -82,7 +82,7 @@ final class OrderItemType extends AbstractResourceType
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getBlockPrefix(): string
     {

@@ -103,14 +103,14 @@ final class Kernel extends BaseKernel
         if (SyliusCoreBundle::MINOR_VERSION > 10) {
             $contents = array_merge(
                 ['Sylius\Calendar\SyliusCalendarBundle' => ['all' => true]],
-                $contents
+                $contents,
             );
         }
 
         if (SyliusCoreBundle::MINOR_VERSION > 12) {
             $contents = array_merge(
                 ['Sylius\Abstraction\StateMachine\SyliusStateMachineAbstractionBundle' => ['all' => true]],
-                $contents
+                $contents,
             );
         }
 
@@ -131,9 +131,9 @@ final class Kernel extends BaseKernel
                 static function (string $directory): string {
                     return $directory . '/bundles.php';
                 },
-                $this->getConfigurationDirectories()
+                $this->getConfigurationDirectories(),
             ),
-            'file_exists'
+            'file_exists',
         );
     }
 

@@ -15,6 +15,7 @@ use Tests\Sylius\AdminOrderCreationPlugin\Behat\Service\AutoCompleteSelector;
 class OrderCreateFormElement extends Element implements OrderCreateFormElementInterface
 {
     public const TYPE_BILLING = 'billing';
+
     public const TYPE_SHIPPING = 'shipping';
 
     public function __construct(
@@ -68,7 +69,7 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         $addressForm = $this->getDocument()->find('css', 'div[id*="shippingAddress"]');
         $this->fillAddressData(
             $addressForm,
-            $address
+            $address,
         );
     }
 
@@ -78,7 +79,7 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         $addressForm = $this->getDocument()->find('css', 'div[id*="billingAddress"]');
         $this->fillAddressData(
             $addressForm,
-            $address
+            $address,
         );
     }
 
@@ -96,10 +97,11 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         $this->waitForFormToLoad();
 
         $shippingMethods = $this->getDocument()->findAll(
-            'css', '#sylius_admin_order_creation_new_order_shipments [data-form-collection="item"]:last-child select option'
+            'css',
+            '#sylius_admin_order_creation_new_order_shipments [data-form-collection="item"]:last-child select option',
         );
 
-        return array_map(static function(NodeElement $option) : string {
+        return array_map(static function (NodeElement $option): string {
             return $option->getText();
         }, $shippingMethods);
     }
@@ -138,7 +140,7 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
 
     public function placeOrder(): void
     {
-        $this->getDocument()->waitFor(10, function() {
+        $this->getDocument()->waitFor(10, function () {
             try {
                 $this->getDocument()->pressButton('Create');
 
@@ -147,7 +149,6 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
                 return false;
             }
         });
-
     }
 
     public function selectLocale(string $localeName): void
@@ -168,6 +169,7 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
     {
         /** @var NodeElement $invalidMessage */
         $invalidMessage = $this->getDocument()->find('css', '#shipmentsAndPayments .invalid-data-message');
+
         return $invalidMessage->getText();
     }
 
@@ -233,7 +235,7 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
     private function addItemAndWaitForIt(): NodeElement
     {
         $itemsCount = $this->countItems();
-        $this->getDocument()->waitFor(10, function() {
+        $this->getDocument()->waitFor(10, function () {
             try {
                 $this->getDocument()->clickLink('Add');
 
@@ -249,6 +251,7 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
 
         /** @var NodeElement $lastItem */
         $lastItem = $this->getDocument()->find('css', '#items [data-form-collection="item"]:last-child');
+
         return $lastItem;
     }
 
@@ -286,6 +289,7 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
         $this->getDocument()->waitFor(5, function () use ($tabName) {
             /** @var NodeElement $title */
             $title = $this->getDocument()->find('css', sprintf('.title:contains("%s") + .content', $tabName));
+
             return $title->hasClass('active');
         });
     }
@@ -303,6 +307,7 @@ class OrderCreateFormElement extends Element implements OrderCreateFormElementIn
     {
         /** @var NodeElement $paymentButton */
         $paymentButton = $this->getElement('payments')->find('css', '[data-form-collection="add"]');
+
         return $paymentButton->isVisible();
     }
 }

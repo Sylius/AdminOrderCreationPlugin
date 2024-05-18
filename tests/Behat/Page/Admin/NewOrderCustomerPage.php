@@ -18,7 +18,7 @@ final class NewOrderCustomerPage extends SymfonyPage implements NewOrderCustomer
         Session $session,
         $parameters,
         RouterInterface $router,
-        AutoCompleteSelector $autoCompleteSelector
+        AutoCompleteSelector $autoCompleteSelector,
     ) {
         parent::__construct($session, $parameters, $router);
 
@@ -50,7 +50,7 @@ final class NewOrderCustomerPage extends SymfonyPage implements NewOrderCustomer
     {
         $this->getDocument()->selectFieldOption(
             'sylius_admin_order_creation_new_order_customer_create_channel',
-            $channelName
+            $channelName,
         );
     }
 

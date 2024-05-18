@@ -18,6 +18,7 @@ final class OrderPreviewPage extends SymfonyPage implements OrderPreviewPageInte
     {
         /** @var NodeElement $totalCell */
         $totalCell = $this->getDocument()->find('css', 'td#total');
+
         return str_replace('Order total: ', '', $totalCell->getText());
     }
 
@@ -25,6 +26,7 @@ final class OrderPreviewPage extends SymfonyPage implements OrderPreviewPageInte
     {
         /** @var NodeElement $shippingTotalCell */
         $shippingTotalCell = $this->getDocument()->find('css', 'td#shipping-total');
+
         return str_replace('Shipping total: ', '', $shippingTotalCell->getText());
     }
 

@@ -19,7 +19,7 @@ final class CustomerProvider implements CustomerProviderInterface
 
     public function __construct(
         CustomerRepositoryInterface $customerRepository,
-        FactoryInterface $customerFactory
+        FactoryInterface $customerFactory,
     ) {
         $this->customerRepository = $customerRepository;
         $this->customerFactory = $customerFactory;

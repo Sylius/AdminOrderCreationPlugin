@@ -31,7 +31,7 @@ final class OrderPreviewAction
         OrderFactoryInterface $orderFactory,
         FormFactoryInterface $formFactory,
         OrderProcessorInterface $orderProcessor,
-        Environment $twig
+        Environment $twig,
     ) {
         $this->orderFactory = $orderFactory;
         $this->formFactory = $formFactory;
