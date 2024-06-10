@@ -19,7 +19,7 @@ final class ShipmentType extends AbstractResourceType
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getBlockPrefix(): string
     {

@@ -20,7 +20,7 @@ final class CustomerCreationAction
 
     public function __construct(
         RouterInterface $router,
-        CustomerProviderInterface $customerProvider
+        CustomerProviderInterface $customerProvider,
     ) {
         $this->router = $router;
         $this->customerProvider = $customerProvider;
@@ -38,8 +38,8 @@ final class CustomerCreationAction
                 [
                     'customerId' => $customer->getId(),
                     'channelCode' => $request->attributes->get('channelCode'),
-                ]
-            )
+                ],
+            ),
         );
     }
 }

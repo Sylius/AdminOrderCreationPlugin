@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Element;
 
+use ArrayAccess;
 use Behat\Mink\Driver\DriverInterface;
 use Behat\Mink\Element\DocumentElement;
 use Behat\Mink\Element\NodeElement;
@@ -13,18 +14,12 @@ use Behat\Mink\Session;
 
 abstract class Element
 {
-    /** @var Session */
-    private $session;
-    
-    private $parameters;
+    private ?DocumentElement $document = null;
 
-    /** @var DocumentElement|null */
-    private $document;
-
-    public function __construct(Session $session, $parameters = [])
-    {
-        $this->session = $session;
-        $this->parameters = $parameters;
+    public function __construct(
+        private Session $session,
+        private ArrayAccess $parameters,
+    ) {
     }
 
     protected function getParameter(string $name): NodeElement
@@ -49,7 +44,7 @@ abstract class Element
                 $this->getSession(),
                 sprintf('Element named "%s" with parameters %s', $name, implode(', ', $parameters)),
                 'xpath',
-                $element->getXpath()
+                $element->getXpath(),
             );
         }
 
@@ -88,7 +83,7 @@ abstract class Element
             throw new \InvalidArgumentException(sprintf(
                 'Could not find a defined element with name "%s". The defined ones are: %s.',
                 $name,
-                implode(', ', array_keys($definedElements))
+                implode(', ', array_keys($definedElements)),
             ));
         }
 
@@ -96,7 +91,7 @@ abstract class Element
 
         return new NodeElement(
             $this->getSelectorAsXpath($elementSelector, $this->session->getSelectorsHandler()),
-            $this->session
+            $this->session,
         );
     }
 
@@ -115,9 +110,10 @@ abstract class Element
         }
 
         array_map(
-            function ($definedElement) use ($parameters): string {
+            static function ($definedElement) use ($parameters): string {
                 return strtr($definedElement, $parameters);
-            }, $definedElements[$name]
+            },
+            $definedElements[$name],
         );
 
         return $definedElements[$name];

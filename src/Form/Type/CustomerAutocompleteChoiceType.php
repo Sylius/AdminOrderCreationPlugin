@@ -23,7 +23,7 @@ final class CustomerAutocompleteChoiceType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
@@ -32,7 +32,7 @@ final class CustomerAutocompleteChoiceType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getBlockPrefix(): string
     {
@@ -40,7 +40,7 @@ final class CustomerAutocompleteChoiceType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getParent(): string
     {

@@ -6,7 +6,7 @@ Feature: Creating order without payment if order is free
 
     Background:
         Given the store operates on a single channel in "United States"
-        And the store has a product "Stark Coat" priced at "$0"
+        And the store has a product "Stark Coat" priced at "$0.00"
         And the store ships everywhere for free
         And there is a customer account "jon.snow@the-wall.com"
         And I am logged in as an administrator

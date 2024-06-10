@@ -39,7 +39,7 @@ final class OrderPaymentLinkSender implements OrderPaymentLinkSenderInterface
                 [
                     'order' => $order,
                     'paymentLink' => $paymentDetails['payment-link'],
-                ]
+                ],
             )
         ;
     }

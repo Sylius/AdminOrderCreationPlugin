@@ -6,15 +6,13 @@ namespace Tests\Sylius\AdminOrderCreationPlugin\Behat\Context\Admin;
 
 use Behat\Behat\Context\Context;
 use Sylius\Behat\NotificationType;
+use Sylius\Behat\Service\Checker\EmailCheckerInterface;
 use Sylius\Behat\Service\NotificationCheckerInterface;
-use Sylius\Bundle\CoreBundle\Application\Kernel;
-use Sylius\Component\Addressing\Comparator\AddressComparatorInterface;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\ProductInterface;
-use Sylius\Behat\Service\Checker\EmailCheckerInterface as BehatEmailCheckerInterface;
-use Sylius\Component\Core\Test\Services\EmailCheckerInterface as CoreEmailCheckerInterface;
+use Sylius\Component\Core\Model\ProductVariantInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Element\Admin\OrderCreateFormElementInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\NewOrderCustomerPageInterface;
 use Tests\Sylius\AdminOrderCreationPlugin\Behat\Page\Admin\OrderIndexPageInterface;
@@ -25,53 +23,16 @@ use Webmozart\Assert\Assert;
 
 final class ManagingOrdersContext implements Context
 {
-    /** @var OrderIndexPageInterface */
-    private $orderIndexPage;
-
-    /** @var NewOrderCustomerPageInterface */
-    private $newOrderCustomerPage;
-
-    /** @var OrderPreviewPageInterface */
-    private $orderPreviewPage;
-
-    /** @var OrderShowPageInterface */
-    private $orderShowPage;
-
-    /** @var ReorderPageInterface */
-    private $reorderPage;
-
-    /** @var OrderCreateFormElementInterface */
-    private $orderCreateFormElement;
-
-    /** @var NotificationCheckerInterface */
-    private $notificationChecker;
-
-    /** @var BehatEmailCheckerInterface|CoreEmailCheckerInterface */
-    private $emailChecker;
-
-    /** @var AddressComparatorInterface */
-    private $addressComparator;
-
     public function __construct(
-        OrderIndexPageInterface $orderIndexPage,
-        NewOrderCustomerPageInterface $newOrderCustomerPage,
-        OrderPreviewPageInterface $orderPreviewPage,
-        OrderShowPageInterface $orderShowPage,
-        ReorderPageInterface $reorderPage,
-        OrderCreateFormElementInterface $orderCreateFormElement,
-        NotificationCheckerInterface $notificationChecker,
-        BehatEmailCheckerInterface|CoreEmailCheckerInterface $emailChecker,
-        AddressComparatorInterface $addressComparator
+        private OrderIndexPageInterface $orderIndexPage,
+        private NewOrderCustomerPageInterface $newOrderCustomerPage,
+        private OrderPreviewPageInterface $orderPreviewPage,
+        private OrderShowPageInterface $orderShowPage,
+        private ReorderPageInterface $reorderPage,
+        private OrderCreateFormElementInterface $orderCreateFormElement,
+        private NotificationCheckerInterface $notificationChecker,
+        private EmailCheckerInterface $emailChecker,
     ) {
-        $this->orderIndexPage = $orderIndexPage;
-        $this->newOrderCustomerPage = $newOrderCustomerPage;
-        $this->orderPreviewPage = $orderPreviewPage;
-        $this->orderShowPage = $orderShowPage;
-        $this->reorderPage = $reorderPage;
-        $this->orderCreateFormElement = $orderCreateFormElement;
-        $this->notificationChecker = $notificationChecker;
-        $this->emailChecker = $emailChecker;
-        $this->addressComparator = $addressComparator;
     }
 
     /**
@@ -84,7 +45,9 @@ final class ManagingOrdersContext implements Context
 
         $this->newOrderCustomerPage->selectChannel($channelName);
 
-        $this->newOrderCustomerPage->selectCustomer($customer->getEmail());
+        /** @var string $customerEmail */
+        $customerEmail = $customer->getEmail();
+        $this->newOrderCustomerPage->selectCustomer($customerEmail);
         $this->newOrderCustomerPage->next();
     }
 
@@ -124,18 +87,13 @@ final class ManagingOrdersContext implements Context
 
     /**
      * @When I add :product to this order
-     */
-    public function addProductToThisOrder(ProductInterface $product): void
-    {
-        $this->orderCreateFormElement->addProduct($product->getVariants()->first()->getDescriptor());
-    }
-
-    /**
      * @When I add :quantity of :product to this order
      */
-    public function addMultipleProductsToThisOrder(int $quantity, ProductInterface $product): void
+    public function addProductToThisOrder(ProductInterface $product, int $quantity = 1): void
     {
-        $this->orderCreateFormElement->addMultipleProducts($product->getVariants()->first()->getDescriptor(), $quantity);
+        /** @var ProductVariantInterface $productVariant */
+        $productVariant = $product->getVariants()->first();
+        $this->orderCreateFormElement->addProductWithQuantity($productVariant->getDescriptor(), $quantity);
     }
 
     /**
@@ -143,11 +101,14 @@ final class ManagingOrdersContext implements Context
      */
     public function removeProductFromThisOrder(ProductInterface $product): void
     {
+        /** @var ProductVariantInterface $productVariant */
+        $productVariant = $product->getVariants()->first();
+
         try {
-            $this->orderCreateFormElement->removeProduct($product->getVariants()->first()->getDescriptor());
+            $this->orderCreateFormElement->removeProduct($productVariant->getDescriptor());
         } catch (\InvalidArgumentException $exception) {
             // TODO: Currently the autocomplete include product variant code instead of its descriptor when rendering a form with existing items
-            $this->orderCreateFormElement->removeProduct($product->getVariants()->first()->getCode());
+            $this->orderCreateFormElement->removeProduct($productVariant->getCode());
         }
     }
 
@@ -237,9 +198,11 @@ final class ManagingOrdersContext implements Context
      */
     public function lowerItemWithProductPriceBy(ProductInterface $product, string $discount): void
     {
+        /** @var string $productCode */
+        $productCode = $product->getCode();
         $this->orderPreviewPage->lowerItemWithProductPriceBy(
-            $product->getCode(),
-            str_replace(['$', '€', '£'], '', $discount)
+            $productCode,
+            str_replace(['$', '€', '£'], '', $discount),
         );
     }
 
@@ -248,11 +211,14 @@ final class ManagingOrdersContext implements Context
      */
     public function iChangeQuantityOfItemTo(ProductInterface $product, int $quantity): void
     {
+        /** @var ProductVariantInterface $productVariant */
+        $productVariant = $product->getVariants()->first();
+
         try {
-            $this->orderCreateFormElement->specifyQuantity($product->getVariants()->first()->getDescriptor(), $quantity);
+            $this->orderCreateFormElement->specifyQuantity($productVariant->getDescriptor(), $quantity);
         } catch (\InvalidArgumentException $exception) {
             // TODO: Currently the autocomplete include product variant code instead of its descriptor when rendering a form with existing items
-            $this->orderCreateFormElement->specifyQuantity($product->getVariants()->first()->getCode(), $quantity);
+            $this->orderCreateFormElement->specifyQuantity($productVariant->getCode(), $quantity);
         }
     }
 
@@ -323,8 +289,8 @@ final class ManagingOrdersContext implements Context
     public function shouldBeNotifiedAboutShippingMethodsSelectionRequirements(): void
     {
         Assert::same(
+            $this->orderCreateFormElement->getShippingMethodsValidationMessage(),
             'You need to add some items and shipping address to select from eligible shipping method',
-            $this->orderCreateFormElement->getShippingMethodsValidationMessage()
         );
     }
 
@@ -335,7 +301,7 @@ final class ManagingOrdersContext implements Context
     {
         $this->notificationChecker->checkNotification(
             'Order has been successfully created',
-            NotificationType::success()
+            NotificationType::success(),
         );
     }
 
@@ -352,8 +318,10 @@ final class ManagingOrdersContext implements Context
      */
     public function shouldBeNotifiedThatItemWithProductDiscountCannotBeBelow0(ProductInterface $product): void
     {
+        /** @var string $productCode */
+        $productCode = $product->getCode();
         Assert::true(
-            $this->orderPreviewPage->hasItemDiscountValidationMessage($product->getCode(), 'Discount cannot be below 0')
+            $this->orderPreviewPage->hasItemDiscountValidationMessage($productCode, 'Discount cannot be below 0'),
         );
     }
 
@@ -388,7 +356,7 @@ final class ManagingOrdersContext implements Context
     {
         Assert::true($this->emailChecker->hasMessageTo(
             'New order has been created for you in Admin panel. Check it out in your orders history. To pay for this order, click',
-            $email
+            $email,
         ));
     }
 
@@ -397,19 +365,7 @@ final class ManagingOrdersContext implements Context
      */
     public function thereShouldBeNoPaymentLinkSentTo(string $email): void
     {
-        if (Kernel::VERSION_ID < 11200) {
-            try {
-                $this->emailChecker->countMessagesTo($email);
-            } catch (\InvalidArgumentException $exception) {
-                return;
-            }
-
-            throw new \Exception('There should be no messages exception thrown');
-        }
-
-        if (11200 <= Kernel::VERSION_ID) {
-            Assert::same($this->emailChecker->countMessagesTo($email), 0);
-        }
+        Assert::same($this->emailChecker->countMessagesTo($email), 0);
     }
 
     /**
@@ -424,7 +380,7 @@ final class ManagingOrdersContext implements Context
             'state' => 'New',
             'paymentState' => 'Awaiting payment',
             'shippingState' => 'Ready',
-            'channel' => $channelName
+            'channel' => $channelName,
         ]));
     }
 
@@ -442,7 +398,7 @@ final class ManagingOrdersContext implements Context
                 'state' => 'New',
                 'paymentState' => 'Awaiting payment',
                 'shippingState' => 'Ready',
-            ])
+            ]),
         );
     }
 
@@ -454,7 +410,7 @@ final class ManagingOrdersContext implements Context
         string $street,
         string $postcode,
         string $city,
-        string $countryName
+        string $countryName,
     ): void {
         Assert::true($this->orderShowPage->hasShippingAddress($customerName, $street, $postcode, $city, $countryName));
     }
@@ -467,7 +423,7 @@ final class ManagingOrdersContext implements Context
         string $street,
         string $postcode,
         string $city,
-        string $countryName
+        string $countryName,
     ): void {
         Assert::true($this->orderShowPage->hasBillingAddress($customerName, $street, $postcode, $city, $countryName));
     }

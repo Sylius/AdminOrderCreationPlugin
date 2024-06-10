@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Sylius\AdminOrderCreationPlugin\ReorderProcessing;
 
-use Sylius\Component\Core\Model\OrderInterface;
 use Laminas\Stdlib\PriorityQueue;
+use Sylius\Component\Core\Model\OrderInterface;
 
 final class CompositeReorderProcessor implements ReorderProcessor
 {

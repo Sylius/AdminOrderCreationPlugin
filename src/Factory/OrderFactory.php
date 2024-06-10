@@ -33,7 +33,7 @@ final class OrderFactory implements OrderFactoryInterface
         FactoryInterface $baseOrderFactory,
         CustomerRepositoryInterface $customerRepository,
         ChannelRepositoryInterface $channelRepository,
-        ReorderProcessor $reorderProcessor
+        ReorderProcessor $reorderProcessor,
     ) {
         $this->baseOrderFactory = $baseOrderFactory;
         $this->customerRepository = $customerRepository;

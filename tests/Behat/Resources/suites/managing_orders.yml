@@ -56,4 +56,4 @@ default:
 
                 - Tests\Sylius\AdminOrderCreationPlugin\Behat\Context\Admin\ManagingOrdersContext
             filters:
-                tags: "@admin_order_creation_managing_orders && @ui"
+                tags: "@admin_order_creation_managing_orders&&@ui"

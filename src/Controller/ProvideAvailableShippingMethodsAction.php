@@ -20,7 +20,7 @@ final class ProvideAvailableShippingMethodsAction
 
     public function __construct(
         OrderPreparatorInterface $orderPreparator,
-        AvailableShippingMethodsListProvider $availableShippingMethodsListProvider
+        AvailableShippingMethodsListProvider $availableShippingMethodsListProvider,
     ) {
         $this->orderPreparator = $orderPreparator;
         $this->availableShippingMethodsListProvider = $availableShippingMethodsListProvider;

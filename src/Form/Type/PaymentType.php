@@ -19,7 +19,7 @@ final class PaymentType extends AbstractResourceType
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getBlockPrefix(): string
     {

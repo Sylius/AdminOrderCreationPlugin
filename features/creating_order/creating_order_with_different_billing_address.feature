@@ -6,8 +6,8 @@ Feature: Creating order with different billing address
 
     Background:
         Given the store operates on a single channel in "United States"
-        And the store has a product "Stark Coat" priced at "$100"
-        And the store has a product "Lannister Banner" priced at "$40"
+        And the store has a product "Stark Coat" priced at "$100.00"
+        And the store has a product "Lannister Banner" priced at "$40.00"
         And the store ships everywhere for free
         And the store allows paying with "Cash on Delivery"
         And there is a customer account "jon.snow@the-wall.com"

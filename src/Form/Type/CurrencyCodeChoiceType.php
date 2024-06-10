@@ -24,7 +24,7 @@ final class CurrencyCodeChoiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer(
-            new ReversedTransformer(new ResourceToIdentifierTransformer($this->currencyRepository, 'code'))
+            new ReversedTransformer(new ResourceToIdentifierTransformer($this->currencyRepository, 'code')),
         );
     }
 

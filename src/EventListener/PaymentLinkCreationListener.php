@@ -28,7 +28,7 @@ final class PaymentLinkCreationListener
     public function __construct(
         PaymentTokenProviderInterface $paymentTokenProvider,
         ObjectManager $orderManager,
-        OrderPaymentLinkSenderInterface $orderPaymentLinkSender
+        OrderPaymentLinkSenderInterface $orderPaymentLinkSender,
     ) {
         $this->paymentTokenProvider = $paymentTokenProvider;
         $this->orderManager = $orderManager;

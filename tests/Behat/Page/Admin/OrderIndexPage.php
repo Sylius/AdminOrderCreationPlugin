@@ -19,7 +19,7 @@ final class OrderIndexPage extends IndexPage implements OrderIndexPageInterface
         $parameters,
         RouterInterface $router,
         TableAccessorInterface $tableAccessor,
-        $routeName
+        $routeName,
     ) {
         parent::__construct($session, $parameters, $router, $tableAccessor, $routeName);
 

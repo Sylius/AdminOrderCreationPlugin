@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Sylius\AdminOrderCreationPlugin\Application;
 
 use PSS\SymfonyMockerContainer\DependencyInjection\MockerContainer;
-use Sylius\Bundle\CoreBundle\Application\Kernel as SyliusKernel;
+use Sylius\Bundle\CoreBundle\SyliusCoreBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
@@ -13,7 +13,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
-use Symfony\Component\Routing\RouteCollectionBuilder;
 
 final class Kernel extends BaseKernel
 {
@@ -101,10 +100,17 @@ final class Kernel extends BaseKernel
     {
         $contents = require $bundlesFile;
 
-        if (SyliusKernel::MINOR_VERSION > 10) {
+        if (SyliusCoreBundle::MINOR_VERSION > 10) {
             $contents = array_merge(
                 ['Sylius\Calendar\SyliusCalendarBundle' => ['all' => true]],
-                $contents
+                $contents,
+            );
+        }
+
+        if (SyliusCoreBundle::MINOR_VERSION > 12) {
+            $contents = array_merge(
+                ['Sylius\Abstraction\StateMachine\SyliusStateMachineAbstractionBundle' => ['all' => true]],
+                $contents,
             );
         }
 
@@ -125,9 +131,9 @@ final class Kernel extends BaseKernel
                 static function (string $directory): string {
                     return $directory . '/bundles.php';
                 },
-                $this->getConfigurationDirectories()
+                $this->getConfigurationDirectories(),
             ),
-            'file_exists'
+            'file_exists',
         );
     }
 
@@ -138,7 +144,7 @@ final class Kernel extends BaseKernel
     {
         $directories = [
             $this->getProjectDir() . '/config',
-            $this->getProjectDir() . '/config/sylius/' . SyliusKernel::MAJOR_VERSION . '.' . SyliusKernel::MINOR_VERSION,
+            $this->getProjectDir() . '/config/sylius/' . SyliusCoreBundle::MAJOR_VERSION . '.' . SyliusCoreBundle::MINOR_VERSION,
         ];
 
         return array_filter($directories, 'file_exists');

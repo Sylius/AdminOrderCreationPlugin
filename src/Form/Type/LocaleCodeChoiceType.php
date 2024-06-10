@@ -22,7 +22,7 @@ final class LocaleCodeChoiceType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -30,7 +30,7 @@ final class LocaleCodeChoiceType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getParent(): string
     {
@@ -38,7 +38,7 @@ final class LocaleCodeChoiceType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getBlockPrefix(): string
     {
