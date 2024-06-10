@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.15.0 (2024-06-10)
+
+- [#199](https://github.com/Sylius/AdminOrderCreationPlugin/issues/199) Sylius 1.13 ([@Prometee](https://github.com/Prometee))
+- [#200](https://github.com/Sylius/AdminOrderCreationPlugin/issues/200) [Maintenance] Add PHP version to requirements + adjust Kernel and bundles configuration ([@GSadee](https://github.com/GSadee))
+
 ## v0.14.0 (2022-12-15)
 
 - [#186](https://github.com/Sylius/AdminOrderCreationPlugin/issues/186) [Maintenance] Bump up Sylius versions to fix the build ([@GSadee](https://github.com/GSadee))
