@@ -100,20 +100,6 @@ final class Kernel extends BaseKernel
     {
         $contents = require $bundlesFile;
 
-        if (SyliusCoreBundle::MINOR_VERSION > 10) {
-            $contents = array_merge(
-                ['Sylius\Calendar\SyliusCalendarBundle' => ['all' => true]],
-                $contents,
-            );
-        }
-
-        if (SyliusCoreBundle::MINOR_VERSION > 12) {
-            $contents = array_merge(
-                ['Sylius\Abstraction\StateMachine\SyliusStateMachineAbstractionBundle' => ['all' => true]],
-                $contents,
-            );
-        }
-
         foreach ($contents as $class => $envs) {
             if (isset($envs['all']) || isset($envs[$this->environment])) {
                 yield new $class();
