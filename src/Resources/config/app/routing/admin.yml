@@ -1,0 +1,95 @@
+sylius_admin_order_creation_select_order_customer:
+    path: /orders/new/select-customer
+    methods: [GET]
+    defaults:
+        _controller: Sylius\AdminOrderCreationPlugin\Controller\SelectNewOrderCustomerAction
+
+sylius_admin_order_creation_customer_create:
+    path: /orders/new/customer/{customerEmail}/{channelCode}
+    methods: [GET]
+    options:
+        expose: true
+    defaults:
+        _controller: Sylius\AdminOrderCreationPlugin\Controller\CustomerCreationAction
+
+sylius_admin_order_creation_order_create:
+    path: /orders/new/{customerId}/{channelCode}
+    methods: [GET]
+    options:
+        expose: true
+    defaults:
+        _controller: sylius.controller.order::createAction
+        _sylius:
+            event: admin_create
+            section: admin
+            permission: true
+            template: '@SyliusAdminOrderCreationPlugin/Order/create.html.twig'
+            form:
+                type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
+            factory:
+                method: ['expr:service("Sylius\\AdminOrderCreationPlugin\\Factory\\OrderFactory")', 'createForCustomerAndChannel']
+                arguments: [$customerId, $channelCode]
+    requirements:
+        customerId: \d+
+
+sylius_admin_order_creation_order_preview:
+    path: /orders/new/{customerId}/{channelCode}/preview
+    methods: [POST]
+    defaults:
+        _controller: Sylius\AdminOrderCreationPlugin\Controller\OrderPreviewAction
+        _sylius:
+            form:
+                type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
+            factory:
+                method: ['expr:service("Sylius\\AdminOrderCreationPlugin\\Factory\\OrderFactory")', 'createForCustomerAndChannel']
+                arguments: [$customerId, $channelCode]
+
+sylius_admin_order_creation_order_create_from_preview:
+    path: /orders/new/{customerId}/{channelCode}/create-from-preview
+    methods: [POST]
+    options:
+        expose: true
+    defaults:
+        _controller: sylius.controller.order::createAction
+        _sylius:
+            event: admin_create
+            section: admin
+            permission: true
+            template: '@SyliusAdminOrderCreationPlugin/Order/preview.html.twig'
+            form:
+                type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
+            factory:
+                method: ['expr:service("Sylius\\AdminOrderCreationPlugin\\Factory\\OrderFactory")', 'createForCustomerAndChannel']
+                arguments: [$customerId, $channelCode]
+
+sylius_admin_order_creation_order_create_back:
+    path: /orders/edit/{customerId}/{channelCode}
+    methods: [POST]
+    options:
+        expose: true
+    defaults:
+        _controller: Sylius\AdminOrderCreationPlugin\Controller\OrderCreateAction
+    requirements:
+        customerId: \d+
+
+sylius_admin_order_creation_reorder:
+    path: /orders/{id}/reorder
+    methods: [GET]
+    options:
+        expose: true
+    defaults:
+        _controller: sylius.controller.order::createAction
+        _sylius:
+            event: admin_create
+            section: admin
+            permission: true
+            template: '@SyliusAdminOrderCreationPlugin/Order/create.html.twig'
+            form:
+                type: Sylius\AdminOrderCreationPlugin\Form\Type\NewOrderType
+            factory:
+                method: ['expr:service("Sylius\\AdminOrderCreationPlugin\\Factory\\OrderFactory")', 'createFromExistingOrder']
+                arguments: ["expr:service('sylius.repository.order').find($id)"]
+
+sylius_admin_order_creation_ajax:
+    prefix: "/ajax"
+    resource: "@SyliusAdminOrderCreationPlugin/Resources/config/app/routing/admin_ajax.yml"
