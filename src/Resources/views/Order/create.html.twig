@@ -33,12 +33,21 @@
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
     <script>
         $(document).ready(function() {
-            $('body').on('DOMNodeInserted', '#sylius_admin_order_creation_new_order_payments [data-form-collection="item"]', function() {
-                $('#sylius_admin_order_creation_new_order_payments [data-form-collection="add"]').hide();
+            const targetNode = document.querySelector('#sylius_admin_order_creation_new_order_payments');
+            const observer = new MutationObserver(mutations => {
+                mutations.forEach(mutation => {
+                    if (mutation.addedNodes.length > 0) {
+                        document.querySelector('#sylius_admin_order_creation_new_order_payments [data-form-collection="add"]').style.display = 'none';
+                    }
+                    if (mutation.removedNodes.length > 0) {
+                        document.querySelector('#sylius_admin_order_creation_new_order_payments [data-form-collection="add"]').style.display = '';
+                    }
+                });
             });
 
-            $('body').on('DOMNodeRemoved', '#sylius_admin_order_creation_new_order_payments [data-form-collection="item"]', function() {
-                $('#sylius_admin_order_creation_new_order_payments [data-form-collection="add"]').show();
+            observer.observe(targetNode, {
+                childList: true,
+                subtree: true,
             });
 
             $('#sylius_admin_order_creation_new_order_shipments [data-form-collection="add"]').on('click', function(e) {
