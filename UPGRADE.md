@@ -1,3 +1,10 @@
+# UPGRADE FROM 0.15.0 TO 0.16.0
+
+1. Support for Sylius 1.14 has been added, it is now the recommended Sylius version to use.
+
+2. Support for Sylius 1.12 has been dropped, upgrade your application to [Sylius 1.13](https://github.com/Sylius/Sylius/blob/1.14/UPGRADE-1.13.md).
+   or to [Sylius 1.14](https://github.com/Sylius/Sylius/blob/1.14/UPGRADE-1.14.md).
+
 ### UPGRADE FROM 0.14.0 TO 0.15.0
 
 1. Support for Sylius 1.13 has been added, it is now the recommended Sylius version to use with the plugin.
