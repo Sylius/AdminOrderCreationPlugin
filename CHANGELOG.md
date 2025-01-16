@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.16.0 (2025-01-16)
+
+- [#203](https://github.com/Sylius/AdminOrderCreationPlugin/issues/203) Support for Sylius 1.14 ([@Prometee](https://github.com/Prometee), [@TheMilek](https://github.com/TheMilek))
+
 ## v0.15.0 (2024-06-10)
 
 - [#199](https://github.com/Sylius/AdminOrderCreationPlugin/issues/199) Sylius 1.13 ([@Prometee](https://github.com/Prometee))
