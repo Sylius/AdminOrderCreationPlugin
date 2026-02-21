@@ -48,7 +48,7 @@ sylius_admin_order_creation_ajax_product_variant_by_codes:
             permission: true
             serialization_groups: [Autocomplete]
             repository:
-                method: findOneByCode
+                method: findByCode
                 arguments: $code
 
 sylius_admin_order_creation_ajax_provide_available_shipping_methods:
